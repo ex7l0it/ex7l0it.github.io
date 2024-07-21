@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Windows 7 下可用的一个漏洞, 可以在忘记密码又没带U盘没法进PE的时候拿来用😅(如果能用上的话)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 粘滞键后门">
+<meta property="og:url" content="https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Windows 7 下可用的一个漏洞, 可以在忘记密码又没带U盘没法进PE的时候拿来用😅(如果能用上的话)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611909983061-2a1e084e-7c4b-4382-b37f-27404598d119.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611911922375-1d57491b-86b5-49c9-99c2-6392adc0f010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912013373-450445f2-5f71-4779-bf3a-187b108b8d0c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912058218-c708b69d-4dee-4904-99f8-326e24f8c926.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912130153-834749dc-6f26-4297-bf60-566825b5aaa8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912172881-b4833f54-a39d-4890-84c3-68d8bb366232.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912496855-cdedf8de-4e70-48eb-9e55-45a1bb699fcf.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912527330-26a4f702-90a7-4ca5-9ecf-0ce8c23327f0.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912701164-92fb807f-efd2-4435-9a25-2aa7530313b3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913076010-88f1d38c-c513-4e87-8dea-fa4b06640e76.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913184158-34611fcb-92dc-41b4-9924-079067849155.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913577400-e7c8f72f-a380-4a31-abe5-07300483e8c7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913615753-e22a1f62-6363-4c55-8355-70d9bb72b00c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913670230-a05bfdd4-076b-4894-9c6e-10d9efbffa70.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913710439-dd6afb24-21c7-4144-843c-44cc5b362a7c.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913765668-b92d058c-845d-42fa-b7f0-8efba91244ae.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913837521-2a955a9b-4756-49c5-bac8-40f67fe75711.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611914309756-71f2bae5-0526-4ed4-96f7-c2c3f732275f.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611914382965-0ed0246e-a73d-43d6-99a2-20b61df6328f.png">
+<meta property="article:published_time" content="2021-01-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-28T16:00:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611909983061-2a1e084e-7c4b-4382-b37f-27404598d119.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/","path":"2021/01/28/windows-sticky-keys-backdoor/","title":"Windows 粘滞键后门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows 粘滞键后门 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E7%B2%98%E6%BB%9E%E9%94%AE%E5%90%8E%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">Windows 粘滞键后门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E5%88%9B%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">后门创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D-sethc-exe"><span class="nav-number">1.2.1.</span> <span class="nav-text">重命名 sethc.exe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86-cmd-exe-%E5%89%AF%E6%9C%AC%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BA-sethc-exe"><span class="nav-number">1.2.2.</span> <span class="nav-text">将 cmd.exe 副本重命名为 sethc.exe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%90%8E%E9%97%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">测试后门</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">修改系统密码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E5%90%AF%E5%8A%A8%E4%BF%AE%E5%A4%8D"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">进入启动修复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">重命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E8%BF%9B%E5%85%A5%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">重启进入系统</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows 粘滞键后门 | Blog">
+      <meta itemprop="description" content="Windows 7 下可用的一个漏洞, 可以在忘记密码又没带U盘没法进PE的时候拿来用😅(如果能用上的话)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows 粘滞键后门<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/windows-sticky-keys-backdoor.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-29 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-29T00:00:00+08:00">2021-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Security/" itemprop="url" rel="index"><span itemprop="name">Security</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>411</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Windows 7 下可用的一个漏洞, 可以在忘记密码又没带U盘没法进PE的时候拿来用😅(如果能用上的话)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Windows-粘滞键后门"><a href="#Windows-粘滞键后门" class="headerlink" title="Windows 粘滞键后门"></a>Windows 粘滞键后门</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>众所周知，在 Windows 下连续按五次 Shift 键会触发粘滞键：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611909983061-2a1e084e-7c4b-4382-b37f-27404598d119.png" alt="image.png"></p>
+<p>粘滞键程序路径为：<code>C:\Windwos\System32\sethc.exe</code>，当未登录用户时，粘滞键是以 <code>system</code> 用户启动的粘滞键后门即是将 cmd.exe 替换掉 sethc.exe，使得按五次 Shift 键后启动 cmd 窗口，然后我们即可利用 <code>system</code> 权限进行管理员用户创建等操作。</p>
+<h2 id="后门创建"><a href="#后门创建" class="headerlink" title="后门创建"></a>后门创建</h2><h3 id="重命名-sethc-exe"><a href="#重命名-sethc-exe" class="headerlink" title="重命名 sethc.exe"></a>重命名 sethc.exe</h3><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611911922375-1d57491b-86b5-49c9-99c2-6392adc0f010.png" alt="image.png"></p>
+<p>但是访问被拒绝需要先修改权限：<code>属性-安全-所有者</code></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912013373-450445f2-5f71-4779-bf3a-187b108b8d0c.png" alt="image.png"></p>
+<p>修改所有者为 Administrator：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912058218-c708b69d-4dee-4904-99f8-326e24f8c926.png" alt="image.png"></p>
+<p>确定后重新打开属性选项卡，修改 Administrators 组权限：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912130153-834749dc-6f26-4297-bf60-566825b5aaa8.png" alt="image.png"></p>
+<p>确定后即可成功修改文件名：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912172881-b4833f54-a39d-4890-84c3-68d8bb366232.png" alt="image.png"></p>
+<h3 id="将-cmd-exe-副本重命名为-sethc-exe"><a href="#将-cmd-exe-副本重命名为-sethc-exe" class="headerlink" title="将 cmd.exe 副本重命名为 sethc.exe"></a>将 cmd.exe 副本重命名为 sethc.exe</h3><p>复制一份 cmd.exe 重命名：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912496855-cdedf8de-4e70-48eb-9e55-45a1bb699fcf.png" alt="image.png"></p>
+<h3 id="测试后门"><a href="#测试后门" class="headerlink" title="测试后门"></a>测试后门</h3><p>锁定屏幕，连按五次 Shift 触发：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912527330-26a4f702-90a7-4ca5-9ecf-0ce8c23327f0.png" alt="image.png"></p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="修改系统密码"><a href="#修改系统密码" class="headerlink" title="修改系统密码"></a>修改系统密码</h3><p>当不知道系统密码的时候，可以利用粘滞键后门进行修改：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611912701164-92fb807f-efd2-4435-9a25-2aa7530313b3.png" alt="image.png"></p>
+<h4 id="进入启动修复"><a href="#进入启动修复" class="headerlink" title="进入启动修复"></a>进入启动修复</h4><p>重启系统，在系统启动时强制关机，触发错误恢复：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913076010-88f1d38c-c513-4e87-8dea-fa4b06640e76.png" alt="image.png"></p>
+<p>然后进行漫长的等待：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913184158-34611fcb-92dc-41b4-9924-079067849155.png" alt="image.png"></p>
+<p>点进详细信息，打开一个txt文件：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913577400-e7c8f72f-a380-4a31-abe5-07300483e8c7.png" alt="image.png"></p>
+<p>通过文件-打开，</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913615753-e22a1f62-6363-4c55-8355-70d9bb72b00c.png" alt="image.png"></p>
+<p>要选择所有文件</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913670230-a05bfdd4-076b-4894-9c6e-10d9efbffa70.png" alt="image.png"></p>
+<h4 id="重命名"><a href="#重命名" class="headerlink" title="重命名"></a>重命名</h4><p>找 sethc.exe ，然后进行重命名操作：这里直接修改，无需修改权限</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913710439-dd6afb24-21c7-4144-843c-44cc5b362a7c.png" alt="image.png"></p>
+<p>将 cmd.exe copy一份，重命名：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913765668-b92d058c-845d-42fa-b7f0-8efba91244ae.png" alt="image.png"></p>
+<h4 id="重启进入系统"><a href="#重启进入系统" class="headerlink" title="重启进入系统"></a>重启进入系统</h4><p>按五次 Shift 触发：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611913837521-2a955a9b-4756-49c5-bac8-40f67fe75711.png" alt="image.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加新用户</span></span><br><span class="line">net user add admin 123.abc /add</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将新用户加入管理员组</span></span><br><span class="line">net localgroup administrators admin /add</span><br></pre></td></tr></table></figure>
+
+<p>登录：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611914309756-71f2bae5-0526-4ed4-96f7-c2c3f732275f.png" alt="image.png"></p>
+<p>进入用户账户之后就可以随意修改密码了：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/1611914382965-0ed0246e-a73d-43d6-99a2-20b61df6328f.png" alt="image.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/" title="Windows 粘滞键后门">https://ex7l0it.github.io/2021/01/28/windows-sticky-keys-backdoor/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/28/Hackintosh/" rel="prev" title="DELL Vostro 7580 黑苹果安装">
+                  <i class="fa fa-angle-left"></i> DELL Vostro 7580 黑苹果安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/07/ropemporium-wp-1/" rel="next" title="ROP Emporium - Challenge1-3 Writeup">
+                  ROP Emporium - Challenge1-3 Writeup <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">59k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:34</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

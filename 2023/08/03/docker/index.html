@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Docker 的常用命令，Dockerfile、docker-compose 的基本内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 的使用">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/08/03/docker/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Docker 的常用命令，Dockerfile、docker-compose 的基本内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-03T04:30:00.000Z">
+<meta property="article:modified_time" content="2023-08-03T04:30:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Ops">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/08/03/docker/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/08/03/docker/","path":"2023/08/03/docker/","title":"Docker 的使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker 的使用 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker"><span class="nav-number">1.</span> <span class="nav-text">Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">镜像加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">代理配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">镜像相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">容器相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.3.</span> <span class="nav-text">数据卷操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-%E4%B8%8E-v"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">--mount 与 -v</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.4.</span> <span class="nav-text">查看信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">1.4.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.1.</span> <span class="nav-text">Dockerfile指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Compose"><span class="nav-number">1.5.</span> <span class="nav-text">Docker-Compose</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/08/03/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker 的使用 | Blog">
+      <meta itemprop="description" content="Docker 的常用命令，Dockerfile、docker-compose 的基本内容">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker 的使用<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/docker.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-03 12:30:00" itemprop="dateCreated datePublished" datetime="2023-08-03T12:30:00+08:00">2023-08-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tool/" itemprop="url" rel="index"><span itemprop="name">Tool</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Docker 的常用命令，Dockerfile、docker-compose 的基本内容</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><blockquote>
+<p>练习环境：<a target="_blank" rel="noopener" href="https://www.docker.com/play-with-docker/">https://www.docker.com/play-with-docker/</a><br>官方入门文档: <a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/overview/">https://docs.docker.com/get-started/overview/</a><br>学习资料：<a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/">https://yeasy.gitbook.io/docker_practice/</a></p>
+</blockquote>
+<p>想要从零开始学习 Docker 可以直接看上面👆这些资料，下面只整理一些基本的常用命令</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>Docker 是一个开源的应用容器引擎。</li>
+<li>Docker 是一种容器技术，解决软件跨环境迁移的问题，Docker 容器与虚拟机类似，但是原理不同，容器是将操作系统层虚拟化，而虚拟机是硬件虚拟化</li>
+</ul>
+<p>三个基本概念：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/image">镜像（Image）</a></li>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/container">容器（Container）</a></li>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository">仓库（Repository）</a></li>
+</ul>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><ul>
+<li>请查看官方文档 👉 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></li>
+</ul>
+<h3 id="镜像加速"><a href="#镜像加速" class="headerlink" title="镜像加速"></a>镜像加速</h3><ul>
+<li>使用阿里云的镜像加速器 👉 <a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a></li>
+</ul>
+<h3 id="代理配置"><a href="#代理配置" class="headerlink" title="代理配置"></a>代理配置</h3><ul>
+<li>查看官方文档 👉 <a target="_blank" rel="noopener" href="https://docs.docker.com/config/daemon/systemd/">https://docs.docker.com/config/daemon/systemd/</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo <span class="built_in">mkdir</span> -p /etc/systemd/system/docker.service.d</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vim /etc/systemd/system/docker.service.d/http-proxy.conf</span></span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://proxy.example.com:80&quot;</span><br><span class="line">Environment=&quot;HTTPS_PROXY=https://proxy.example.com:443&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="镜像相关命令"><a href="#镜像相关命令" class="headerlink" title="镜像相关命令"></a>镜像相关命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker images           <span class="comment"># 查看现有镜像</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker search redis     <span class="comment"># 搜索镜像(例如redis)</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker pull redis:5.0   <span class="comment"># 拉取镜像, 不指定镜像仓库地址则从docker.io获取镜像, 不指定tag则默认是:latest</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker rmi cefde848bd49 <span class="comment"># 删除镜像(可以指定镜像ID或镜像名称, 镜像ID取前几位能区分开就行)</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="容器相关命令"><a href="#容器相关命令" class="headerlink" title="容器相关命令"></a>容器相关命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">例如下面这个命令:</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --name=c1 -idp 8000:80 -v /var/www/html:/web ubuntu:20.04</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>基于 <code>ubuntu:20.04</code> 镜像以守护进程方式启动一个容器，并保持 <code>STDIN</code> 打开，将该容器命名为 <code>c1</code>，把容器内部 <code>80</code> 端口映射到本地 <code>8000</code> 端口，并将本地的 <code>/var/www/html</code> 目录映射到容器内部 <code>/web</code> 目录</li>
+<li>镜像名后面可指定启动容器后需要执行的命令，不加的话则是默认调用容器在 <code>build</code> 时 <code>Dockerfile</code> 中 <code>CMD</code> 命令指定的</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前运行中的容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker ps</span> </span><br><span class="line">CONTAINER ID   IMAGE          COMMAND   CREATED          STATUS          PORTS                                   NAMES</span><br><span class="line">7406d13e9fe2   ubuntu:20.04   &quot;bash&quot;    19 seconds ago   Up 18 seconds   0.0.0.0:8000-&gt;80/tcp, :::8000-&gt;80/tcp   c1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入c1容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">exec</span> -it c1 /bin/bash</span> </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>flag</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-i</code></td>
+<td>标准输入保持打开(交互式运行容器)</td>
+</tr>
+<tr>
+<td><code>-t</code></td>
+<td>分配一个pseudo-tty(伪终端)</td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td>分离模式，也就是在后台启动容器</td>
+</tr>
+<tr>
+<td><code>--name</code></td>
+<td>指定容器名称</td>
+</tr>
+<tr>
+<td><code>-v 宿主机目录(文件):容器内目录(文件)</code></td>
+<td>将宿主机的目录挂载到容器中</td>
+</tr>
+<tr>
+<td><code>-p 宿主机端口号:容器端口号</code></td>
+<td>将容器端口映射到宿主机中</td>
+</tr>
+<tr>
+<td><code>-P</code></td>
+<td>自动将 Dockerfile 中使用 EXPOSE 命令暴露的端口随机映射出来</td>
+</tr>
+<tr>
+<td><code>--rm</code></td>
+<td>当容器退出时自动删除</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>指定容器内部的环境变量</td>
+</tr>
+<tr>
+<td><code>--network</code></td>
+<td>指定容器使用的网络</td>
+</tr>
+</tbody></table>
+<p>更多的flags参考<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/run/">官方文档</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker ps                    <span class="comment"># 查看正在运行的容器</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker ps -a                 <span class="comment"># 查看所有容器</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker stop c2               <span class="comment"># 停止容器(根据CONTAINER ID或NAMES指定)</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">rm</span> c1                 <span class="comment"># 删除容器(可使用容器ID或容器名称)</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">rm</span> -f                 <span class="comment"># 强制删除容器(自动停止并删除)</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">rm</span> `docker ps -aq`    <span class="comment"># 删除所有容器</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据卷操作"><a href="#数据卷操作" class="headerlink" title="数据卷操作"></a>数据卷操作</h3><details class="note success"><summary><p>📌 <strong>数据卷</strong>与<strong>目录挂载</strong>的区别是什么?</p>
+</summary>
+<ul>
+<li>Named volumes<ul>
+<li>数据卷存放位置由 Docker 统一管理</li>
+<li>在初始化时使用容器内容填充空卷</li>
+</ul>
+</li>
+<li>Bind mounts<ul>
+<li>目录由用户自行指定</li>
+<li>初始化时不会使用容器内容填充空目录</li>
+</ul>
+</li>
+</ul>
+
+</details>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create vol-demo  <span class="comment"># 创建一个名为 vol-demo 的数据卷</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">ls</span>               <span class="comment"># 查看所有的数据卷</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect vol-demo <span class="comment"># 查看 vol-demo 数据卷的信息</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">rm</span> vol-demo      <span class="comment"># 删除 vol-demo 数据卷</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume prune            <span class="comment"># 删除无主数据</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -d -P --name web --mount <span class="built_in">source</span>=vol-demo,target=/web nginx <span class="comment"># 挂载数据卷</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当容器目录和数据卷目录绑定后，两边的修改会立即同步</li>
+<li>一个数据卷可以被多个容器同时挂载</li>
+<li>一个容器也可以被挂载多个数据卷</li>
+<li>容器删除后，数据卷仍然存在</li>
+</ul>
+<h4 id="mount-与-v"><a href="#mount-与-v" class="headerlink" title="--mount 与 -v"></a><code>--mount</code> 与 <code>-v</code></h4><ul>
+<li><code>-v</code> 前面已经提到了，可以将本地目录挂载到容器当中<ul>
+<li><code>-v 宿主机目录:容器内目录</code></li>
+</ul>
+</li>
+<li><code>--mount</code> 相比 <code>-v</code> 来说功能更多，可以更加精准的控制挂载的内容<ul>
+<li>例如挂载类型、读写权限等<ul>
+<li>挂载类型通过 <code>type</code> 指定</li>
+<li>源目录或卷通过 <code>src</code> 或 <code>source</code> 指定</li>
+<li>目标目录通过 <code>dst</code>、<code>destination</code> 或 <code>target</code> 指定</li>
+<li>更多内容看这里 👉 <a target="_blank" rel="noopener" href="https://docs.docker.com/storage/bind-mounts/">https://docs.docker.com/storage/bind-mounts/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过mount将宿主机目录挂载到容器，可通过添加,read-only限制只读</span></span><br><span class="line">--mount type=bind,source=/var/www/html,target=/web,read-only </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可通过mount挂载卷</span></span><br><span class="line">--mount type=colume,src=vol-demo,dst=/usr/local/data</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看信息"><a href="#查看信息" class="headerlink" title="查看信息"></a>查看信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker system <span class="built_in">df</span>     <span class="comment"># 查看镜像、容器、数据卷所占用空间</span></span></span><br><span class="line">TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE</span><br><span class="line">Images          11        3         7.909GB   5.718GB (72%)</span><br><span class="line">Containers      3         0         264.4MB   264.4MB (100%)</span><br><span class="line">Local Volumes   0         0         0B        0B</span><br><span class="line">Build Cache     286       0         3.56GB    3.56GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker diff 550      <span class="comment"># 查看容器存储层的改动内容</span></span></span><br><span class="line">C /etc</span><br><span class="line">A /etc/todos</span><br><span class="line">A /etc/todos/todo.db</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker inspect 550    <span class="comment"># 获取容器/镜像的元数据</span></span></span><br><span class="line">...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container logs 550  <span class="comment"># 获取容器的输出信息</span></span></span><br><span class="line">Using sqlite database at /etc/todos/todo.db</span><br><span class="line">Listening on port 3000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><ul>
+<li>使用 Dockerfile 文件来定制镜像</li>
+<li>Dockerfile 中的每一个指令都会建立一层，shell 命令尽量写在一行中，用 <code>&amp;&amp;</code> 串联，时刻注意这是在构建每一层，而不是 shell 脚本</li>
+<li>注意每一层构建的最后一定要清理掉无关文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t 镜像名 &lt;上下文路径&gt; [-f &lt;dockerfile path&gt;]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t test-image .</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Dockerfile指令"><a href="#Dockerfile指令" class="headerlink" title="Dockerfile指令"></a>Dockerfile指令</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FROM 用来指定基础镜像，必须为第一条指令</span></span><br><span class="line"><span class="keyword">FROM</span> ImageName</span><br><span class="line"><span class="comment"># RUN 指令用来执行命令行命令，与直接在命令行中输入的命令一样</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">command</span></span></span><br><span class="line"><span class="comment"># 复制文件到镜像</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> [--<span class="built_in">chown</span>=&lt;user&gt;:&lt;group&gt;] &lt;源路径&gt; &lt;目标路径&gt;</span></span><br><span class="line"><span class="comment"># CMD 用于指定默认容器主进程的启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> &lt;命令&gt;</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [ <span class="string">&quot;program&quot;</span>, <span class="string">&quot;arg1&quot;</span>, <span class="string">&quot;arg2&quot;</span> ]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于设置环境变量，容器运行时依旧存在</span></span><br><span class="line"><span class="keyword">ENV</span> &lt;key&gt; &lt;value&gt;      </span><br><span class="line"><span class="comment"># 用于设置环境变量，容器运行时不会存在，定义的默认值可使用--build-arg来覆盖，要使用时需要在各个阶段指定   </span></span><br><span class="line"><span class="keyword">ARG</span> &lt;key&gt;[=&lt;value&gt;]</span><br><span class="line"><span class="comment"># 定义匿名卷</span></span><br><span class="line">VOLUMNE &lt;路径&gt;</span><br><span class="line"><span class="comment"># 声明容器运行时提供服务的端口，在执行docker run -P时会随机映射EXPOSE的端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> &lt;端口<span class="number">1</span>&gt; [&lt;端口<span class="number">2</span>&gt;...]</span><br><span class="line"><span class="comment"># 指定工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> &lt;工作目录路径&gt;</span></span><br><span class="line"><span class="comment"># 指定当前用户</span></span><br><span class="line"><span class="keyword">USER</span> &lt;用户名&gt;[:&lt;用户组&gt;]</span><br><span class="line"><span class="comment"># 指定 RUN、ENTRYPOINT、CMD指令的shell，默认是 /bin/sh -c</span></span><br><span class="line"><span class="keyword">SHELL</span><span class="language-bash"> [<span class="string">&quot;executable&quot;</span>, <span class="string">&quot;parameters&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>更多内容查看：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image/dockerfile">https://yeasy.gitbook.io/docker_practice/image/dockerfile</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a></li>
+</ul>
+</blockquote>
+<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker-Compose"></a>Docker-Compose</h2><blockquote>
+<p>学习资料 👉 <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/gettingstarted/">https://docs.docker.com/compose/gettingstarted/</a></p>
+</blockquote>
+<ul>
+<li>安装: <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">https://docs.docker.com/compose/install/</a><ul>
+<li>Step1: 安装 <a target="_blank" rel="noopener" href="https://docs.docker.com/get-docker/">Docker Engine</a></li>
+<li>Step2: 安装 <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">Docker Compose</a></li>
+</ul>
+</li>
+</ul>
+<p>安装完成后能正常执行 <code>docker compose version</code> 就 OK：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker compose version</span></span><br><span class="line">Docker Compose version v2.20.2</span><br></pre></td></tr></table></figure>
+
+<p>放一个 <code>docker/getting-started</code> 中的例子:</p>
+<ul>
+<li>创建 <code>compose.yaml</code> 配置文件:<ul>
+<li>目前的默认路径是工作目录的 <code>compose.yaml</code> 或 <code>compose.yml</code></li>
+<li>仍支持早期版本的 <code>docker-compose.yaml</code> 和 <code>docker-compose.yml</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">node:12-alpine</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span> <span class="string">&quot;yarn install &amp;&amp; yarn run dev&quot;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3000</span><span class="string">:3000</span></span><br><span class="line">    <span class="attr">working_dir:</span> <span class="string">/app</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./:/app</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_HOST:</span> <span class="string">mysql</span></span><br><span class="line">      <span class="attr">MYSQL_USER:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">MYSQL_PASSWORD:</span> <span class="string">secret</span></span><br><span class="line">      <span class="attr">MYSQL_DB:</span> <span class="string">todos</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.7</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">todo-mysql-data:/var/lib/mysql</span></span><br><span class="line">    <span class="attr">environment:</span> </span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">secret</span></span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> <span class="string">todos</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">todo-mysql-data:</span></span><br></pre></td></tr></table></figure>
+
+<p>启动:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker compose up -d</span></span><br></pre></td></tr></table></figure>
+
+<p>停止并销毁容器和网络:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker compose down</span></span><br></pre></td></tr></table></figure>
+
+<p>复杂的需求就直接查文档 + GPT 吧😅</p>
+<blockquote>
+<p>完整的 compose.yaml 配置说明 👉 <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/03-compose-file/">https://docs.docker.com/compose/compose-file/03-compose-file/</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/08/03/docker/" title="Docker 的使用">https://ex7l0it.github.io/2023/08/03/docker/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Ops/" rel="tag"><i class="fa fa-tag"></i> Ops</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/19/start-learning/" rel="prev" title="学习安全方向的必备能力">
+                  <i class="fa fa-angle-left"></i> 学习安全方向的必备能力
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/08/18/ctfd/" rel="next" title="CTFd + CTFd_Whale 部署">
+                  CTFd + CTFd_Whale 部署 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">59k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:34</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

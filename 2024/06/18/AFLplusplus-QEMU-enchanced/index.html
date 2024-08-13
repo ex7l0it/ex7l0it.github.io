@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AFL++ QEMU mode （aarch64 架构）的高级应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFL++ QEMU mode (aarch64)">
+<meta property="og:url" content="https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="AFL++ QEMU mode （aarch64 架构）的高级应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130857834.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130904840.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130914230.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130914241.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130906519.png">
+<meta property="article:published_time" content="2024-06-18T03:56:00.000Z">
+<meta property="article:modified_time" content="2024-06-18T03:56:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Fuzzing">
+<meta property="article:tag" content="Tutorial">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130857834.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/","path":"2024/06/18/AFLplusplus-QEMU-enchanced/","title":"AFL++ QEMU mode (aarch64)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AFL++ QEMU mode (aarch64) | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AFL-QEMU-mode-%EF%BC%88aarch64%EF%BC%89%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">AFL++ QEMU mode （aarch64）高级应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E7%82%B9%E6%9B%B4%E6%94%B9"><span class="nav-number">1.1.</span> <span class="nav-text">入口点更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">持续模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.</span> <span class="nav-text">内存模糊测试</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AFL++ QEMU mode (aarch64) | Blog">
+      <meta itemprop="description" content="AFL++ QEMU mode （aarch64 架构）的高级应用">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AFL++ QEMU mode (aarch64)<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/AFLplusplus-QEMU-enchanced.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-06-18 11:56:00" itemprop="dateCreated datePublished" datetime="2024-06-18T11:56:00+08:00">2024-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tool/" itemprop="url" rel="index"><span itemprop="name">Tool</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">AFL++ QEMU mode （aarch64 架构）的高级应用</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="AFL-QEMU-mode-（aarch64）高级应用"><a href="#AFL-QEMU-mode-（aarch64）高级应用" class="headerlink" title="AFL++ QEMU mode （aarch64）高级应用"></a>AFL++ QEMU mode （aarch64）高级应用</h1><blockquote>
+<p>参考资料: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://antel0p3.github.io/2023/07/20/AFL-QEMU/">使用 AFL++-QEMU 和 LIBPROTOBUF 的高级二进制模糊：语法感知和内存中持续模糊的实际案例</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/qemu_mode/README.persistent.md">How to use the persistent mode in AFL++’s QEMU mode</a></li>
+</ul>
+</blockquote>
+<p>AFL++ 的 QEMU 模式在物联网（IoT）和车联网（V2X）领域有着重要的应用。由于这些设备和系统通常包含大量闭源软件，且运行在多种不同架构上（如 ARM、MIPS 等），传统的源代码插桩方法往往不可行。利用 QEMU 模式，AFL++ 能够在不需要源代码的情况下直接对这些设备的固件或二进制文件进行模糊测试。</p>
+<p>但 QEMU 模式的执行速度比编译时插桩模式慢得多，因为 QEMU 模式需要进行二进制翻译和仿真，而这些操作比直接运行编译过的插桩代码要耗费更多的时间和资源。</p>
+<p>为了优化提升 QEMU mode 测试效率，我们可以通过对下述环境变量进行配置，具体内容可参考<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/qemu_mode/README.md">官方说明文档</a></p>
+<ul>
+<li><p>插桩和覆盖率：</p>
+<ul>
+<li><code>AFL_INST_LIBS</code> （如果需要对使用的库进行插桩，可启用该选项）</li>
+<li><code>AFL_QEMU_INST_RANGES</code> （用于指定插桩的地址范围）</li>
+</ul>
+</li>
+<li><p>突变：</p>
+<ul>
+<li><code>AFL_CUSTOM_MUTATOR_LIBRARY</code></li>
+<li><code>AFL_CUSTOM_MUTATOR_ONLY</code></li>
+</ul>
+</li>
+<li><p>变异：</p>
+<ul>
+<li><code>AFL_ENTRYPOINT</code></li>
+<li><code>AFL_QEMU_PERSISTENT_ADDR</code>&#x2F; <code>AFL_QEMU_PERSISTENT_ADDR_RET</code></li>
+<li><code>AFL_QEMU_PERSISTENT_HOOK</code></li>
+<li><code>AFL_DISABLE_TRIM</code></li>
+<li><code>AFL_DEBUG</code>&#x2F; <code>AFL_DEBUG_CHILD</code></li>
+</ul>
+</li>
+</ul>
+<p>本文将以 <a target="_blank" rel="noopener" href="https://github.com/ChijinZ/security_advisories/tree/master/libjpeg-v9a">libjpeg</a> 为例，在 aarch64 架构下进行编译与测试，测试目标是 libjpeg 库中自带的 cjpeg 程序。它是一个二进制文件，能够将输入的图片文件转换为 jpeg 文件。</p>
+<p>编译目标程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">按照交叉编译环境</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install gcc-aarch64-linux-gnu</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成 Makefile</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./configure --prefix=<span class="string">&quot;<span class="subst">$(pwd)</span>/install&quot;</span> --enable-shared --enable-static CC=aarch64-linux-gnu-gcc --host=aarch64-linux</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make -j &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+
+<p>运行（AFL++ 的 QEMU mode 已经预先编译安装完成(aarch64)）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">QEMU_LD_PREFIX=/usr/aarch64-linux-gnu LD_LIBRARY_PATH=./install/lib afl-qemu-trace ./install/bin/cjpeg -h</span></span><br><span class="line">usage: ./cjpeg [switches] [inputfile]</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>种子应当寻找对应的合法类型文件，例如这里可以寻找 ppm 类型样例文件<ul>
+<li>这里由于程序较简单，种子只写了一个 a，任其随机变异</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd install</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建种子文件</span></span><br><span class="line">mkdir input &amp;&amp; echo a &gt; input/test</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>由于该程序是动态链接的，且使用了 libjpeg.so 库，在对其进行模糊测试时需要装载：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">fuzz.sh 文件内容:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 ld 路径</span></span><br><span class="line">export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定 libjpeg.so 所在的路径</span></span><br><span class="line">export LD_LIBRARY_PATH=./lib</span><br><span class="line">afl-fuzz -i ./input -o ./output -Q -m 10240 -- ./bin/cjpeg @@</span><br></pre></td></tr></table></figure>
+
+<p>发现第一个 crash 用时 44s，exec speed 在 700 ~ 1000&#x2F;sec 浮动：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130857834.png" alt="image-20240617100028263" style="zoom:80%;" />
+
+<h2 id="入口点更改"><a href="#入口点更改" class="headerlink" title="入口点更改"></a>入口点更改</h2><p>默认情况下，AFL++ 会自动将程序的入口点设置为 AFL 的入口点（ <code>_start</code> 函数），这种情况下，每次迭代都会完整地运行整个目标</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以通过开启 AFL_DEBUG 选项查看入口点：</span></span><br><span class="line">[AFL++ ebb70fcf6696] ~/libjpeg/install # AFL_DEBUG=1 ./fuzz.sh | grep entrypoint</span><br><span class="line">AFL forkserver entrypoint: 0x5500001840</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 r2 查询 _start 函数地址:</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">r2 -c <span class="string">&quot;aa; pdf@0x1840&quot;</span> bin/cjpeg</span></span><br><span class="line">            ;-- _start:</span><br><span class="line">            ;-- pc:</span><br><span class="line">            ; XREFS(30)</span><br><span class="line">┌ 48: entry0 (func rtld_fini, int64_t argc, char **ubp_av); // noreturn</span><br><span class="line">│           ; arg func rtld_fini @ x0</span><br><span class="line">│           ; arg int64_t argc @ sp+0x0</span><br><span class="line">│           ; arg char **ubp_av @ sp+0x8</span><br><span class="line">│           0x00001840      1f2003d5       nop</span><br><span class="line">│           0x00001844      1d0080d2       mov x29, 0</span><br><span class="line">│           0x00001848      1e0080d2       mov x30, 0</span><br><span class="line">│           0x0000184c      e50300aa       mov x5, x0                  ; func rtld_fini</span><br><span class="line">│           0x00001850      e10340f9       ldr x1, [sp]                ; pstate ; int argc</span><br><span class="line">│           0x00001854      e2230091       add x2, ubp_av              ; char **ubp_av</span><br><span class="line">│           0x00001858      e6030091       mov x6, sp                  ; void *stack_end</span><br><span class="line">│           0x0000185c      a00000d0       adrp x0, 0x17000</span><br><span class="line">│           0x00001860      00f847f9       ldr x0, [x0, 0xff0]         ; 0x1480</span><br><span class="line">│                                                                      ; dbg.main ; func main</span><br><span class="line">│           0x00001864      030080d2       mov x3, 0                   ; func init</span><br><span class="line">│           0x00001868      040080d2       mov x4, 0                   ; func fini</span><br><span class="line">└           0x0000186c      89feff97       bl sym.imp.__libc_start_main ; int __libc_start_main(func main, int argc, char **ubp_av, func init, func fini, func rtld_fini, void *stack_end)</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用 <code>AFL_ENTRYPOINT</code> 指定入口点到程序的主函数，跳过 _start 函数中的初始化工作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">找到 main 函数偏移地址: 0x1480</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">r2 -c <span class="string">&quot;aa; afl&quot;</span> bin/cjpeg 2&gt; /dev/null | grep main</span></span><br><span class="line">0x00001290    1     16 sym.imp.__libc_start_main</span><br><span class="line">0x00001480   35    896 main</span><br></pre></td></tr></table></figure>
+
+<p>将偏移地址加上基地址得到最终的目标函数地址（aarch64 架构下，base addr 为 0x5500000000），那么 main 函数的目标地址为：<code>0x5500001480</code></p>
+<ul>
+<li>对于 amd64: 添加 0x4000000000</li>
+<li>对于 x86: 添加 0x40000000</li>
+<li>对于 aarch64: 添加 0x5500000000</li>
+<li>对于 arm: 无需添加</li>
+<li>具体的实际加载地址可以通过 <code>AFL_QEMU_DEBUG_MAPS=1 afl-qemu-trace TARGET-BINARY</code> 查看</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 fuzz.sh 中添加 AFL_ENTRYPOINT 选项</span></span><br><span class="line">export AFL_ENTRYPOINT=0x5500001480</span><br></pre></td></tr></table></figure>
+
+<p>使用同样的种子，发现第一个 crash 用时 28s，exec speed 在 1000~1500&#x2F;sec 浮动</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130904840.png" alt="51ygiak3.y5b" style="zoom:80%;" />
+
+<h2 id="持续模式"><a href="#持续模式" class="headerlink" title="持续模式"></a>持续模式</h2><p>“持续模式”是允许 AFL++ 避免每个迭代都调用 <code>fork</code> 的特性。相反，它在到达某个地址（<code>AFL_QEMU_PERSISTENT_ADDR</code>）时保存子节点的状态，并在到达另一个地址（ <code>AFL_QEMU_PERSISTENT_RET</code>）时恢复此状态。（aarch64 架构下无法使用 <code>AFL_QEMU_PERSISTENT_RETADDR_OFFSET</code>）</p>
+<ul>
+<li>需要注意，<code>AFL_QEMU_PERSISTENT_ADDR</code> 必须指向程序中一个能够循环调用的函数，并且该函数返回后能够再次被调用。</li>
+<li>99% 的情况下，需要附加 <code>AFL_QEMU_PERSISTENT_GPR=1</code>（用于恢复通用寄存器的状态，如果不添加该环境变量，第二次迭代循环开始之后会丢失参数值，例如 main 函数的 argc 值将丢失）</li>
+</ul>
+<p>在 cjpeg 中，我们目前需要重点关注的是解析文件、处理文件部分的函数，计算偏移后指定持续模式的起始地址与返回地址，期望能够持续测试目标部分如下：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130914230.png" alt="ytnr04bx.hkh" style="zoom:80%;" />
+
+<ul>
+<li>要注意，持续模式起始地址需要囊括读取文件部分（否则无法获取到模糊测试输入数据）</li>
+</ul>
+<p>在本样例程序中，文件读取、解析操作都在 main 函数中，因此起始地址仍需配置为 main 函数开始，返回地址可以适当前移（文件关闭句柄之前）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export AFL_QEMU_PERSISTENT_ADDR=0x5500001480</span><br><span class="line">export AFL_QEMU_PERSISTENT_RET=0x5500001668</span><br></pre></td></tr></table></figure>
+
+<p>另外需要注意本程序中某个分支下有一个能够导致程序退出的 return，持续模式下如果包含能够导致程序退出的分支，需要指定：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export AFL_QEMU_PERSISTENT_EXITS=1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启用该选项后，如果遇到 exit 不会退出程序，而是返回到 START 重新执行</li>
+</ul>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130914241.png" alt="tptd4hcc.nan" style="zoom:80%;" />
+
+<p>如果执行时如果遇到下述问题，需要考虑修改起始地址、返回地址及上述相关配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[AFL] ERROR: no persistent iteration executed</span><br><span class="line"></span><br><span class="line">[-] Unable to communicate with fork server. Some possible reasons:</span><br><span class="line"></span><br><span class="line">    - You&#x27;ve run out of memory. Use -m to increase the the memory limit</span><br><span class="line">      to something higher than 10240.</span><br><span class="line">    - The binary or one of the libraries it uses manages to create</span><br><span class="line">      threads before the forkserver initializes.</span><br><span class="line">    - The binary, at least in some circumstances, exits in a way that</span><br><span class="line">      also kills the parent process - raise() could be the culprit.</span><br><span class="line">    - If using persistent mode with QEMU, AFL_QEMU_PERSISTENT_ADDR is</span><br><span class="line">      probably not valid (hint: add the base address in case of PIE)</span><br><span class="line"></span><br><span class="line">If all else fails you can disable the fork server via AFL_NO_FORKSRV=1.</span><br><span class="line"></span><br><span class="line">[-] PROGRAM ABORT : Unable to communicate with fork server</span><br><span class="line">         Location : afl_fsrv_run_target(), src/afl-forkserver.c:1990</span><br></pre></td></tr></table></figure>
+
+<p>对样例程序进行模糊测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu</span><br><span class="line">export LD_LIBRARY_PATH=./lib</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> AFL_INST_LIBS=1</span></span><br><span class="line">export AFL_ENTRYPOINT=0x5500001480</span><br><span class="line">export AFL_QEMU_PERSISTENT_ADDR=0x5500001480</span><br><span class="line">export AFL_QEMU_PERSISTENT_RET=0x5500001668</span><br><span class="line">export AFL_QEMU_PERSISTENT_GPR=1</span><br><span class="line">export AFL_QEMU_PERSISTENT_EXITS=1</span><br><span class="line">export AFL_QEMU_PERSISTENT_CNT=1000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> AFL_DEBUG=1</span></span><br><span class="line">afl-fuzz -i ./input -o ./output -Q -m 10240 -- ./bin/cjpeg @@</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>目标中的循环越稳定，可以运行的时间越长，循环越不稳定，循环计数应该越低。较低值为 100，最大值应为 10000。默认值为 1000。可以使用 <code>AFL_QEMU_PERSISTENT_CNT</code> 设置该值（根据具体情况适当调整该值即可，这里设为 1000）</li>
+</ul>
+<p>发现第一个 crash 用时 8s，exec speed 在 6000+&#x2F;sec </p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202408130906519.png" alt="aqexs3jf.v4a" style="zoom:80%;" />
+
+
+
+<h2 id="内存模糊测试"><a href="#内存模糊测试" class="headerlink" title="内存模糊测试"></a>内存模糊测试</h2><p>目标：直接从模糊器的内存中读取输入，跳过文件打开读取操作</p>
+<p>钩子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Inspired by https://github.com/AFLplusplus/AFLplusplus/blob/stable/utils/qemu_persistent_hook/read_into_rdi.c</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;api.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> g2h(x) ((void *)((unsigned long)(x) + guest_base))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> h2g(x) ((uint64_t)(x) - guest_base)</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">afl_persistent_hook</span><span class="params">(<span class="keyword">struct</span> arm64_regs *regs, <span class="type">uint64_t</span> guest_base, <span class="type">uint8_t</span> *input_buf, <span class="type">uint32_t</span> input_buf_len)</span> &#123;</span><br><span class="line">  <span class="comment">// Make sure we don&#x27;t overflow the target buffer</span></span><br><span class="line">  <span class="keyword">if</span> (input_buf_len &gt; <span class="number">4096</span>)</span><br><span class="line">    input_buf_len = <span class="number">4096</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Copy the fuzz data to the target&#x27;s memory</span></span><br><span class="line">  <span class="built_in">memcpy</span>(g2h(regs-&gt;x0), input_buf, input_buf_len);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 根据实际情况修改寄存器的数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">afl_persistent_hook_init</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 1 for shared memory input (faster), 0 for normal input (you have to use</span></span><br><span class="line">  <span class="comment">// read(), input_buf will be NULL)</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意: <code>api.h</code> 来自 <code>AFLplusplus/qemu_mode/qemuafl/qemuafl/api.h</code></li>
+<li>编译 hook 代码：<code>gcc -shared -fPIC -o libhook.so hook.c</code></li>
+<li>加载 hook 代码：<code>export AFL_QEMU_PERSISTENT_HOOK=&quot;./libhook.so&quot;</code></li>
+</ul>
+<p>修改持续模式的 START 地址到待测试的目标函数，根据反汇编信息，修改各参数对应的寄存器数据，启动模糊测试（暂无实例演示）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/" title="AFL++ QEMU mode (aarch64)">https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Fuzzing/" rel="tag"><i class="fa fa-tag"></i> Fuzzing</a>
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/03/os-basic/" rel="prev" title="带你玩 💻">
+                  <i class="fa fa-angle-left"></i> 带你玩 💻
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/12/uds-experiment-tutorial/" rel="next" title="UDS 服务仿真实验">
+                  UDS 服务仿真实验 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">61k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:43</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

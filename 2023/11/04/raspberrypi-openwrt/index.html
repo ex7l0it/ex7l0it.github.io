@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近又稍微折腾了一下吃灰许久的树莓派。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派4B 折腾记 - Openwrt">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="最近又稍微折腾了一下吃灰许久的树莓派。。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231105154331378.png">
+<meta property="article:published_time" content="2023-11-04T06:31:08.000Z">
+<meta property="article:modified_time" content="2023-11-06T08:45:08.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Raspberry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231105154331378.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/","path":"2023/11/04/raspberrypi-openwrt/","title":"树莓派4B 折腾记 - Openwrt"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>树莓派4B 折腾记 - Openwrt | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenWRT"><span class="nav-number">1.</span> <span class="nav-text">OpenWRT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Openwrt-%E5%9B%BA%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">Openwrt 固件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91"><span class="nav-number">1.3.</span> <span class="nav-text">踩坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%96%E5%9D%91"><span class="nav-number">1.4.</span> <span class="nav-text">挖坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90"><span class="nav-number">1.5.</span> <span class="nav-text">插件推荐</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="树莓派4B 折腾记 - Openwrt | Blog">
+      <meta itemprop="description" content="最近又稍微折腾了一下吃灰许久的树莓派。。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派4B 折腾记 - Openwrt<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/raspberrypi-openwrt.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-04 14:31:08" itemprop="dateCreated datePublished" datetime="2023-11-04T14:31:08+08:00">2023-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-06 16:45:08" itemprop="dateModified" datetime="2023-11-06T16:45:08+08:00">2023-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%98%E8%85%BE%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">折腾记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>995</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">最近又稍微折腾了一下吃灰许久的树莓派。。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="OpenWRT"><a href="#OpenWRT" class="headerlink" title="OpenWRT"></a>OpenWRT</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>近期的折腾内容:<ul>
+<li>刷回官方系统:<ul>
+<li>现在官方系统有刷机工具了，<a target="_blank" rel="noopener" href="https://www.raspberrypi.com/software/">Raspberry Pi Imager</a> 选一选无脑刷就行</li>
+</ul>
+</li>
+<li>一行命令装 <a target="_blank" rel="noopener" href="https://docs.raspap.com/">RaspAP</a>:<ul>
+<li>装了这个会把防火墙扬了，再开防火墙 RaspAP 会寄<ul>
+<li>也得研究防火墙配置了，对一堆需求的本懒人不友好</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>根据自身的需求分析一顿还是选择了直接刷 OpenWrt，需要的功能软件啥的 OpenWrt 都有软件包能干<ul>
+<li>需求：<ul>
+<li>组建一个个人局域网（有线+无线）（主机+移动设备）<ul>
+<li>树莓派自带的就一个网口，要做 WAN 口用，自带无线网卡做 AP</li>
+<li>再买一个 USB RJ45 转接口做 LAN 口</li>
+</ul>
+</li>
+<li>挂载一个硬盘用来做 nas 当备份盘<ul>
+<li><code>luci-app-samba4</code></li>
+</ul>
+</li>
+<li>自动接入网络<ul>
+<li>根据网络通断状况调用脚本自动认证登录<ul>
+<li><code>luci-app-watchcat</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>能网络唤醒主机并远程连接<ul>
+<li><code>luci-app-wolplus</code> + NAT 端口转发</li>
+</ul>
+</li>
+<li>接入私人局域网，在外访问管理页面<ul>
+<li><code>luci-app-zerotier</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>刷系统，找工具，安装，配置，折腾一顿突然 DHCP 跟 DNS 寄了（原因未知）<ul>
+<li>研究半天还是解决不了 (👴🏻属实搞不明白服务都开着就是不给 DHCP 响应</li>
+</ul>
+</li>
+<li>【重刷解决一切稀奇古怪问题】</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231105154331378.png" alt="image-20231105154331378"></p>
+<h2 id="Openwrt-固件"><a href="#Openwrt-固件" class="headerlink" title="Openwrt 固件"></a>Openwrt 固件</h2><ul>
+<li>看文档先: <a target="_blank" rel="noopener" href="https://doc.openwrt.cc/">https://doc.openwrt.cc/</a></li>
+<li>OpenWrt Rpi 固件下载： <ul>
+<li><a target="_blank" rel="noopener" href="https://doc.openwrt.cc/2-OpenWrt-Rpi/1-Download/">https://doc.openwrt.cc/2-OpenWrt-Rpi/1-Download/</a></li>
+<li><a target="_blank" rel="noopener" href="https://openwrt.cc/releases/targets/bcm27xx/bcm2711/">https://openwrt.cc/releases/targets/bcm27xx/bcm2711/</a></li>
+</ul>
+</li>
+<li>从恩山论坛上找了一个能在线定制的固件： <ul>
+<li><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-8248163-1-1.html">https://www.right.com.cn/forum/thread-8248163-1-1.html</a></li>
+<li><a href="https://openwrt.ai/?target=bcm27xx/bcm2711&id=rpi-4">https://openwrt.ai/?target=bcm27xx%2Fbcm2711&amp;id=rpi-4</a><ul>
+<li>这里没找到初始安装的固件，就先刷的 OpenWrt Rpi, 然后固件升级</li>
+<li>重刷的固件版本(opwnert.ai 定制页默认的固件): <code>openwrt-10.15.2023-bcm27xx-bcm2711-rpi-4-squashfs-sysupgrade.img.gz</code></li>
+<li><code>sha256sum: a5b538ea1d12fd9bbd667deb593a50dd0185c3a98fcf48e2bfbdfad67c814499</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<details class="note warning"><summary><p>有个小坑</p>
+</summary>
+<p>OpenWrtRpi 固件升级到这个固件之后，会保留原始配置，原来 root 用户使用的是 zsh 终端，新的这个固件默认不装 zsh （需要手动安装先，不然 ssh 连接会因为无法启动 shell 直接关闭连接）</p>
+
+</details>
+
+
+<h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><ul>
+<li>刷机完成后不要直接插网线，先连接无线网 OpenWrt 进管理页去配置<ul>
+<li>默认 wlan0 和 eth0 都属于 br-lan 网络</li>
+</ul>
+</li>
+<li>samba4 指定用户需要先在 &#x2F;etc&#x2F;passwd 中添加<ul>
+<li>然后 <code>smbpasswd -a username</code> 添加 samba 用户</li>
+<li>勾选强制 root 才有权限写</li>
+</ul>
+</li>
+<li>如果遇到 netdata 报错：<code>Access to file is not permitted: /usr/share/netdata/web//index.html</code><ul>
+<li>找到的解决方案: <a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-4054870-1-1.html">https://www.right.com.cn/forum/thread-4054870-1-1.html</a> <ul>
+<li>修改路径所属用户为 root: <code>chown -R root:root /usr/share/netdata/web</code></li>
+</ul>
+</li>
+<li>【重刷之后没遇到这个问题😅】<ul>
+<li>【卸载 netdata 后又重装就出现这个问题😅】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>关于开启 ipv6: <a target="_blank" rel="noopener" href="https://doc.openwrt.cc/1-General/5-IPV6-Guide/">https://doc.openwrt.cc/1-General/5-IPV6-Guide/</a></li>
+<li>🧨 莫名其妙突然 DHCP 和 DNS 失效<ul>
+<li>折腾半天也没搞明白为啥</li>
+<li>猜测：<ul>
+<li>可能是 netdata 的问题?<ul>
+<li>当时打开 netdata 的时候卡的一批</li>
+<li>【重刷之后装 netdata 后打开一直加载中就卸了】</li>
+</ul>
+</li>
+<li>也可能 docker 的问题？<ul>
+<li>【重刷之后没装 docker】</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>🔥 重启遇到无线网卡第一时间无法识别导致 AP 无法开启<ul>
+<li>手动启动网卡重启 AP 可临时解决 😅</li>
+<li>原因未知</li>
+</ul>
+</li>
+</ul>
+<h2 id="挖坑"><a href="#挖坑" class="headerlink" title="挖坑"></a>挖坑</h2><ul>
+<li><input disabled="" type="checkbox"> IPv6</li>
+</ul>
+<h2 id="插件推荐"><a href="#插件推荐" class="headerlink" title="插件推荐"></a>插件推荐</h2><ul>
+<li><code>luci-app-diskman</code><ul>
+<li>磁盘管理</li>
+</ul>
+</li>
+<li><code>luci-app-samba4</code><ul>
+<li>SMB 文件共享<ul>
+<li>在这个定制的高版本固件中安装的 samba4 支持兼容 MacOS (配置 TimeMachine 更简单了)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>luci-app-ddns-go</code><ul>
+<li>ddns-go 的 openwrt 插件</li>
+</ul>
+</li>
+<li><code>luci-app-wol</code><ul>
+<li>Wake On Lan 网络唤醒</li>
+</ul>
+</li>
+<li><code>luci-app-pushbot</code><ul>
+<li>全能推送 (IOS 上使用 Bark 推送很香)</li>
+</ul>
+</li>
+<li><code>luci-app-watchcat</code><ul>
+<li>可以配合自动登录校园网脚本实现掉线自动重新登录<ul>
+<li>检测到外网主机无法 ping 通时自动执行脚本</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>安装命令存档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg update &amp;&amp; opkg install ca-certificates zsh curl git-http vim-full luci-app-ddns-go luci-app-netdata luci-app-nginx-manager luci-app-kodexplorer luci-app-watchcat luci-app-zerotier luci-app-pushbot luci-app-wolplus luci-app-frpc luci-app-openvpn-client luci-app-diskman luci-app-unblockmusic luci-app-ttyd luci-app-vlmcsd luci-app-uugamebooster luci-app-wrtbwmon luci-app-ttyd</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/" title="树莓派4B 折腾记 - Openwrt">https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Raspberry/" rel="tag"><i class="fa fa-tag"></i> Raspberry</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/23/23sdnisc/" rel="prev" title="2023 山东省大学生网络安全技能大赛 复盘">
+                  <i class="fa fa-angle-left"></i> 2023 山东省大学生网络安全技能大赛 复盘
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/03/os-basic/" rel="next" title="带你玩 💻">
+                  带你玩 💻 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">61k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:43</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

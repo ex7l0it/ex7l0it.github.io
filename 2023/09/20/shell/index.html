@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="shell的基础知识 (2023秋季助教课件)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础知识 - shell 💻">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/09/20/shell/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="shell的基础知识 (2023秋季助教课件)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-20T08:28:51.000Z">
+<meta property="article:modified_time" content="2023-10-06T08:21:40.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="助教课件">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/09/20/shell/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/09/20/shell/","path":"2023/09/20/shell/","title":"基础知识 - shell 💻"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>基础知识 - shell 💻 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-Shell"><span class="nav-number">1.</span> <span class="nav-text">基础知识 - Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">shell 的基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%90%90%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">一些琐碎的知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">一些常用的快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.3.</span> <span class="nav-text">一些常用的软件命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">1.2.4.</span> <span class="nav-text">关于文件权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">1.2.5.</span> <span class="nav-text">关于重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-find-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.6.</span> <span class="nav-text">关于 find 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">shell 脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">1.4.</span> <span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%BB%83%E4%B9%A0"><span class="nav-number">1.5.</span> <span class="nav-text">扩展练习</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/09/20/shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="基础知识 - shell 💻 | Blog">
+      <meta itemprop="description" content="shell的基础知识 (2023秋季助教课件)">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基础知识 - shell 💻<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/shell.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-20 16:28:51" itemprop="dateCreated datePublished" datetime="2023-09-20T16:28:51+08:00">2023-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-06 16:21:40" itemprop="dateModified" datetime="2023-10-06T16:21:40+08:00">2023-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tool/" itemprop="url" rel="index"><span itemprop="name">Tool</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">shell的基础知识 (2023秋季助教课件)</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="基础知识-Shell"><a href="#基础知识-Shell" class="headerlink" title="基础知识 - Shell"></a>基础知识 - Shell</h1><ul>
+<li>版本：2023秋季学期</li>
+</ul>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
+<li>🤔 什么是 Shell ?<ul>
+<li>简单来说，Shell 是一个程序，能够从键盘接收命令并转给系统去执行。</li>
+<li>CLI(Command-line interface) vs GUI(Graphical user interface)<ul>
+<li>CLI: 命令行界面</li>
+<li>GUI: 图形界面</li>
+</ul>
+</li>
+<li>在大多数 Linux 发行版中，Shell 默认是 <code>Bash</code>(Bourne Again Shell), 除此之外还有很多种 Shell, 如 <code>zsh</code>, <code>ksh</code>, <code>tcsh</code> 等等；Windows 上的 Shell 有 <code>PowerShell</code>, <code>cmd.exe</code> 等等。</li>
+</ul>
+</li>
+<li>📙 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/56658043/shell-vs-terminal-vs-command-line-vs-bash">shell vs terminal vs command line vs Bash?</a></li>
+</ul>
+<h2 id="shell-的基本命令"><a href="#shell-的基本命令" class="headerlink" title="shell 的基本命令"></a>shell 的基本命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ls</code></td>
+<td>列出当前目录内容</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>切换工作目录</td>
+</tr>
+<tr>
+<td><code>pwd</code></td>
+<td>打印当前工作目录</td>
+</tr>
+<tr>
+<td><code>touch</code></td>
+<td>创建文件</td>
+</tr>
+<tr>
+<td><code>mkdir</code> &#x2F;  <code>rmdir</code></td>
+<td>创建 &#x2F; 删除目录</td>
+</tr>
+<tr>
+<td><code>mv</code></td>
+<td>移动</td>
+</tr>
+<tr>
+<td><code>cp</code></td>
+<td>复制</td>
+</tr>
+<tr>
+<td><code>rm</code></td>
+<td>删除</td>
+</tr>
+<tr>
+<td><code>echo</code></td>
+<td>输出字符串</td>
+</tr>
+<tr>
+<td><code>man</code></td>
+<td>查看帮助文档</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>打印当前日期时间</td>
+</tr>
+<tr>
+<td><code>which</code></td>
+<td>从环境变量(<code>$PATH</code>)中寻找目标文件</td>
+</tr>
+<tr>
+<td><code>cat</code></td>
+<td>查看文件内容</td>
+</tr>
+<tr>
+<td><code>head</code></td>
+<td>查看文件头部内容</td>
+</tr>
+<tr>
+<td><code>tail</code></td>
+<td>查看文件尾部内容</td>
+</tr>
+<tr>
+<td><code>more</code></td>
+<td>分页显示文件内容</td>
+</tr>
+<tr>
+<td><code>less</code></td>
+<td>也是分页显示，比 more 好使，能灵活翻页</td>
+</tr>
+<tr>
+<td><code>clear</code></td>
+<td>清屏</td>
+</tr>
+<tr>
+<td><code>find</code></td>
+<td>寻找文件</td>
+</tr>
+<tr>
+<td><code>grep</code></td>
+<td>筛选出文件中匹配的行</td>
+</tr>
+<tr>
+<td><code>chown</code></td>
+<td>修改所属用户与组</td>
+</tr>
+<tr>
+<td><code>chmod</code></td>
+<td>修改用户权限</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>还有很多基本命令，就不一一解释了，自行使用 man 查询即可</p>
+<ul>
+<li>除了 man 之外，用 <a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr">tldr</a> （Too Long Didn’t Read）可能是一个方便一点的选择（也还行吧）<ul>
+<li>安装: <code>pip3 install tldr</code></li>
+<li>更新数据库: <code>tldr -u</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">tac</span><br><span class="line">wc</span><br><span class="line">sort</span><br><span class="line">uniq</span><br><span class="line">diff</span><br><span class="line">comm</span><br><span class="line">cut</span><br><span class="line">xargs</span><br><span class="line">sed</span><br><span class="line">awk</span><br><span class="line">ln</span><br><span class="line">df</span><br><span class="line">free</span><br><span class="line">id</span><br><span class="line">uname</span><br><span class="line">hostname</span><br><span class="line">jobs</span><br><span class="line">fg</span><br><span class="line">bg</span><br><span class="line">whoami</span><br><span class="line">ps</span><br><span class="line">top</span><br><span class="line">w</span><br><span class="line">du</span><br><span class="line">tar</span><br><span class="line">reboot</span><br><span class="line">shutdown</span><br><span class="line">poweroff</span><br><span class="line">mount</span><br><span class="line">umount</span><br><span class="line">sudo</span><br><span class="line">env</span><br><span class="line">apt</span><br><span class="line">kill</span><br><span class="line">type</span><br><span class="line">history</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>顺带提一句，这一些命令之所以可以直接使用（例如 <code>ls</code>），是因为 <code>ls</code> 程序所在目录（<code>/usr/bin</code>）已经被加入了环境变量 <code>$PATH</code>中，执行 <code>ls</code> 与 <code>/usr/bin/ls</code> 是一样的<ul>
+<li>当然，还有一些命令是 shell 内置的，例如 <code>cd</code>, <code>eval</code> 等，更多信息可以自行搜索 <code>Shell builtin</code> 查看学习</li>
+</ul>
+</li>
+<li>再提一句，执行目标程序可以使用绝对路径或相对路径，例如执行当前目录（假设在 <code>/tmp</code>）下的 <code>hello.sh</code> 脚本，可以输入 <code>./hello.sh</code> 或 <code>/tmp/hello.sh</code> 回车后执行</li>
+</ul>
+</blockquote>
+<h3 id="一些琐碎的知识点"><a href="#一些琐碎的知识点" class="headerlink" title="一些琐碎的知识点"></a>一些琐碎的知识点</h3><ul>
+<li>当前目录: <code>.</code></li>
+<li>上一级目录: <code>..</code></li>
+<li>根目录: <code>/</code></li>
+<li>家目录: <code>~</code></li>
+<li><code>cd -</code> (切换到上一次所在的目录)</li>
+<li><code>command ; command</code> (顺序执行命令)</li>
+<li><code>command1 || command2</code> (command1 执行失败时执行 command2)</li>
+<li><code>command1 &amp;&amp; command2</code> (command1 执行成功时执行 command2)</li>
+<li><code>command &amp;</code> (后台执行命令)</li>
+<li>变量<ul>
+<li>定义变量: <code>var=1</code></li>
+<li>使用变量: <code>$var</code><ul>
+<li>单引号中的变量不会被解析</li>
+<li>双引号中的变量会被解析</li>
+</ul>
+</li>
+<li>取消变量: <code>unset var</code></li>
+</ul>
+</li>
+<li>环境变量: <ul>
+<li><code>$PATH</code> (用于存放可执行文件的路径)</li>
+<li><code>$HOME</code> (家目录)</li>
+<li><code>$USER</code> (当前用户)</li>
+<li><code>$PWD</code> (当前工作目录)</li>
+<li><code>$?</code> (上一条命令的返回值)</li>
+<li>…</li>
+<li>使用 <code>export</code> 命令可以将变量导出到环境变量中</li>
+</ul>
+</li>
+<li>通配符:<ul>
+<li><code>*</code> (匹配任意多个字符)</li>
+<li><code>?</code> (匹配任意一个字符)</li>
+<li><code>[]</code> (匹配任意一个字符)</li>
+<li><code>&#123;&#125;</code> (匹配任意一个字符串)</li>
+</ul>
+</li>
+</ul>
+<h3 id="一些常用的快捷键"><a href="#一些常用的快捷键" class="headerlink" title="一些常用的快捷键"></a>一些常用的快捷键</h3><ul>
+<li><code>Ctrl + C</code> (中断当前程序)</li>
+<li><code>Ctrl + Z</code> (挂起当前程序)</li>
+<li><code>Ctrl + A</code> (移动光标到行首)</li>
+<li><code>Ctrl + E</code> (移动光标到行尾)</li>
+</ul>
+<h3 id="一些常用的软件命令"><a href="#一些常用的软件命令" class="headerlink" title="一些常用的软件命令"></a>一些常用的软件命令</h3><ul>
+<li><code>vim</code> (文本编辑器)</li>
+<li><code>git</code> (版本控制工具)</li>
+<li><code>wget</code> (下载工具)</li>
+<li><code>curl</code> (下载工具)</li>
+<li><code>ssh</code> (远程登录工具)</li>
+<li><code>tmux</code> (终端复用工具)</li>
+<li><code>htop</code> (进程查看工具)</li>
+<li><code>tree</code> (目录树查看工具)</li>
+<li><code>ifconfig</code> (查看网络信息, 需安装 net-tools)</li>
+<li>…</li>
+</ul>
+<h3 id="关于文件权限"><a href="#关于文件权限" class="headerlink" title="关于文件权限"></a>关于文件权限</h3><ul>
+<li>📙 <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-file-attr-permission.html">Linux 文件基本属性</a></li>
+<li><code>r</code> (读权限, 4)</li>
+<li><code>w</code> (写权限, 2)</li>
+<li><code>x</code> (执行权限, 1)</li>
+</ul>
+<h3 id="关于重定向"><a href="#关于重定向" class="headerlink" title="关于重定向"></a>关于重定向</h3><ul>
+<li>📙 <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell-io-redirections.html">Shell 输入&#x2F;输出重定向</a></li>
+<li>管道: <code>|</code> (将前一个命令的输出作为后一个命令的输入)<ul>
+<li>例如：<code>ls | grep .txt</code> (列出当前目录下所有的 txt 文件)</li>
+</ul>
+</li>
+</ul>
+<h3 id="关于-find-命令"><a href="#关于-find-命令" class="headerlink" title="关于 find 命令"></a>关于 find 命令</h3><ul>
+<li>📙 <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-find.html">Linux find 命令</a></li>
+</ul>
+<h2 id="shell-脚本"><a href="#shell-脚本" class="headerlink" title="shell 脚本"></a>shell 脚本</h2><ul>
+<li><code>hello.sh</code>:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo &quot;Hello World!&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>这里第一行的 <code>#!</code> 是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用 <code>/bin/bash</code> 来执行这个脚本</p>
+<ul>
+<li>当脚本具有可执行权限时，可以直接执行脚本: <code>./hello.sh</code>，此时会调用 <code>/bin/bash</code> 来执行脚本</li>
+</ul>
+</li>
+<li><p>更多资料可查看 👉 📘 <a target="_blank" rel="noopener" href="https://shellscript.readthedocs.io/zh_CN/latest/index.html">ShellScript Doc</a></p>
+</li>
+</ul>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><ul>
+<li>📙 <a target="_blank" rel="noopener" href="https://missing-semester-cn.github.io/2020/course-shell/">missing-semester – shell</a></li>
+<li>📙 <a target="_blank" rel="noopener" href="https://missing-semester-cn.github.io/2020/course-shell/">missing-semester – shell 工具和脚本</a></li>
+</ul>
+<h2 id="扩展练习"><a href="#扩展练习" class="headerlink" title="扩展练习"></a>扩展练习</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://overthewire.org/wargames/bandit">🔥 Bandit - Linux命令练习靶场</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/09/20/shell/" title="基础知识 - shell 💻">https://ex7l0it.github.io/2023/09/20/shell/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/%E5%8A%A9%E6%95%99%E8%AF%BE%E4%BB%B6/" rel="tag"><i class="fa fa-tag"></i> 助教课件</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/16/ljb23/" rel="prev" title="2023陇剑杯复盘">
+                  <i class="fa fa-angle-left"></i> 2023陇剑杯复盘
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/13/esxi-upgrade/" rel="next" title="vSphere 折腾记 -- ESXi 系统升级+回滚">
+                  vSphere 折腾记 -- ESXi 系统升级+回滚 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">65k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

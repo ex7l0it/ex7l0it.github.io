@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="好久前刚开始玩树莓派时的记录，很多东西可能已经过时了，现在树莓派也在吃灰着，一些内容也就没有再测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派4B 折腾记">
+<meta property="og:url" content="https://ex7l0it.github.io/2020/02/18/raspberrypi/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="好久前刚开始玩树莓派时的记录，很多东西可能已经过时了，现在树莓派也在吃灰着，一些内容也就没有再测试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_20200218_130025.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_20200218_135927.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200218210537167.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200220152601065.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200220113739859.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200225173315632.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/rpi-pins-40-0.png">
+<meta property="article:published_time" content="2020-02-18T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-12T16:00:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Raspberry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_20200218_130025.jpg">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2020/02/18/raspberrypi/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2020/02/18/raspberrypi/","path":"2020/02/18/raspberrypi/","title":"树莓派4B 折腾记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>树莓派4B 折腾记 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E8%8E%93%E6%B4%BE4B-%E6%8A%98%E8%85%BE%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">树莓派4B 折腾记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">系统安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-Pi-Aarch64"><span class="nav-number">1.1.1.</span> <span class="nav-text">Debian-Pi-Aarch64</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">安装完成后配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E4%B8%AD%E6%96%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">更改中文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E6%97%B6%E5%8C%BA%E3%80%81%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80%E7%AD%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">更改时区、键盘布局等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5-wifi"><span class="nav-number">1.2.3.</span> <span class="nav-text">连接 wifi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%BC%80%E6%9C%BA%E5%90%8C%E6%AD%A5%E6%97%B6%E9%97%B4"><span class="nav-number">1.2.4.</span> <span class="nav-text">实现开机同步时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E5%8F%8AVNC"><span class="nav-number">1.2.5.</span> <span class="nav-text">安装桌面及VNC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">1.3.1.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VIM"><span class="nav-number">1.3.2.</span> <span class="nav-text">VIM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA"><span class="nav-number">1.4.</span> <span class="nav-text">平台搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pi-hole-%E5%B9%BF%E5%91%8A%E8%BF%87%E6%BB%A4"><span class="nav-number">1.4.1.</span> <span class="nav-text">Pi-hole 广告过滤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-number">1.5.</span> <span class="nav-text">硬件相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">引脚对照表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E6%8E%A5-OLED-%E5%B1%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">外接 OLED 屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arduino-IDE"><span class="nav-number">1.5.3.</span> <span class="nav-text">Arduino IDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-RED"><span class="nav-number">1.5.4.</span> <span class="nav-text">Node-RED</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2020/02/18/raspberrypi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="树莓派4B 折腾记 | Blog">
+      <meta itemprop="description" content="好久前刚开始玩树莓派时的记录，很多东西可能已经过时了，现在树莓派也在吃灰着，一些内容也就没有再测试">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派4B 折腾记<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/raspberrypi.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-18 20:00:00" itemprop="dateCreated datePublished" datetime="2020-02-18T20:00:00+08:00">2020-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-07-13 00:00:00" itemprop="dateModified" datetime="2023-07-13T00:00:00+08:00">2023-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%98%E8%85%BE%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">折腾记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>951</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">好久前刚开始玩树莓派时的记录，很多东西可能已经过时了，现在树莓派也在吃灰着，一些内容也就没有再测试</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="树莓派4B-折腾记"><a href="#树莓派4B-折腾记" class="headerlink" title="树莓派4B 折腾记"></a>树莓派4B 折腾记</h1><p>开始入坑树莓派，，，</p>
+<ul>
+<li>到手的是 Raspberry 4B 2G 版本</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_20200218_130025.jpg" alt="IMG_20200218_130025"></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_20200218_135927.jpg" alt="IMG_20200218_135927"></p>
+<blockquote>
+<p>2023.07.13 更新时注: 当年应该多买几个囤起来，多好的理财产品😅😅😅</p>
+</blockquote>
+<h2 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h2><p>官方下载：<a target="_blank" rel="noopener" href="https://www.raspberrypi.com/software/">https://www.raspberrypi.com/software/</a></p>
+<p>官方系统镜像下载：<a target="_blank" rel="noopener" href="https://www.raspberrypi.com/software/operating-systems/">https://www.raspberrypi.com/software/operating-systems/</a></p>
+<p>三方工具：<a target="_blank" rel="noopener" href="https://win32diskimager.org/">Win32DiskImager</a> &#x2F; <a target="_blank" rel="noopener" href="https://etcher.balena.io/">Balenaetcher</a></p>
+<h3 id="Debian-Pi-Aarch64"><a href="#Debian-Pi-Aarch64" class="headerlink" title="Debian-Pi-Aarch64"></a>Debian-Pi-Aarch64</h3><p>香的一批的系统： <a target="_blank" rel="noopener" href="https://gitee.com/openfans-community/Debian-Pi-Aarch64">https://gitee.com/openfans-community/Debian-Pi-Aarch64</a></p>
+<blockquote>
+<p>2023.07.13更新时注：目前这个项目已经冻结了</p>
+</blockquote>
+<h2 id="安装完成后配置"><a href="#安装完成后配置" class="headerlink" title="安装完成后配置"></a>安装完成后配置</h2><h3 id="更改中文"><a href="#更改中文" class="headerlink" title="更改中文"></a>更改中文</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行以下命令配置语言</span></span><br><span class="line">dpkg-reconfigure locales</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">选中 zh_CN.UTF-8 UTF-8 后保存</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>/etc/default/locale</code> 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">File generated by update-locale</span></span><br><span class="line">LANG=zh_CN.UTF-8</span><br><span class="line">LC_ALL=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改时区、键盘布局等"><a href="#更改时区、键盘布局等" class="headerlink" title="更改时区、键盘布局等"></a>更改时区、键盘布局等</h3><p>进入<code>raspi-config</code>，在 <code>Localisation Options Set up language and regional settings to match your location</code> 选项中有设置入口</p>
+<h3 id="连接-wifi"><a href="#连接-wifi" class="headerlink" title="连接 wifi"></a>连接 wifi</h3><p>刚装完系统时无线网卡是被软件层次上禁用的，需要手动开启：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~ $ susdo rfkill list</span><br><span class="line">0: phy0: Wireless LAN</span><br><span class="line">		Soft blocked: yes</span><br><span class="line">		Hard blocked: no</span><br><span class="line">1: hci0: Bluetooth</span><br><span class="line">		Soft blocked: no</span><br><span class="line">		Hard blocked: no</span><br><span class="line">pi@raspberrypi:~ $ sudo rfkill unblock 0</span><br><span class="line">pi@raspberrypi:~ $ susdo rfkill list</span><br><span class="line">0: phy0: Wireless LAN</span><br><span class="line">		Soft blocked: no</span><br><span class="line">		Hard blocked: no</span><br><span class="line">1: hci0: Bluetooth</span><br><span class="line">		Soft blocked: no</span><br><span class="line">		Hard blocked: no</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以通过下述命令扫描WIFI信号</span></span><br><span class="line">sudo iwlist wlan0 scan</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200218210537167.png" alt="image-20200218210537167"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入 raspi-config, 找 Network Options, 选择国家位置信息后继续选择 Wifi, 然后填入需要连接的无线网络的ESSID，再填写密码即可连接成功</span></span><br><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现开机同步时间"><a href="#实现开机同步时间" class="headerlink" title="实现开机同步时间"></a>实现开机同步时间</h3><p>安装时间NTP:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 NTP</span></span><br><span class="line">sudo apt-get install ntpdate</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">选择 Asia/Shanghai 时区</span></span><br><span class="line">sudo dpkg-reconfigure tzdata</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在 <code>/etc/rc.local</code> 中添加 <code>sudo ntpdate ntp.aliyun.com</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Print the IP address</span></span><br><span class="line">_IP=$(hostname -I) || true</span><br><span class="line">if [ &quot;$_IP&quot; ]; then</span><br><span class="line">	printf &quot;My IP address is %s\n&quot; &quot;$_IP&quot;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">连接网络后同步时间</span></span><br><span class="line">	sudo ntpdate ntp.aliyun.com</span><br><span class="line">fi</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装桌面及VNC"><a href="#安装桌面及VNC" class="headerlink" title="安装桌面及VNC"></a>安装桌面及VNC</h3><p>这里安装的是 xfce 桌面，尝试了KDE（太卡，内存占用高，而且刚进桌面一段时间内没法打开终端）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y xfce4</span><br></pre></td></tr></table></figure>
+
+<p>VNC 的安装通过 <code>raspi-config</code> 开启VNC</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200220152601065.png" alt="image-20200220152601065"></p>
+<blockquote>
+<p>2023.07.13 更新时注: 基本用不到桌面环境，VNC更加用不到…有使用桌面需求的时候直接外接显示器更快 (也不晓得当时为啥要桌面环境还选的不带桌面环境的版本折腾)</p>
+</blockquote>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://shumeipai.nxez.com/2019/05/20/how-to-install-docker-on-your-raspberry-pi.html">https://shumeipai.nxez.com/2019/05/20/how-to-install-docker-on-your-raspberry-pi.html</a></p>
+</blockquote>
+<h3 id="VIM"><a href="#VIM" class="headerlink" title="VIM"></a>VIM</h3><p>树莓派直接通过apt安装的VIM是不支持python的，所以只能自己编译安装：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200220113739859.png" alt="image-20200220113739859"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/vim/vim.git</span><br><span class="line">cd vim/src</span><br><span class="line">./configure -with-features=huge --enable-python3interp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-arm-linux-gnueabihf/ --enable-rubyinterp --enable-luainterp --enable-perlinterp --with-python3-config-dir=/usr/lib/python3.7/config-3.7m-arm-linux-gnueabihf/ --enable-multibyte --enable-cscope --prefix=/usr/local/vim/</span><br><span class="line">sudo make -j &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="平台搭建"><a href="#平台搭建" class="headerlink" title="平台搭建"></a>平台搭建</h2><h3 id="Pi-hole-广告过滤"><a href="#Pi-hole-广告过滤" class="headerlink" title="Pi-hole 广告过滤"></a>Pi-hole 广告过滤</h3><blockquote>
+<p>搭建完成之后经实际测试感觉效果不佳，搜狐网上很多广告依旧存在</p>
+</blockquote>
+<p>项目链接：<a target="_blank" rel="noopener" href="https://github.com/pi-hole/pi-hole">https://github.com/pi-hole/pi-hole</a></p>
+<p>下载安装：直接参考 github 上的 README 即可一句话自动安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://install.pi-hole.net | bash</span><br></pre></td></tr></table></figure>
+
+<p>一路确定，直到安装成功，通过访问 <a target="_blank" rel="noopener" href="http://ip/admin">http://ip/admin</a> 进入管理页面</p>
+<blockquote>
+<p>2023.07.13 更新时注：再没尝试搭建过，不清楚现在效果如何，不过如果需要作软路由的话可以刷 openwrt 玩，更香</p>
+</blockquote>
+<h2 id="硬件相关"><a href="#硬件相关" class="headerlink" title="硬件相关"></a>硬件相关</h2><h3 id="引脚对照表"><a href="#引脚对照表" class="headerlink" title="引脚对照表"></a>引脚对照表</h3><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20200225173315632.png" alt="image-20200225173315632"></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/rpi-pins-40-0.png" alt="rpi-pins-40-0"></p>
+<h3 id="外接-OLED-屏"><a href="#外接-OLED-屏" class="headerlink" title="外接 OLED 屏"></a>外接 OLED 屏</h3><p>修改 <code>/boot/config.txt</code> ，开启<code> i2c</code> 和 <code>spi</code></p>
+<h3 id="Arduino-IDE"><a href="#Arduino-IDE" class="headerlink" title="Arduino IDE"></a>Arduino IDE</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">sudo apt-get install arduino</span><br></pre></td></tr></table></figure>
+
+<h3 id="Node-RED"><a href="#Node-RED" class="headerlink" title="Node-RED"></a>Node-RED</h3><ul>
+<li>简介：Node-RED 是一个基于浏览器的编程工具，可以直接可视化地将硬件设备、API以及在线服务连接起来</li>
+</ul>
+<p>项目仓库：<a target="_blank" rel="noopener" href="https://github.com/node-red/node-red">https://github.com/node-red/node-red</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装依赖</span></span><br><span class="line">sudo apt install nodejs npm</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装node-red</span></span><br><span class="line">sudo npm install -g --unsafe-perm node-red</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动, 服务在 http://localhost:1880</span></span><br><span class="line">node-red</span><br></pre></td></tr></table></figure>
+
+<p>监听地址修改：配置文件在 <code>~/.node-red/settings.json</code>， 将 iHost 修改为 “0.0.0.0” 即可</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2020/02/18/raspberrypi/" title="树莓派4B 折腾记">https://ex7l0it.github.io/2020/02/18/raspberrypi/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Raspberry/" rel="tag"><i class="fa fa-tag"></i> Raspberry</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/02/08/OverTheWire-Natas/" rel="prev" title="OverTheWire-Natas 靶场">
+                  <i class="fa fa-angle-left"></i> OverTheWire-Natas 靶场
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/04/Arch/" rel="next" title="Arch Linux 折腾记">
+                  Arch Linux 折腾记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">65k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

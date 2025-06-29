@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Github Actions workflows 的基本使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github Actions Workflows 使用">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/09/07/GithubActions/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Github Actions workflows 的基本使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-07T08:31:06.000Z">
+<meta property="article:modified_time" content="2023-09-07T13:45:46.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="Github">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/09/07/GithubActions/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/09/07/GithubActions/","path":"2023/09/07/GithubActions/","title":"Github Actions Workflows 使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Github Actions Workflows 使用 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Github-Actions-workflows"><span class="nav-number">1.</span> <span class="nav-text">Github Actions workflows</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yml-%E5%B7%A5%E4%BD%9C%E6%B5%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">yml 工作流配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#on-%E8%A7%A6%E5%8F%91%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.2.</span> <span class="nav-text">on 触发工作流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#job-%E4%BD%9C%E4%B8%9A%E5%86%85%E5%AE%B9"><span class="nav-number">1.3.</span> <span class="nav-text">job 作业内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secrets"><span class="nav-number">1.4.</span> <span class="nav-text">Secrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%BC%96%E8%AF%91%E5%B9%B6%E5%8F%91%E5%B8%83"><span class="nav-number">1.5.1.</span> <span class="nav-text">自动编译并发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO"><span class="nav-number">1.5.2.</span> <span class="nav-text">TODO</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/09/07/GithubActions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Github Actions Workflows 使用 | Blog">
+      <meta itemprop="description" content="Github Actions workflows 的基本使用">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Github Actions Workflows 使用<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/GithubActions.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-07 16:31:06 / 修改时间：21:45:46" itemprop="dateCreated datePublished" datetime="2023-09-07T16:31:06+08:00">2023-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tool/" itemprop="url" rel="index"><span itemprop="name">Tool</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Github Actions workflows 的基本使用</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Github-Actions-workflows"><a href="#Github-Actions-workflows" class="headerlink" title="Github Actions workflows"></a>Github Actions workflows</h1><ul>
+<li>Workflows 是一个可以配置的自动化流程</li>
+<li>它通过 YAML 文件定义，存放在仓库的 <code>.github/workflows</code> 目录中</li>
+<li>可以有多个工作流，可以手动触发也可自动触发</li>
+<li>免费版本每月有 2000 分钟的使用资源，也足够用了</li>
+</ul>
+<blockquote>
+<p>如果想要系统的学习 Github Actions，可以直接查看<a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions">👉 📘官方文档 👈</a>进行学习</p>
+</blockquote>
+<p>后面的内容就基于基本的文件内容和本人遇到的实际需求来写了，存个档方便以后忘了回来 Ctrl CV 🤔</p>
+<h2 id="yml-工作流配置文件"><a href="#yml-工作流配置文件" class="headerlink" title="yml 工作流配置文件"></a>yml 工作流配置文件</h2><ul>
+<li>第一步在仓库的 <code>.github/workflows</code> 下随便创建一个 <code>.yml</code> 文件 (例如 <code>demo.yml</code>)</li>
+<li>直接从官方文档上复制的例子:</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里 name 是可选项，如果指定了 name, 它会显示在 Github 仓库的 Actions 页面里，实际操作一下就晓得了</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">learn-github-actions</span></span><br><span class="line"><span class="comment"># 这里 run-name 也是可选项(从来没用过, 需要了解的话官方文档里有解释)</span></span><br><span class="line"><span class="attr">run-name:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.actor</span> <span class="string">&#125;&#125;</span> <span class="string">is</span> <span class="string">learning</span> <span class="string">GitHub</span> <span class="string">Actions</span></span><br><span class="line"><span class="comment"># on 用来指定这个工作流的触发器(也就是什么时候执行工作流)</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"><span class="comment"># jobs 里头指定要执行的作业任务</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="comment"># 这里是定义了一个名为 check-bats-version 的作业 (这个名可以随便起</span></span><br><span class="line">  <span class="attr">check-bats-version:</span></span><br><span class="line">    <span class="comment"># runs-on 定义这个作业运行在什么系统环境下</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="comment"># steps 下面是这个作业的执行步骤</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># 第一步调用 actions/checkout@v3 这个操作</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">      <span class="comment"># 第二步调用 actions/setup-node@v3 这个操作，并携带运行参数</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;14&#x27;</span></span><br><span class="line">      <span class="comment"># 第三步执行命令</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">bats</span></span><br><span class="line">      <span class="comment"># 第四步执行命令</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">bats</span> <span class="string">-v</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="on-触发工作流"><a href="#on-触发工作流" class="headerlink" title="on 触发工作流"></a>on 触发工作流</h2><ul>
+<li>👉 <a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/triggering-a-workflow">📘如何自动触发 GitHub Actions 工作流程</a> </li>
+<li>详细的触发事件说明 👉 <a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows">📘触发工作流的事件</a></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">workflow_dispatch:</span></span><br><span class="line">  <span class="attr">schedule:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">cron:</span> <span class="string">&quot;0 */24 * * *&quot;</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">v*</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>workflow_dispatch:</code> 可指定手动触发工作流，效果看<a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/manually-running-a-workflow">📘这里</a></li>
+<li><code>schedule:</code> 可在计划时间触发工作流(<a target="_blank" rel="noopener" href="https://crontab.guru/">crontab</a>)，具体说明看<a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows#schedule">📘这里</a></li>
+<li><code>push:</code> 这里指定的是在 <code>master</code> 分支上有人推送时或有人推送以 <code>v</code> 开头的 <code>tag</code> 时会触发，具体的说明看<a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows#push">这里</a></li>
+</ul>
+<h2 id="job-作业内容"><a href="#job-作业内容" class="headerlink" title="job 作业内容"></a>job 作业内容</h2><ul>
+<li>在 Github <a target="_blank" rel="noopener" href="https://github.com/marketplace?type=actions">👉 Marketplace</a> 上有很多 actions<ul>
+<li>可以直接在上面搜关键词寻找满足自己需求的操作<ul>
+<li>例如环境配置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>一些常用的 actions:</p>
+<ul>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/checkout">actions&#x2F;checkout@v4</a><ul>
+<li>用于将当前仓库拉取到工作流中</li>
+<li>复杂的需求查看链接中的使用说明即可</li>
+</ul>
+</li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/upload-a-build-artifact">actions&#x2F;upload-artifact@v3</a></li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/download-a-build-artifact">actions&#x2F;download-artifact@v3</a><ul>
+<li>用于在不同的作业中共享数据</li>
+<li>upload 时 name 写一个用于标识的名字，path 写要上传的文件路径</li>
+<li>download 时 name 写 upload 时配置的名字，path 可选(指定保存到哪里)</li>
+</ul>
+</li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/actions/create-release">actions&#x2F;create-release@v1</a><ul>
+<li>用于创建 release</li>
+</ul>
+</li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">actions&#x2F;upload-release-asset@v1</a><ul>
+<li>用于向 release 上传文件</li>
+</ul>
+</li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/github-push">ad-m&#x2F;github-push-action@master</a><ul>
+<li>用于向目标仓库进行 push 操作</li>
+</ul>
+</li>
+<li>📌<a target="_blank" rel="noopener" href="https://github.com/theme-keep/hexo-deploy-github-pages-action">theme-keep&#x2F;hexo-deploy-github-pages-action@master</a><ul>
+<li>用于自动部署 hexo 博客</li>
+</ul>
+</li>
+</ul>
+<h2 id="Secrets"><a href="#Secrets" class="headerlink" title="Secrets"></a>Secrets</h2><p>在一些 actions 的使用模板中可能会看到类似这样的内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">steps:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">shell:</span> <span class="string">bash</span></span><br><span class="line">    <span class="attr">env:</span></span><br><span class="line">      <span class="attr">SUPER_SECRET:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SuperSecret</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">      <span class="string">example-command</span> <span class="string">&quot;$SUPER_SECRET&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里的 secrets 可以认为是 Github Actions 工作流程的变量值，这个值只能有仓库管理员进行添加修改，可以用于传递密码、限制权限等<ul>
+<li>详细的说明看这里 👉 <a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/security-guides/using-secrets-in-github-actions">Using secrets in GitHub Actions</a></li>
+</ul>
+</li>
+<li>⚠️ 注意这里有一个特别的 secret 👉 <code>secrets.GITHUB_TOKEN</code><ul>
+<li>这是 Github 自动创建的一个唯一的 secret(不能手动创建)，可以在工作流中进行身份验证，详细说明看<a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/security-guides/automatic-token-authentication">📘这里</a></li>
+<li>使用到这个值的操作可能需要写权限，默认是只读权限，添加写权限需要到操作的仓库设置中的 <code>Actions -&gt; General -&gt; Workflow permissions</code> 中将其值修改为 <code>Read and write permissions</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="自动编译并发布"><a href="#自动编译并发布" class="headerlink" title="自动编译并发布"></a>自动编译并发布</h3><ul>
+<li>例如需要将一个 Go 的项目自动编译并发布 Release<ul>
+<li>具体需求是当用户将以 <code>v</code> 开头的 <code>tag</code> push 到仓库时自动执行：<ul>
+<li>编译该项目并将编译的程序 <code>target</code> 压缩为 <code>target-linux-amd64.tar.gz</code></li>
+<li>发布一个同 tag 名的 Release，并将打包好的 <code>tar.gz</code> 文件上传到 Release 中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;v*&quot;</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build_and_publish:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">Publish</span> <span class="string">Release</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">Compress</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">| </span></span><br><span class="line"><span class="string">          go build -o target . </span></span><br><span class="line"><span class="string">          tar zcvf target-linux-amd64.tar.gz target</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Crate</span> <span class="string">a</span> <span class="string">Release</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">create_release</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/create-release@v1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">            <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">            <span class="attr">tag_name:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.ref</span> <span class="string">&#125;&#125;</span></span><br><span class="line">            <span class="attr">release_name:</span> <span class="string">Release</span> <span class="string">$&#123;&#123;</span> <span class="string">github.ref</span> <span class="string">&#125;&#125;</span></span><br><span class="line">            <span class="attr">draft:</span> <span class="literal">false</span></span><br><span class="line">            <span class="attr">prerelease:</span> <span class="literal">false</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Upload</span> <span class="string">Release</span> <span class="string">Asset</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">upload-release-asset</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-release-asset@v1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">upload_url:</span> <span class="string">$&#123;&#123;</span> <span class="string">steps.create_release.outputs.upload_url</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">asset_path:</span> <span class="string">./target-linux-amd64.tar.gz</span></span><br><span class="line">          <span class="attr">asset_name:</span> <span class="string">target-linux-amd64.tar.gz</span></span><br><span class="line">          <span class="attr">asset_content_type:</span> <span class="string">application/gzip</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/09/07/GithubActions/" title="Github Actions Workflows 使用">https://ex7l0it.github.io/2023/09/07/GithubActions/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/Github/" rel="tag"><i class="fa fa-tag"></i> Github</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/18/ctfd/" rel="prev" title="CTFd + CTFd_Whale 部署">
+                  <i class="fa fa-angle-left"></i> CTFd + CTFd_Whale 部署
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/16/ljb23/" rel="next" title="2023陇剑杯复盘">
+                  2023陇剑杯复盘 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

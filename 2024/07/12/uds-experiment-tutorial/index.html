@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="车联网安全 🚗 - UDS 服务 - 仿真实验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDS 服务仿真实验">
+<meta property="og:url" content="https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="车联网安全 🚗 - UDS 服务 - 仿真实验">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240712155654.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240712155819.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240715100416.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240715100428.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171944295.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171944438.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171945237.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407181932537.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407181932634.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407190936011.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407191048711.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201640190.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201640080.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201641552.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021909.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021717.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021065.png">
+<meta property="article:published_time" content="2024-07-12T07:35:24.000Z">
+<meta property="article:modified_time" content="2024-07-23T03:23:24.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="IoV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240712155654.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/","path":"2024/07/12/uds-experiment-tutorial/","title":"UDS 服务仿真实验"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>UDS 服务仿真实验 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UDS-%E6%9C%8D%E5%8A%A1%E4%BB%BF%E7%9C%9F%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">UDS 服务仿真实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAN-%E6%95%B0%E6%8D%AE%E5%B8%A7"><span class="nav-number">1.2.</span> <span class="nav-text">CAN 数据帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x10-Diagnostic-Session-Control"><span class="nav-number">1.3.</span> <span class="nav-text">0x10 Diagnostic Session Control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">服务简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">请求 &#x2F; 响应数据包分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x22-ReadDataByIdentifier"><span class="nav-number">1.4.</span> <span class="nav-text">0x22 ReadDataByIdentifier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">服务简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">请求 &#x2F; 响应数据包分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x27-SecurityAccess"><span class="nav-number">1.5.</span> <span class="nav-text">0x27 SecurityAccess</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">服务简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">请求 &#x2F; 响应数据包分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x2E-WriteDatabyIdentifier"><span class="nav-number">1.6.</span> <span class="nav-text">0x2E WriteDatabyIdentifier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B-3"><span class="nav-number">1.6.1.</span> <span class="nav-text">服务简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90-3"><span class="nav-number">1.6.2.</span> <span class="nav-text">请求 &#x2F; 响应数据包分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.7.</span> <span class="nav-text">TODO</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="UDS 服务仿真实验 | Blog">
+      <meta itemprop="description" content="车联网安全 🚗 - UDS 服务 - 仿真实验">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          UDS 服务仿真实验<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/uds-experiment-tutorial.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-07-12 15:35:24" itemprop="dateCreated datePublished" datetime="2024-07-12T15:35:24+08:00">2024-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-07-23 11:23:24" itemprop="dateModified" datetime="2024-07-23T11:23:24+08:00">2024-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/IoV/" itemprop="url" rel="index"><span itemprop="name">IoV</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">车联网安全 🚗 - UDS 服务 - 仿真实验</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><div class="note info"><p>👨‍💻 最近在 Github 上找到一个比较符合学习需求的 UDS 模拟器，拿来补充了一下，顺带搞个仿真实验教程。</p>
+</div>
+
+<h1 id="UDS-服务仿真实验"><a href="#UDS-服务仿真实验" class="headerlink" title="UDS 服务仿真实验"></a>UDS 服务仿真实验</h1><blockquote>
+<p>参考资料：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.canfd.net/uds.html">UDS协议</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44522306/article/details/113104819">UDS(二)网络层</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.canfd.net/udsreference.html">UDS快速参考手册</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40309666/article/details/130831416">《UDS协议从入门到精通（UDS速查手册）》（完结撒花版）</a></p>
+<ul>
+<li>写本文的时候这一系列还是都能免费看的，才过了没几天全变 VIP 文章了 😓【2024.07.23】</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.rafavi.com/index.php/en/training/automobile-communication-protocol/download/30_9fbe88c49894ef50341ba4aafe14abf1">ISO 14229-1</a></p>
+</li>
+</ul>
+<p>📌 本文中的理论知识部分均摘自上述参考资料</p>
+</blockquote>
+<p>UDS：Unified Diagnostic Services，中文名称统一诊断服务，简称UDS。UDS协议是当前使用最为广泛的车载控制器诊断协议。UDS 既可应用于CAN总线，又可应用于以太网、LIN总线等。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><ul>
+<li><p>本文测试使用系统：Ubuntu 22.04</p>
+</li>
+<li><p>本文实验所用模拟器：<a target="_blank" rel="noopener" href="https://github.com/ex7l0it/uds-server-simulator">uds-server-simulator</a></p>
+<ul>
+<li>模拟应用于 CAN 总线上的 UDS 诊断协议</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装依赖环境</span></span><br><span class="line">sudo apt install can-utils</span><br><span class="line">pip3 install python-can</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启用虚拟 can 接口</span></span><br><span class="line">sudo ip link add dev vcan0 type vcan</span><br><span class="line">sudo ip link set vcan0 up</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译模拟器</span></span><br><span class="line">git clone https://github.com/ex7l0it/uds-server-simulator</span><br><span class="line">cd ./uds-server-simulator &amp;&amp; make</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动模拟器(使用 config.json 中的 TBOX ECU配置)</span></span><br><span class="line">./uds-server-simulator -e TBOX vcan0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">另开终端会话，启动 candump 监听 can 通信数据</span></span><br><span class="line">candump vcan0</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CAN-数据帧"><a href="#CAN-数据帧" class="headerlink" title="CAN 数据帧"></a>CAN 数据帧</h2><p>首先了解一下 CAN 数据帧结构：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240712155654.png" alt="摘自canfd.net"></p>
+<table>
+<thead>
+<tr>
+<th>简写</th>
+<th>全称</th>
+<th>中文含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>N_PCIType</td>
+<td>Network Protocol Control Information Type</td>
+<td>网络层协议控制信息类型</td>
+</tr>
+<tr>
+<td>SF_DL</td>
+<td>Single Frame Data Length</td>
+<td>单帧数据长度</td>
+</tr>
+<tr>
+<td>N_Data</td>
+<td>Network Layer Data</td>
+<td>网络层数据</td>
+</tr>
+<tr>
+<td>FF_DL</td>
+<td>First Frame Data Length</td>
+<td>首帧数据长度</td>
+</tr>
+<tr>
+<td>SN</td>
+<td>Sequence Number</td>
+<td>序号</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>Flow Status</td>
+<td>流控帧状态</td>
+</tr>
+<tr>
+<td>BS</td>
+<td>Block Size</td>
+<td>块大小（允许一次最大可发送连续帧数）</td>
+</tr>
+<tr>
+<td>STmin</td>
+<td>Separation Time Minium</td>
+<td>最小间隔时间</td>
+</tr>
+<tr>
+<td>CF</td>
+<td>Consecutive Frame</td>
+<td>连续帧、后续帧</td>
+</tr>
+</tbody></table>
+<ul>
+<li>N_PCIType &#x3D; 0 时，表示当前帧为单帧，首字节的低 4bit 代表当前帧后续的数据长度</li>
+<li>N_PCIType &#x3D; 1 时，表示将要发送的数据不足以在单个帧中发送完毕，需要拆分，当前帧为首帧</li>
+<li>N_PCIType &#x3D; 2 时，表示当前帧为拆分发送的数据，当前帧为连续帧，SN表示当前的帧序号</li>
+<li>N_PCIType &#x3D; 3 时，表示当前帧为流控帧，能够调整 CF N_PDUs 发送速率</li>
+</ul>
+<h2 id="0x10-Diagnostic-Session-Control"><a href="#0x10-Diagnostic-Session-Control" class="headerlink" title="0x10 Diagnostic Session Control"></a>0x10 Diagnostic Session Control</h2><h3 id="服务简介"><a href="#服务简介" class="headerlink" title="服务简介"></a>服务简介</h3><p>诊断会话控制服务，SID: 0x10</p>
+<p>该服务内容详解：<del><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40309666/article/details/133752052?spm=1001.2014.3001.5501">《UDS协议从入门到精通》系列——图解0x10：诊断会话控制</a></del></p>
+<p>对应 ISO-14229-1 页码：36</p>
+<p>UDS 协议中定义了三种会话模式，同一时间只能处于一种会话模式下，10 服务则用于切换会话模式：</p>
+<ul>
+<li>默认会话：上电默认进入的会话，在切换到任意非默认会话时，默认会话中的诊断功能同样可用</li>
+<li>编程会话</li>
+<li>扩展会话</li>
+</ul>
+<p>推荐的UDS诊断服务配置方式见下表（摘自canfd.net）：</p>
+<table>
+<thead>
+<tr>
+<th>SID(0X)</th>
+<th>Service</th>
+<th>默认会话</th>
+<th>编程会话</th>
+<th>扩展会话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>Diagnostic Session Control</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>11</td>
+<td>ECU Reset</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Security Access</td>
+<td>-</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Communication Control</td>
+<td>-</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>3E</td>
+<td>Tester Present</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Control DTC Setting</td>
+<td>-</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Read Data By Identifier</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>2E</td>
+<td>Write Data By Identifier</td>
+<td>-</td>
+<td>Y*</td>
+<td>Y*</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Clear Diagnostic Information</td>
+<td>Y</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Read DTC Information</td>
+<td>Y</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>2F</td>
+<td>Input Output Control By Identifier</td>
+<td>-</td>
+<td>-</td>
+<td>Y*</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Routine Control</td>
+<td>-</td>
+<td>-</td>
+<td>Y*</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Request Download</td>
+<td>-</td>
+<td>Y*</td>
+<td>-</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Transfer Data</td>
+<td>-</td>
+<td>Y*</td>
+<td>-</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Request Transfer Exit</td>
+<td>-</td>
+<td>Y*</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240712155819.png" alt="ngt4n5mg.1dr"></p>
+<ul>
+<li>$x^a$：在默认会话模式中是否也允许0x86服务是特定于实现的，即不一定支持该服务；</li>
+<li>$x^b$：如果是访问安全相关的DID则需基于安全访问服务，因此如果是该情况下要进非默认会话；</li>
+<li>$x^c$：如果是访问安全相关的内存区域则需要安全访问服务，因此如果是该情况下要进非默认会话；</li>
+<li>$x^d$：可以在默认和非默认会话中动态定义DID，因此非默认会话也支持这个服务；</li>
+<li>$x^e$​：如果是安全相关例程需安全访问服务，因此需要非默认会话模式；需要客户端主动停止的例程也需要非默认会话模式。</li>
+</ul>
+<h3 id="请求-响应数据包分析"><a href="#请求-响应数据包分析" class="headerlink" title="请求 &#x2F; 响应数据包分析"></a>请求 &#x2F; 响应数据包分析</h3><p>使用 cansend 发送诊断会话控制请求，请求更改会话模式为扩展会话模式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cansend vcan0 733<span class="comment">#0210030000000000</span></span></span><br></pre></td></tr></table></figure>
+
+<p>查看 candump 捕获到 vcan0 接口上的 can 报文数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vcan0  733   [8]  02 10 03 00 00 00 00 00</span><br><span class="line">vcan0  73B   [8]  06 50 03 00 32 01 F4 00</span><br></pre></td></tr></table></figure>
+
+<p><strong>0x10 服务请求数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240715100416.jpg" alt="1720663353541"></p>
+<p>Sub-Function 的 1 Byte 数据代表 SessionType:</p>
+<table>
+<thead>
+<tr>
+<th>SessionType</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x00</td>
+<td>保留未使用</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>默认会话模式（Default Session），ECU上电后默认进入的模式，该模式无需 0x3E 服务进行维持</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>编程会话模式（Programming Session），主要用于 ECU 软件升级刷写</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>扩展会话模式（Extended Diagnostic Session），用于解锁需要高权限的诊断服务，基本覆盖各类服务（最常见的是读写 DID 前先进入扩展会话模式）</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>安全模式（Safety System Diagnostic Session），使能所有跟车载系统安全相关的服务（如安全气囊）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>当前使用的 UDS 模拟器暂不支持 0x03 安全模式</p>
+</blockquote>
+<p><strong>0x10 服务肯定响应数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture20240715100428.jpg" alt="1720665925832"></p>
+<ul>
+<li>P2Server_max：表示 ECU 在收到请求与给出响应的时间间隔为 50 ms (0x32)</li>
+<li>P2* Server_max<strong>：</strong>表示 ECU 发送 NRC 0x78 之后继续发送下帧诊断响应报文的时间间隔为 5000ms (0x01F4 * 10)</li>
+</ul>
+<p><strong>0x10 服务否定响应数据帧：</strong></p>
+<ul>
+<li>使用 cansend 发送一个长度为 3 Byte 的请求，得到否定响应：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vcan0  733   [8]  03 10 03 00 00 00 00 00</span><br><span class="line">vcan0  73B   [8]  03 7F 10 13 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171944295.jpg" alt="1720679290434"></p>
+<p>可能出现的 NRC（否定响应码）：</p>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>描述</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x12</td>
+<td>sub-functionNotSupported</td>
+<td>子功能参数不受支持</td>
+</tr>
+<tr>
+<td>0x13</td>
+<td>incorrectMessageLengthOrInvalidFormat</td>
+<td>消息长度错误</td>
+</tr>
+<tr>
+<td>0x22</td>
+<td>conditionsNotCorrect</td>
+<td>不满足请求标准&#x2F;条件</td>
+</tr>
+</tbody></table>
+<h2 id="0x22-ReadDataByIdentifier"><a href="#0x22-ReadDataByIdentifier" class="headerlink" title="0x22 ReadDataByIdentifier"></a>0x22 ReadDataByIdentifier</h2><h3 id="服务简介-1"><a href="#服务简介-1" class="headerlink" title="服务简介"></a>服务简介</h3><p>通过 ID 读数据，SID: 0x22</p>
+<p>该服务内容详解：<del><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40309666/article/details/133888416?spm=1001.2014.3001.5501">《UDS协议从入门到精通》系列——图解0x22：通过ID读数据</a></del></p>
+<p>对应 ISO-14229-1 页码：106</p>
+<ul>
+<li><p>DID：Data Identifier，数据标识符，能够用来标识数据的代号</p>
+</li>
+<li><p>22 服务能够查询指定 DID 对应的数据</p>
+</li>
+<li><p>ISO 14229-1 中 337 页的附录中定义了一部分 DID 含义，其中一些 常见的DID：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>DID</th>
+<th>描述</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0xF180</td>
+<td>BootSoftwareIdentificationDataIdentifier</td>
+<td>ECU 引导软件标识</td>
+</tr>
+<tr>
+<td>0xF187</td>
+<td>vehicleManufacturerSparePartNumberDataIdentifier</td>
+<td>备件编号</td>
+</tr>
+<tr>
+<td>0xF18B</td>
+<td>ECUManufacturingDateDataIdentifier</td>
+<td>ECU 生产日期</td>
+</tr>
+<tr>
+<td>0xF190</td>
+<td>VINDataIdentifier</td>
+<td>车辆 VIN 码</td>
+</tr>
+</tbody></table>
+<h3 id="请求-响应数据包分析-1"><a href="#请求-响应数据包分析-1" class="headerlink" title="请求 &#x2F; 响应数据包分析"></a>请求 &#x2F; 响应数据包分析</h3><p>使用 cansend 发送请求读取 DID 为 0xF190 （VIN）的数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">cansend vcan0 733#0210030000000000</span><br><span class="line">cansend vcan0 733#0322F19000000000</span><br><span class="line">cansend vcan0 733#3000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>查看捕获到 的 can 报文数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">请求切换到扩展会话模式</span></span><br><span class="line">  vcan0  733   [8]  02 10 03 00 00 00 00 00</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确认切换到扩展会话模式</span></span><br><span class="line">  vcan0  73B   [8]  06 50 03 00 32 01 F4 00</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ReadDataByIdentifier:</span></span><br><span class="line">  vcan0  733   [8]  03 22 F1 90 00 00 00 00</span><br><span class="line">  vcan0  73B   [8]  10 14 62 F1 90 4C 55 41</span><br><span class="line">  vcan0  733   [8]  30 00 00 00 00 00 00 00</span><br><span class="line">  vcan0  73B   [8]  21 55 32 41 55 42 33 47</span><br><span class="line">  vcan0  73B   [8]  22 45 33 38 33 34 36 37</span><br></pre></td></tr></table></figure>
+
+<p><strong>0x22 服务请求数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171944438.jpg" alt="1720677506735"></p>
+<p>0x22 服务可以请求一个或多个DID（但实验所使用的 uds 模拟器暂不支持请求多个DID）</p>
+<p>0x22 服务不支持 sub-function</p>
+<p><strong>0x22 服务肯定响应数据帧（单个DID）：</strong></p>
+<p>由于数据超出一个 CAN 帧能够携带的数据长度，需要分段发送，接收到一个分段数据的首帧：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407171945237.jpg" alt="1720679348704"></p>
+<p>发送流控帧，请求后续的数据：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407181932537.jpg" alt="1720679085007"></p>
+<p>接收到后续的连续帧数据：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407181932634.jpg" alt="1720679634417"></p>
+<p>拼接即得到 VIN(0xF190) 数据：<code>LUAU2AUB3GE383467</code></p>
+<p><strong>0x22 服务否定响应数据帧：</strong></p>
+<p>使用 cansend 发送一个请求不存在的 DID 的数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vcan0  733   [8]  03 22 DE AD 00 00 00 00</span><br><span class="line">vcan0  73B   [8]  03 7F 22 31 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+
+
+<p>0x22 服务支持的否定响应代码：</p>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>描述</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x13</td>
+<td>incorrectMessageLengthOrInvalidFormat</td>
+<td>消息长度错误</td>
+</tr>
+<tr>
+<td>0x14</td>
+<td>responseTooLong</td>
+<td>响应消息太长，比如一个请求包含多个DID，超过传输协议允许最大长度</td>
+</tr>
+<tr>
+<td>0x22</td>
+<td>conditionsNotCorrect</td>
+<td>当前条件不满足</td>
+</tr>
+<tr>
+<td>0x31</td>
+<td>requestOutOfRange</td>
+<td>请求的DID对当前设备或在当前会话不受支持，参数错误</td>
+</tr>
+<tr>
+<td>0x33</td>
+<td>securityAccessDenied</td>
+<td>安全访问错误，比如访问的DID数据是安全数据，但当前等级未解锁</td>
+</tr>
+</tbody></table>
+<p>0x22 服务 NRC 处理流程：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407190936011.png" alt="2h0tgvpm.ofv" style="zoom:67%;" />
+
+<h2 id="0x27-SecurityAccess"><a href="#0x27-SecurityAccess" class="headerlink" title="0x27 SecurityAccess"></a>0x27 SecurityAccess</h2><h3 id="服务简介-2"><a href="#服务简介-2" class="headerlink" title="服务简介"></a>服务简介</h3><p>安全访问，SID：0x27</p>
+<p>该服务内容详解：<del><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40309666/article/details/133753204?spm=1001.2014.3001.5501">《UDS协议从入门到精通》系列——图解0x27：安全访问</a></del></p>
+<p>对应 ISO-14229-1 页码：47</p>
+<ul>
+<li>ECU 中某些重要数据会受到安全保护，对其进行读或写操作时需要先申请安全访问，解锁对应的安全等级后才能进行后续操作</li>
+<li>例如在通过 0x2E 服务对指定 DID 进行写操作时，或通过0x34 服务进行请求下载操作时通常需要安全解锁</li>
+</ul>
+<p>工作流程（摘自👆详解）：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407191048711.png" alt="dhexdyjl.hcw" style="zoom:67%;" />
+
+<p>该服务支持 sub-function</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201640190.png" alt="pxlvb4pe.cwp" style="zoom:67%;" />
+
+<h3 id="请求-响应数据包分析-2"><a href="#请求-响应数据包分析-2" class="headerlink" title="请求 &#x2F; 响应数据包分析"></a>请求 &#x2F; 响应数据包分析</h3><blockquote>
+<p>本实验采用的模拟器自行定义了 03, 19, 21 三个 安全等级，以下是各等级的限制（这几个安全等级均为自行定义）：</p>
+<ul>
+<li>安全等级 03：读数据无需安全访问，写数据需要安全访问（fake key，固定key：<code>deadbeef</code>）</li>
+<li>安全等级 19：读数据无需安全访问，写数据需要安全访问</li>
+<li>安全等级 21：读写数据均需要安全访问</li>
+</ul>
+<p>所使用的 key 生成算法如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> *<span class="title function_">security_algorithm</span><span class="params">(<span class="type">uint8_t</span> *seed_ptr)</span> &#123;</span><br><span class="line">	<span class="type">uint8_t</span> *key_ptr = (<span class="type">uint8_t</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">uint8_t</span>)*<span class="number">4</span>);</span><br><span class="line">    <span class="type">uint8_t</span> Seed[<span class="number">4</span>];</span><br><span class="line">    <span class="type">uint8_t</span> Const[<span class="number">4</span>];</span><br><span class="line">    <span class="type">uint8_t</span> Key[<span class="number">4</span>];</span><br><span class="line">    <span class="type">uint32_t</span> wConst = <span class="number">0xdeadbeef</span>;</span><br><span class="line"></span><br><span class="line">    Seed[<span class="number">0</span>] = *seed_ptr;</span><br><span class="line">    Seed[<span class="number">1</span>] = *(seed_ptr+<span class="number">1</span>);</span><br><span class="line">    Seed[<span class="number">2</span>] = *(seed_ptr+<span class="number">2</span>);</span><br><span class="line">    Seed[<span class="number">3</span>] = *(seed_ptr+<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    Const[<span class="number">3</span>] = (<span class="type">uint8_t</span>)((wConst &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>);</span><br><span class="line">    Const[<span class="number">2</span>] = (<span class="type">uint8_t</span>)((wConst &amp; <span class="number">0x00ff0000</span>) &gt;&gt; <span class="number">16</span>);</span><br><span class="line">    Const[<span class="number">1</span>] = (<span class="type">uint8_t</span>)((wConst &amp; <span class="number">0x0000ff00</span>) &gt;&gt; <span class="number">8</span>);</span><br><span class="line">    Const[<span class="number">0</span>] = (<span class="type">uint8_t</span>)(wConst &amp; <span class="number">0x000000ff</span>);</span><br><span class="line"></span><br><span class="line">    Key[<span class="number">0</span>] = Const[<span class="number">0</span>] * (Seed[<span class="number">0</span>] * Seed[<span class="number">0</span>]) + Const[<span class="number">1</span>] * (Seed[<span class="number">1</span>] * Seed[<span class="number">1</span>]) + Const[<span class="number">2</span>] * (Seed[<span class="number">0</span>] * Seed[<span class="number">1</span>]);</span><br><span class="line">    Key[<span class="number">1</span>] = Const[<span class="number">0</span>] * (Seed[<span class="number">0</span>]) + Const[<span class="number">1</span>] * (Seed[<span class="number">1</span>]) + Const[<span class="number">3</span>] * (Seed[<span class="number">0</span>] * Seed[<span class="number">1</span>]);</span><br><span class="line">    Key[<span class="number">2</span>] = Const[<span class="number">0</span>] * (Seed[<span class="number">2</span>] * Seed[<span class="number">3</span>]) + Const[<span class="number">1</span>] * (Seed[<span class="number">3</span>] * Seed[<span class="number">3</span>]) + Const[<span class="number">2</span>] * (Seed[<span class="number">2</span>] * Seed[<span class="number">3</span>]);</span><br><span class="line">    Key[<span class="number">3</span>] = Const[<span class="number">0</span>] * (Seed[<span class="number">2</span>] * Seed[<span class="number">3</span>]) + Const[<span class="number">1</span>] * (Seed[<span class="number">3</span>]) + Const[<span class="number">3</span>] * (Seed[<span class="number">2</span>] * Seed[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    key_ptr = Key;</span><br><span class="line">    <span class="keyword">return</span> key_ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>接下来使用安全等级 21 进行演示，捕获到的 can 报文如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">请求切换到扩展会话模式</span></span><br><span class="line">[TX] 733 [8] 0210030000000000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确认切换到扩展会话模式</span></span><br><span class="line">[RX] 73b [8] 065003003201f400</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Security Access</span></span><br><span class="line">[TX] 733 [8] 0227210000000000</span><br><span class="line">[RX] 73b [8] 0667213071940900</span><br><span class="line">[TX] 733 [8] 0627226e4ece5200</span><br><span class="line">[RX] 73b [8] 0267220000000000</span><br></pre></td></tr></table></figure>
+
+<p><strong>0x27 服务请求数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201640080.jpg" alt="1720749947508"></p>
+<p>请求种子（seedRequest）请求中，SID 后一字节数据为奇数，代表对应的安全等级，securityAccessDataRecord 一般不使用</p>
+<p>发送密钥（sendKey）请求中，SID 后一字节数据为偶数，其值为目标的安全等级+1</p>
+<p><strong>0x27 服务肯定响应数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407201641552.jpg" alt="1720750212050"></p>
+<p>大多情况下肯定响应帧只有 0x67 和 Sub-Function，只有在请求种子的响应中会携带 securitySeed 数据</p>
+<p><strong>0x27 服务否定响应数据帧：</strong></p>
+<p>发送一个错误的密钥进行否定响应演示，捕获到的 CAN 数据如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[TX] 733 [8] 0210030000000000</span><br><span class="line">[RX] 73b [8] 065003003201f400</span><br><span class="line">[TX] 733 [8] 0227210000000000</span><br><span class="line">[RX] 73b [8] 0667216151303900</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送错误的密钥</span></span><br><span class="line">[TX] 733 [8] 062722deadbeef00</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">得到否定响应</span></span><br><span class="line">[RX] 73b [8] 037f273500000000</span><br></pre></td></tr></table></figure>
+
+<p>0x27 服务支持的否定响应代码：</p>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>描述</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x12</td>
+<td>sub-functionNotSupported</td>
+<td>子功能参数不受支持</td>
+</tr>
+<tr>
+<td>0x13</td>
+<td>incorrectMessageLengthOrInvalidFormat</td>
+<td>消息长度错误</td>
+</tr>
+<tr>
+<td>0x22</td>
+<td>conditionsNotCorrect</td>
+<td>不满足请求标准&#x2F;条件</td>
+</tr>
+<tr>
+<td>0x24</td>
+<td>requestSequenceError</td>
+<td>请求顺序错误，比如应该先发送请求种子，而不是先发送密钥数据</td>
+</tr>
+<tr>
+<td>0x31</td>
+<td>requestOutOfRange</td>
+<td>请求中携带的数据是无效的</td>
+</tr>
+<tr>
+<td>0x35</td>
+<td>invalidKey</td>
+<td>密钥不匹配，即Tester计算出来的key和目标ECU计算出来的不一样：若始终不匹配还不断尝试，ECU会回复下面的NRC&#x3D;36，告诉你已经超过失败的次数了，不能再请求安全解锁了</td>
+</tr>
+<tr>
+<td>0x36</td>
+<td>exceededNumberOfAttempts</td>
+<td>超过最大试错次数，已达到解锁最大错误次数，若你执意再请求，ECU就会回复你下面的NRC&#x3D;37,意思是ECU现在不接受安全访问，这就是ECU锁死的现象，需等待一定时间后才可继续请求安全访问</td>
+</tr>
+<tr>
+<td>0x37</td>
+<td>requiredTimeDelayNotExpired</td>
+<td>当前服务器处于延时状态，超时时间未到</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>未额外声明时，当前服务的上述 NRC 在 UDS 模拟器中均可支持</p>
+</blockquote>
+<h2 id="0x2E-WriteDatabyIdentifier"><a href="#0x2E-WriteDatabyIdentifier" class="headerlink" title="0x2E WriteDatabyIdentifier"></a>0x2E WriteDatabyIdentifier</h2><h3 id="服务简介-3"><a href="#服务简介-3" class="headerlink" title="服务简介"></a>服务简介</h3><p>通过 ID 写数据，SID：0x2E</p>
+<p>该服务内容详解：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40309666/article/details/133888945?spm=1001.2014.3001.5501">《UDS协议从入门到精通》系列——图解0x2E：通过ID写数据</a></p>
+<p>对应 ISO-14229-1 页码：162</p>
+<p>本服务不支持 sub-function，且不支持一次性写多个 DID</p>
+<h3 id="请求-响应数据包分析-3"><a href="#请求-响应数据包分析-3" class="headerlink" title="请求 &#x2F; 响应数据包分析"></a>请求 &#x2F; 响应数据包分析</h3><blockquote>
+<p>UDS 模拟器的配置文件中声明了可用的 DID，接下来使用默认 TBOX 配置中的 DID 0xF190（VIN码） 作为目标 DID 进行演示（安全等级 19）</p>
+</blockquote>
+<p>发送请求：请求读取 F190 数据，然后请求写 F190 数据（写入 <code>Hello world</code>），最后请求读 F190 数据，捕获到的 CAN 数据包如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">请求切换到扩展会话模式</span></span><br><span class="line">[TX] 733 [8] 0210030000000000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确认切换到扩展会话模式</span></span><br><span class="line">[RX] 73b [8] 065003003201f400</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">请求读取 DID 为 F190 的数据</span></span><br><span class="line">[TX] 733 [8] 0322f19000000000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">返回数据</span></span><br><span class="line">[RX] 73b [8] 101462f1904c5541</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">流控帧</span></span><br><span class="line">[TX] 733 [8] 3000000000000000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">返回数据</span></span><br><span class="line">[RX] 73b [8] 2155324155423347</span><br><span class="line">[RX] 73b [8] 2245333833343637</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安全访问请求</span></span><br><span class="line">[TX] 733 [8] 0227190000000000</span><br><span class="line">[RX] 73b [8] 0667193625349200</span><br><span class="line">[TX] 733 [8] 06271aa084d8e400</span><br><span class="line">[RX] 73b [8] 02671a0000000000</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">WriteDatabyIdentifier:</span></span><br><span class="line">[TX] 733 [8] 100e2ef19048656c</span><br><span class="line">[RX] 73b [8] 30000f0000000000</span><br><span class="line">[TX] 733 [8] 216c6f20776f726c</span><br><span class="line">[TX] 733 [8] 2264000000000000</span><br><span class="line">[RX] 73b [8] 036ef19000000000</span><br><span class="line">[TX] 733 [8] 0322f19000000000</span><br><span class="line">[RX] 73b [8] 100e62f19048656c</span><br><span class="line">[TX] 733 [8] 3000000000000000</span><br><span class="line">[RX] 73b [8] 216c6f20776f726c</span><br><span class="line">[RX] 73b [8] 2264000000000000</span><br></pre></td></tr></table></figure>
+
+<p><strong>0x2E 服务请求数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021909.png" alt="qbnen5dn.ens"></p>
+<p><strong>0x2E 服务肯定响应数据帧：</strong></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021717.jpg" alt="1720767745805"></p>
+<p><strong>0x2E 服务否定响应数据帧：</strong></p>
+<p>尝试请求写一个安全等级尚未解锁的目标 DID：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[TX] 733 [8] 0210030000000000</span><br><span class="line">[RX] 73b [8] 065003003201f400</span><br><span class="line">[TX] 733 [8] 100e2efa1948656c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">返回否定响应</span></span><br><span class="line">[RX] 73b [8] 037f2e3300000000</span><br></pre></td></tr></table></figure>
+
+<p>0x2E 服务支持的否定响应代码：</p>
+<table>
+<thead>
+<tr>
+<th>NRC</th>
+<th>描述</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x13</td>
+<td>incorrectMessageLengthOrInvalidFormat</td>
+<td>消息长度错误</td>
+</tr>
+<tr>
+<td>0x22</td>
+<td>conditionsNotCorrect</td>
+<td>当前条件不满足</td>
+</tr>
+<tr>
+<td>0x31</td>
+<td>requestOutOfRange</td>
+<td>请求参数不受支持，参数错误</td>
+</tr>
+<tr>
+<td>0x33</td>
+<td>securityAccessDenied</td>
+<td>安全访问错误，比如访问的DID数据是安全数据，但当前等级未解锁</td>
+</tr>
+<tr>
+<td>0x72</td>
+<td>generalProgrammingFailure</td>
+<td>通用编程错误，一般写入内存出错就报这个NRC</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>UDS 模拟器暂不支持 NRC 0x72</p>
+</blockquote>
+<p>0x2E 服务 NRC 处理流程：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture202407211021065.png" alt="vjp1uiyv.2z3" style="zoom:67%;" />
+
+
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>0x34, 0x35, 0x36, 0x37 服务</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/" title="UDS 服务仿真实验">https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/IoV/" rel="tag"><i class="fa fa-tag"></i> IoV</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/18/AFLplusplus-QEMU-enchanced/" rel="prev" title="AFL++ QEMU mode (aarch64)">
+                  <i class="fa fa-angle-left"></i> AFL++ QEMU mode (aarch64)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/02/10/llm/" rel="next" title="LLM 使用">
+                  LLM 使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

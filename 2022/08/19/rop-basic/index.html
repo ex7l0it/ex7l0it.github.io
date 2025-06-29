@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="栈溢出与ROP - 【01】基本 ROP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn - 基本 ROP">
+<meta property="og:url" content="https://ex7l0it.github.io/2022/08/19/rop-basic/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="栈溢出与ROP - 【01】基本 ROP">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-19T07:51:00.000Z">
+<meta property="article:modified_time" content="2023-11-22T16:00:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2022/08/19/rop-basic/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2022/08/19/rop-basic/","path":"2022/08/19/rop-basic/","title":"Pwn - 基本 ROP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Pwn - 基本 ROP | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACROP"><span class="nav-number">1.</span> <span class="nav-text">基本ROP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.</span> <span class="nav-text">ROP简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gadgets-tools"><span class="nav-number">1.2.1.</span> <span class="nav-text">gadgets tools</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ret2text"><span class="nav-number">1.3.</span> <span class="nav-text">ret2text</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">1.3.2.</span> <span class="nav-text">一般思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ret2syscall"><span class="nav-number">1.4.</span> <span class="nav-text">ret2syscall</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.4.3.</span> <span class="nav-text">一般思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ret2shellcode"><span class="nav-number">1.5.</span> <span class="nav-text">ret2shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ret2libc"><span class="nav-number">1.6.</span> <span class="nav-text">ret2libc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E4%B8%8E-Writeup"><span class="nav-number">1.6.1.</span> <span class="nav-text">实例与 Writeup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%8E%E6%89%A9%E5%B1%95"><span class="nav-number">1.7.</span> <span class="nav-text">练习与扩展</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2022/08/19/rop-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Pwn - 基本 ROP | Blog">
+      <meta itemprop="description" content="栈溢出与ROP - 【01】基本 ROP">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pwn - 基本 ROP<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/rop-basic.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-19 15:51:00" itemprop="dateCreated datePublished" datetime="2022-08-19T15:51:00+08:00">2022-08-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-23 00:00:00" itemprop="dateModified" datetime="2023-11-23T00:00:00+08:00">2023-11-23</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">栈溢出与ROP - 【01】基本 ROP</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="基本ROP"><a href="#基本ROP" class="headerlink" title="基本ROP"></a>基本ROP</h1><blockquote>
+<p>参考资料:</p>
+<ul>
+<li>基础知识：CSAPP <a target="_blank" rel="noopener" href="https://fengmuzi2003.gitbook.io/csapp3e/di-3-zhang-ji-qi-ji-bian-cheng">第3章</a>、 <a target="_blank" rel="noopener" href="https://fengmuzi2003.gitbook.io/csapp3e/di-07-zhang-lian-jie">第7章</a></li>
+<li><a target="_blank" rel="noopener" href="https://tc.gts3.org/cs6265/2020/tut/tut06-01-rop.html#tut06-return-oriented-programming-rop">CS6265 Tut06-1: Return-oriented Programming (ROP)</a></li>
+<li><a target="_blank" rel="noopener" href="https://tc.gts3.org/cs6265/2020/tut/tut06-02-advrop.html#tut06-advanced-rop">CS6265 Tut06-2: Advanced ROP</a></li>
+<li>《CTF竞赛权威指南 Pwn篇》第10章、第12章</li>
+</ul>
+</blockquote>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>TODO</p>
+<h2 id="ROP简介"><a href="#ROP简介" class="headerlink" title="ROP简介"></a>ROP简介</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E8%BF%94%E5%9B%9E%E5%AF%BC%E5%90%91%E7%BC%96%E7%A8%8B">Wikipedia</a>:<br>返回导向编程（英语：Return-Oriented Programming，缩写：ROP）是计算机安全中的一种漏洞利用技术，该技术允许攻击者在程序启用了安全保护技术（如堆栈不可执行）的情况下控制程序执行流，执行恶意代码。其核心思想是通过栈缓冲区溢出等方式控制堆栈调用以劫持程序控制流并执行针对性的机器语言指令序列（称为Gadgets）。所谓 gadgets 就是以 ret 结尾的指令序列，通过这些指令序列，我们可以修改某些地址的内容，方便控制程序的执行流程。</p>
+</blockquote>
+<h3 id="gadgets-tools"><a href="#gadgets-tools" class="headerlink" title="gadgets tools"></a>gadgets tools</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/JonathanSalwan/ROPgadget">ROPgadget</a><ul>
+<li>命令：<code>ROPgadget --binary ./binary | grep &quot;pop rdi; ret&quot;</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sashs/Ropper">ropper</a><ul>
+<li>命令：<code>ropper -f ./binary --search &quot;pop rdi; ret&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="ret2text"><a href="#ret2text" class="headerlink" title="ret2text"></a>ret2text</h2><ul>
+<li>也叫做 ret2win</li>
+<li>控制程序执行本身已有的代码</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2text">ctf-wiki</a>:<br>ret2text 即控制程序执行程序本身已有的的代码 (.text)。其实，这种攻击方法是一种笼统的描述。我们控制执行程序已有的代码的时候也可以控制程序执行好几段不相邻的程序已有的代码 (也就是 gadgets)，这就是我们所要说的 ROP。</p>
+</blockquote>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><ul>
+<li><a href="https://ex7l0it.github.io/2022/03/07/ropemporium-wp-1/#Challenge1%20ret2win">📖 ROP Emporium - Challenge 1 ret2win</a><ul>
+<li>最最基本的 ROP 利用，直接跳转到程序中的某一个函数 getshell</li>
+</ul>
+</li>
+<li><a href="https://ex7l0it.github.io/2022/03/07/ropemporium-wp-1/#Challenge3%20callme">📖 ROP Emporium - Challenge 3 callme</a>   <ul>
+<li>x86-64 需要利用 gadgets 对指定的寄存器赋值，以进行函数的参数传递</li>
+</ul>
+</li>
+</ul>
+<h3 id="一般思路"><a href="#一般思路" class="headerlink" title="一般思路"></a>一般思路</h3><ul>
+<li>寻找程序中是否存在能够直接 getshell 的函数</li>
+<li>寻找有用的代码片段，用于指定寄存器的值</li>
+</ul>
+<h2 id="ret2syscall"><a href="#ret2syscall" class="headerlink" title="ret2syscall"></a>ret2syscall</h2><ul>
+<li>控制程序执行系统调用<ul>
+<li>例如调用此函数： <code>execve(&#39;/bin/sh&#39;, NULL, NULL)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看系统调用说明文档</span></span><br><span class="line">man syscall</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">...</span> </span><br><span class="line">       Arch/ABI    Instruction           System  Ret  Ret  Error    Notes</span><br><span class="line">       ───────────────────────────────────────────────────────────────────</span><br><span class="line">       i386        int $0x80             eax     eax  edx  -</span><br><span class="line">       x86-64      syscall               rax     rax  rdx  -        5</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The second table shows the registers used to pass the system call arguments.</span></span><br><span class="line"></span><br><span class="line">       Arch/ABI      arg1  arg2  arg3  arg4  arg5  arg6  arg7  Notes</span><br><span class="line">       ──────────────────────────────────────────────────────────────</span><br><span class="line">       i386          ebx   ecx   edx   esi   edi   ebp   -</span><br><span class="line">       x86-64        rdi   rsi   rdx   r10   r8    r9    -</span><br></pre></td></tr></table></figure>
+
+<p>看到 i386 架构需要通过 <code>int $0x80</code> 触发系统调用，系统调用号存放在 <code>eax</code> 中，参数依次通过 ebx、ecx、edx 等寄存器传递；x86-64 架构则是通过 <code>syscall</code> 触发系统调用，系统调用号存储在 <code>rax</code> 中，参数依次通过 rdi、rsi、rdx 等寄存器传递</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看系统调用号</span></span><br><span class="line">cat /usr/include/x86_64-linux-gnu/asm/unistd_32.h</span><br><span class="line">cat /usr/include/x86_64-linux-gnu/asm/unistd_64.h </span><br><span class="line"></span><br><span class="line">❯ cat /usr/include/x86_64-linux-gnu/asm/unistd_32.h | grep execve </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">define __NR_execve 11</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">define __NR_execveat 358</span></span><br><span class="line">❯ cat /usr/include/x86_64-linux-gnu/asm/unistd_64.h | grep execve</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">define __NR_execve 59</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">define __NR_execveat 322</span></span><br></pre></td></tr></table></figure>
+
+<p>这里以执行 <code>execve(&#39;/bin/sh&#39;, NULL, NULL)</code> 为例，<code>execve</code> 在 32bit 的系统调用号为 11，即 <code>0xb</code>；在 64bit 的系统调用号为 59，即 <code>0x3b</code></p>
+<p>32bit:</p>
+<ul>
+<li>eax 赋值为 <code>0xb</code></li>
+<li>ebx 赋值为 <code>/bin/sh</code> 字符串地址</li>
+<li>ecx 赋值为 <code>NULL(0)</code></li>
+<li>edx 赋值为 <code>NULL(0)</code></li>
+<li>调用: <code>int 0x80</code></li>
+</ul>
+<p>64bit:</p>
+<ul>
+<li>rax 赋值为 <code>0x3b</code></li>
+<li>rdi 赋值为 <code>/bin/sh</code> 字符串地址</li>
+<li>rsi 赋值为 <code>0</code></li>
+<li>rdx 赋值为 <code>0</code></li>
+<li>调用：<code>syscall</code></li>
+</ul>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><ul>
+<li>bamboofox - ret2syscall (x86) <ul>
+<li>32 位程序，使用 <code>int 0x80</code> 触发系统调用，执行 <code>execve(&#39;/bin/sh&#39;, NULL, NULL)</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop">题目下载</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2syscall">📔 ctf-wiki 对应的 writeup</a></li>
+</ul>
+</li>
+<li>ret2syscall_ex1 (x86-64)<ul>
+<li>64 位程序，使用 <code>syscall</code> 触发系统调用，执行 <code>execve(&#39;/bin/sh&#39;, NULL, NULL)</code></li>
+<li>题目下载: TODO</li>
+<li>writeup: TODO</li>
+</ul>
+</li>
+</ul>
+<h3 id="一般思路-1"><a href="#一般思路-1" class="headerlink" title="一般思路"></a>一般思路</h3><ul>
+<li>寻找 <code>int 0x80</code> 或 <code>syscall</code> 的 gadget</li>
+<li>寻找能够控制 eax&#x2F;rax 的 gadget</li>
+</ul>
+<h2 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h2><ul>
+<li>控制程序执行shellcode代码，注意shellcode所在段需要具有可执行权限</li>
+<li>一般情况下，相关题目存在可执行的内存空间</li>
+</ul>
+<p>shellcode题目分类：</p>
+<ol>
+<li>getshell</li>
+<li>orw (open read write)</li>
+<li>时间盲注&#x2F;布尔盲注</li>
+<li>…</li>
+</ol>
+<p>扩展资料: <a target="_blank" rel="noopener" href="https://tttang.com/archive/1447/">📔 shellcode题目整理</a></p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://tc.gts3.org/cs6265/2021/tut/tut03-02-pwntools.html">cs6265-lab3-pwntools</a><ul>
+<li>32 位</li>
+<li><a target="_blank" rel="noopener" href="https://tc.gts3.org/cs6265/tut/tut.tar.gz">题目下载</a></li>
+<li>writeup: 原网页自带</li>
+</ul>
+</li>
+<li>TODO</li>
+</ul>
+<h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><ul>
+<li>控制程序执行libc中的函数<ul>
+<li>直接调用程序 plt 表中的 libc 函数</li>
+<li>泄露 got 表中 libc 函数真实地址，根据偏移计算目标 libc 函数地址</li>
+</ul>
+</li>
+</ul>
+<p>参考资料: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/pannengzhi/p/2018-04-09-about-got-plt.html">深入了解GOT, PLT和动态链接</a> </p>
+<h3 id="实例与-Writeup"><a href="#实例与-Writeup" class="headerlink" title="实例与 Writeup"></a>实例与 Writeup</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2libc">📔 ctf-wiki ret2libc</a></li>
+</ul>
+<p>TODO</p>
+<h2 id="练习与扩展"><a href="#练习与扩展" class="headerlink" title="练习与扩展"></a>练习与扩展</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://ropemporium.com/">ropemporium</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/">ctf-wiki 例题</a></li>
+<li><a target="_blank" rel="noopener" href="https://buuoj.cn/">buuctf</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2022/08/19/rop-basic/" title="Pwn - 基本 ROP">https://ex7l0it.github.io/2022/08/19/rop-basic/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/13/stackoverflow/" rel="prev" title="Pwn 栈溢出">
+                  <i class="fa fa-angle-left"></i> Pwn 栈溢出
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/01/GDB/" rel="next" title="GDB 使用指南">
+                  GDB 使用指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

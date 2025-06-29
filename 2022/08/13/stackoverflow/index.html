@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="栈溢出与ROP - 【00】栈溢出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn 栈溢出">
+<meta property="og:url" content="https://ex7l0it.github.io/2022/08/13/stackoverflow/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="栈溢出与ROP - 【00】栈溢出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020220812194240.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231020102621336.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20220118093536407.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20211226130846802.png">
+<meta property="article:published_time" content="2022-08-13T11:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-20T02:35:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020220812194240.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2022/08/13/stackoverflow/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2022/08/13/stackoverflow/","path":"2022/08/13/stackoverflow/","title":"Pwn 栈溢出"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Pwn 栈溢出 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="nav-number">1.</span> <span class="nav-text">栈溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%E9%9C%80%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">前置知识需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">1.2.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88"><span class="nav-number">1.2.1.</span> <span class="nav-text">函数调用栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#32bit"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">32bit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#64bit"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">64bit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E6%BA%A2%E5%87%BA%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">栈溢出原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E5%88%A9%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">可利用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2022/08/13/stackoverflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Pwn 栈溢出 | Blog">
+      <meta itemprop="description" content="栈溢出与ROP - 【00】栈溢出">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pwn 栈溢出<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/stackoverflow.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-13 19:00:00" itemprop="dateCreated datePublished" datetime="2022-08-13T19:00:00+08:00">2022-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-20 10:35:00" itemprop="dateModified" datetime="2023-10-20T10:35:00+08:00">2023-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">栈溢出与ROP - 【00】栈溢出</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h1><h2 id="前置知识需求"><a href="#前置知识需求" class="headerlink" title="前置知识需求"></a>前置知识需求</h2><ul>
+<li>C、Python</li>
+<li>x86-64、x86 汇编</li>
+<li>gdb、objdump 等工具</li>
+<li>linux</li>
+</ul>
+<details class="note info"><summary><p>参考资料</p>
+</summary>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/stack-intro/">CTF Wiki - 栈介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/stackoverflow-basic/">CTF Wiki - 栈溢出原理</a></li>
+</ul>
+
+</details>
+
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><details class="note info"><summary><p>Wikipedia</p>
+</summary>
+<p><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E5%A0%86%E6%A0%88">维基百科-堆栈(一种数据结构) 👇</a></p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020220812194240.png" alt="Pasted image 20220812194240"></p>
+<p><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/wiki/%E5%91%BC%E5%8F%AB%E5%A0%86%E7%96%8A">维基百科-调用栈 👇</a></p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231020102621336.png" alt="image-20231020102621336" style="zoom:50%;" />
+
+
+</details>
+
+
+<h3 id="函数调用栈"><a href="#函数调用栈" class="headerlink" title="函数调用栈"></a>函数调用栈</h3><div class="note warning"><p>注意: 以下内容仅涉及 x86 架构CPU，暂不考虑 ARM、MIPS 等架构</p>
+</div>
+
+<p>一个简单的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> arg1, <span class="type">int</span> arg2, <span class="type">int</span> arg3, <span class="type">int</span> arg4, <span class="type">int</span> arg5, <span class="type">int</span> arg6, <span class="type">int</span> arg7, <span class="type">int</span> arg8)</span> &#123;</span><br><span class="line">    <span class="type">int</span> loc1 = arg1 + arg3;</span><br><span class="line">    <span class="type">int</span> loc2 = arg6 + arg8;</span><br><span class="line">    <span class="type">int</span> loc3 = arg2 + arg7;</span><br><span class="line">    <span class="keyword">return</span> loc1 + loc2 + loc3;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    func(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gcc -m32 -no-pie -fno-pie demo.c -o call_stack_32</span></span><br><span class="line"><span class="comment">// gcc -no-pie -fno-pie demo.c -o call_stack</span></span><br></pre></td></tr></table></figure>
+
+<details class="note info"><summary><p>gcc参数说明</p>
+</summary>
+<ul>
+<li><code>-m32</code> 用于指明生成 32bit 程序</li>
+<li><code>-no-pie</code> 用于指明禁用生成位置无关(PIE)文件</li>
+<li><code>-fno-pie</code> 类似于 <code>-no-pie</code>，但这个是作为编译选项来指定的，而 <code>-no-pie</code>是作为链接器选项来指定的，这两者的区别可以看<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/74300190/difference-between-fno-pie-and-no-pie">这个回答</a></li>
+</ul>
+
+</details>
+
+<p>接下来通过 GDB 进行调试分析：</p>
+<blockquote>
+<p>这里的 GDB 安装了 <a target="_blank" rel="noopener" href="https://github.com/pwndbg/pwndbg">pwndbg</a> 插件</p>
+</blockquote>
+<h4 id="32bit"><a href="#32bit" class="headerlink" title="32bit"></a>32bit</h4><ul>
+<li>现在 32bit 的机器很少了，CTF比赛中基本上全是 64bit 的程序</li>
+<li>重点放在 64bit，不过 32bit 的还是需要学习</li>
+</ul>
+<p>接下来是 32bit 的情况：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gdb call_stack_32</span></span><br><span class="line">pwndbg&gt; disass main</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> function main:</span><br><span class="line">=&gt; <span class="number">0x080491b0</span> &lt;+<span class="number">0</span>&gt;:		endbr32 </span><br><span class="line">   <span class="number">0x080491b4</span> &lt;+<span class="number">4</span>&gt;:		push   ebp</span><br><span class="line">   <span class="number">0x080491b5</span> &lt;+<span class="number">5</span>&gt;:		mov    ebp,esp</span><br><span class="line">   <span class="number">0x080491b7</span> &lt;+<span class="number">7</span>&gt;:		push   <span class="number">0x8</span></span><br><span class="line">   <span class="number">0x080491b9</span> &lt;+<span class="number">9</span>&gt;:		push   <span class="number">0x7</span></span><br><span class="line">   <span class="number">0x080491bb</span> &lt;+<span class="number">11</span>&gt;:	push   <span class="number">0x6</span></span><br><span class="line">   <span class="number">0x080491bd</span> &lt;+<span class="number">13</span>&gt;:	push   <span class="number">0x5</span></span><br><span class="line">   <span class="number">0x080491bf</span> &lt;+<span class="number">15</span>&gt;:	push   <span class="number">0x4</span></span><br><span class="line">   <span class="number">0x080491c1</span> &lt;+<span class="number">17</span>&gt;:	push   <span class="number">0x3</span></span><br><span class="line">   <span class="number">0x080491c3</span> &lt;+<span class="number">19</span>&gt;:	push   <span class="number">0x2</span></span><br><span class="line">   <span class="number">0x080491c5</span> &lt;+<span class="number">21</span>&gt;:	push   <span class="number">0x1</span></span><br><span class="line">   <span class="number">0x080491c7</span> &lt;+<span class="number">23</span>&gt;:	call   <span class="number">0x8049176</span> &lt;func&gt;</span><br><span class="line">   <span class="number">0x080491cc</span> &lt;+<span class="number">28</span>&gt;:	add    esp,<span class="number">0x20</span></span><br><span class="line">   <span class="number">0x080491cf</span> &lt;+<span class="number">31</span>&gt;:	mov    eax,<span class="number">0x0</span></span><br><span class="line">   <span class="number">0x080491d4</span> &lt;+<span class="number">36</span>&gt;:	leave  </span><br><span class="line">   <span class="number">0x080491d5</span> &lt;+<span class="number">37</span>&gt;:	ret    </span><br><span class="line">End of assembler dump.</span><br><span class="line">pwndbg&gt; disass func</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> function func:</span><br><span class="line">   <span class="number">0x08049176</span> &lt;+<span class="number">0</span>&gt;:		endbr32 </span><br><span class="line">   <span class="number">0x0804917a</span> &lt;+<span class="number">4</span>&gt;:		push   ebp</span><br><span class="line">   <span class="number">0x0804917b</span> &lt;+<span class="number">5</span>&gt;:		mov    ebp,esp</span><br><span class="line">   <span class="number">0x0804917d</span> &lt;+<span class="number">7</span>&gt;:		sub    esp,<span class="number">0x10</span></span><br><span class="line">   <span class="number">0x08049180</span> &lt;+<span class="number">10</span>&gt;:	mov    edx,DWORD PTR [ebp+<span class="number">0x8</span>]</span><br><span class="line">   <span class="number">0x08049183</span> &lt;+<span class="number">13</span>&gt;:	mov    eax,DWORD PTR [ebp+<span class="number">0x10</span>]</span><br><span class="line">   <span class="number">0x08049186</span> &lt;+<span class="number">16</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x08049188</span> &lt;+<span class="number">18</span>&gt;:	mov    DWORD PTR [ebp<span class="number">-0xc</span>],eax</span><br><span class="line">   <span class="number">0x0804918b</span> &lt;+<span class="number">21</span>&gt;:	mov    edx,DWORD PTR [ebp+<span class="number">0x1c</span>]</span><br><span class="line">   <span class="number">0x0804918e</span> &lt;+<span class="number">24</span>&gt;:	mov    eax,DWORD PTR [ebp+<span class="number">0x24</span>]</span><br><span class="line">   <span class="number">0x08049191</span> &lt;+<span class="number">27</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x08049193</span> &lt;+<span class="number">29</span>&gt;:	mov    DWORD PTR [ebp<span class="number">-0x8</span>],eax</span><br><span class="line">   <span class="number">0x08049196</span> &lt;+<span class="number">32</span>&gt;:	mov    edx,DWORD PTR [ebp+<span class="number">0xc</span>]</span><br><span class="line">   <span class="number">0x08049199</span> &lt;+<span class="number">35</span>&gt;:	mov    eax,DWORD PTR [ebp+<span class="number">0x20</span>]</span><br><span class="line">   <span class="number">0x0804919c</span> &lt;+<span class="number">38</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x0804919e</span> &lt;+<span class="number">40</span>&gt;:	mov    DWORD PTR [ebp<span class="number">-0x4</span>],eax</span><br><span class="line">   <span class="number">0x080491a1</span> &lt;+<span class="number">43</span>&gt;:	mov    edx,DWORD PTR [ebp<span class="number">-0xc</span>]</span><br><span class="line">   <span class="number">0x080491a4</span> &lt;+<span class="number">46</span>&gt;:	mov    eax,DWORD PTR [ebp<span class="number">-0x8</span>]</span><br><span class="line">   <span class="number">0x080491a7</span> &lt;+<span class="number">49</span>&gt;:	add    edx,eax</span><br><span class="line">   <span class="number">0x080491a9</span> &lt;+<span class="number">51</span>&gt;:	mov    eax,DWORD PTR [ebp<span class="number">-0x4</span>]</span><br><span class="line">   <span class="number">0x080491ac</span> &lt;+<span class="number">54</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x080491ae</span> &lt;+<span class="number">56</span>&gt;:	leave  </span><br><span class="line">   <span class="number">0x080491af</span> &lt;+<span class="number">57</span>&gt;:	ret    </span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure>
+
+<p>当程序执行至 <code> ► 0x8049180 &lt;func+10&gt;    mov    edx, dword ptr [ebp + 8]</code> 时，此时的栈：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; <span class="built_in">stack</span> <span class="number">0x10</span></span><br><span class="line"><span class="number">00</span>:<span class="number">0000</span>│ esp <span class="number">0xffffd480</span> —▸ <span class="number">0xf7fbc3fc</span> (__exit_funcs) —▸ <span class="number">0xf7fbd180</span> (initial) ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">01</span>:<span class="number">0004</span>│     <span class="number">0xffffd484</span> ◂— <span class="number">0x80000</span></span><br><span class="line"><span class="number">02</span>:<span class="number">0008</span>│     <span class="number">0xffffd488</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">03</span>:<span class="number">000</span>c│     <span class="number">0xffffd48c</span> —▸ <span class="number">0x8049233</span> (__libc_csu_init+<span class="number">83</span>) ◂— <span class="number">0x8301c683</span></span><br><span class="line"><span class="number">04</span>:<span class="number">0010</span>│ ebp <span class="number">0xffffd490</span> —▸ <span class="number">0xffffd4b8</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">05</span>:<span class="number">0014</span>│     <span class="number">0xffffd494</span> —▸ <span class="number">0x80491cc</span> (main+<span class="number">28</span>) ◂— <span class="number">0xb820c483</span>  <span class="comment">// 返回地址</span></span><br><span class="line"><span class="number">06</span>:<span class="number">0018</span>│     <span class="number">0xffffd498</span> ◂— <span class="number">0x1</span>                                <span class="comment">// arg1</span></span><br><span class="line"><span class="number">07</span>:<span class="number">001</span>c│     <span class="number">0xffffd49c</span> ◂— <span class="number">0x2</span>                                <span class="comment">// arg2</span></span><br><span class="line"><span class="number">08</span>:<span class="number">0020</span>│     <span class="number">0xffffd4a0</span> ◂— <span class="number">0x3</span>                                <span class="comment">// ...</span></span><br><span class="line"><span class="number">09</span>:<span class="number">0024</span>│     <span class="number">0xffffd4a4</span> ◂— <span class="number">0x4</span></span><br><span class="line"><span class="number">0</span>a:<span class="number">0028</span>│     <span class="number">0xffffd4a8</span> ◂— <span class="number">0x5</span></span><br><span class="line"><span class="number">0b</span>:<span class="number">002</span>c│     <span class="number">0xffffd4ac</span> ◂— <span class="number">0x6</span></span><br><span class="line"><span class="number">0</span>c:<span class="number">0030</span>│     <span class="number">0xffffd4b0</span> ◂— <span class="number">0x7</span></span><br><span class="line"><span class="number">0</span>d:<span class="number">0034</span>│     <span class="number">0xffffd4b4</span> ◂— <span class="number">0x8</span></span><br><span class="line"><span class="number">0</span>e:<span class="number">0038</span>│     <span class="number">0xffffd4b8</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0f</span>:<span class="number">003</span>c│     <span class="number">0xffffd4bc</span> —▸ <span class="number">0xf7debed5</span> (__libc_start_main+<span class="number">245</span>) ◂— add    esp, <span class="number">0x10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>32bit 情况下函数参数在函数返回地址的上方 (所有参数都在栈上)</li>
+<li>内存地址不能大于 0x00007FFFFFFFFFFF，6 个字节长度，否则会抛出异常。</li>
+</ul>
+<h4 id="64bit"><a href="#64bit" class="headerlink" title="64bit"></a>64bit</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gdb call_stack</span></span><br><span class="line">pwndbg&gt; disass main</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> function main:</span><br><span class="line">=&gt; <span class="number">0x0000000000401152</span> &lt;+<span class="number">0</span>&gt;:		endbr64 </span><br><span class="line">   <span class="number">0x0000000000401156</span> &lt;+<span class="number">4</span>&gt;:		push   rbp</span><br><span class="line">   <span class="number">0x0000000000401157</span> &lt;+<span class="number">5</span>&gt;:		mov    rbp,rsp</span><br><span class="line">   <span class="number">0x000000000040115a</span> &lt;+<span class="number">8</span>&gt;:		push   <span class="number">0x8</span></span><br><span class="line">   <span class="number">0x000000000040115c</span> &lt;+<span class="number">10</span>&gt;:	push   <span class="number">0x7</span></span><br><span class="line">   <span class="number">0x000000000040115e</span> &lt;+<span class="number">12</span>&gt;:	mov    r9d,<span class="number">0x6</span></span><br><span class="line">   <span class="number">0x0000000000401164</span> &lt;+<span class="number">18</span>&gt;:	mov    r8d,<span class="number">0x5</span></span><br><span class="line">   <span class="number">0x000000000040116a</span> &lt;+<span class="number">24</span>&gt;:	mov    ecx,<span class="number">0x4</span></span><br><span class="line">   <span class="number">0x000000000040116f</span> &lt;+<span class="number">29</span>&gt;:	mov    edx,<span class="number">0x3</span></span><br><span class="line">   <span class="number">0x0000000000401174</span> &lt;+<span class="number">34</span>&gt;:	mov    esi,<span class="number">0x2</span></span><br><span class="line">   <span class="number">0x0000000000401179</span> &lt;+<span class="number">39</span>&gt;:	mov    edi,<span class="number">0x1</span></span><br><span class="line">   <span class="number">0x000000000040117e</span> &lt;+<span class="number">44</span>&gt;:	call   <span class="number">0x401106</span> &lt;func&gt;</span><br><span class="line">   <span class="number">0x0000000000401183</span> &lt;+<span class="number">49</span>&gt;:	add    rsp,<span class="number">0x10</span></span><br><span class="line">   <span class="number">0x0000000000401187</span> &lt;+<span class="number">53</span>&gt;:	mov    eax,<span class="number">0x0</span></span><br><span class="line">   <span class="number">0x000000000040118c</span> &lt;+<span class="number">58</span>&gt;:	leave  </span><br><span class="line">   <span class="number">0x000000000040118d</span> &lt;+<span class="number">59</span>&gt;:	ret    </span><br><span class="line">End of assembler dump.</span><br><span class="line">pwndbg&gt; disass func</span><br><span class="line">Dump of assembler code <span class="keyword">for</span> function func:</span><br><span class="line">   <span class="number">0x0000000000401106</span> &lt;+<span class="number">0</span>&gt;:		endbr64 </span><br><span class="line">   <span class="number">0x000000000040110a</span> &lt;+<span class="number">4</span>&gt;:		push   rbp</span><br><span class="line">   <span class="number">0x000000000040110b</span> &lt;+<span class="number">5</span>&gt;:		mov    rbp,rsp</span><br><span class="line">   <span class="number">0x000000000040110e</span> &lt;+<span class="number">8</span>&gt;:		mov    DWORD PTR [rbp<span class="number">-0x14</span>],edi</span><br><span class="line">   <span class="number">0x0000000000401111</span> &lt;+<span class="number">11</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x18</span>],esi</span><br><span class="line">   <span class="number">0x0000000000401114</span> &lt;+<span class="number">14</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x1c</span>],edx</span><br><span class="line">   <span class="number">0x0000000000401117</span> &lt;+<span class="number">17</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x20</span>],ecx</span><br><span class="line">   <span class="number">0x000000000040111a</span> &lt;+<span class="number">20</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x24</span>],r8d</span><br><span class="line">   <span class="number">0x000000000040111e</span> &lt;+<span class="number">24</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x28</span>],r9d</span><br><span class="line">   <span class="number">0x0000000000401122</span> &lt;+<span class="number">28</span>&gt;:	mov    edx,DWORD PTR [rbp<span class="number">-0x14</span>]</span><br><span class="line">   <span class="number">0x0000000000401125</span> &lt;+<span class="number">31</span>&gt;:	mov    eax,DWORD PTR [rbp<span class="number">-0x1c</span>]</span><br><span class="line">   <span class="number">0x0000000000401128</span> &lt;+<span class="number">34</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x000000000040112a</span> &lt;+<span class="number">36</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0xc</span>],eax</span><br><span class="line">   <span class="number">0x000000000040112d</span> &lt;+<span class="number">39</span>&gt;:	mov    edx,DWORD PTR [rbp<span class="number">-0x28</span>]</span><br><span class="line">   <span class="number">0x0000000000401130</span> &lt;+<span class="number">42</span>&gt;:	mov    eax,DWORD PTR [rbp+<span class="number">0x18</span>]</span><br><span class="line">   <span class="number">0x0000000000401133</span> &lt;+<span class="number">45</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x0000000000401135</span> &lt;+<span class="number">47</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x8</span>],eax</span><br><span class="line">   <span class="number">0x0000000000401138</span> &lt;+<span class="number">50</span>&gt;:	mov    edx,DWORD PTR [rbp<span class="number">-0x18</span>]</span><br><span class="line">   <span class="number">0x000000000040113b</span> &lt;+<span class="number">53</span>&gt;:	mov    eax,DWORD PTR [rbp+<span class="number">0x10</span>]</span><br><span class="line">   <span class="number">0x000000000040113e</span> &lt;+<span class="number">56</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x0000000000401140</span> &lt;+<span class="number">58</span>&gt;:	mov    DWORD PTR [rbp<span class="number">-0x4</span>],eax</span><br><span class="line">   <span class="number">0x0000000000401143</span> &lt;+<span class="number">61</span>&gt;:	mov    edx,DWORD PTR [rbp<span class="number">-0xc</span>]</span><br><span class="line">   <span class="number">0x0000000000401146</span> &lt;+<span class="number">64</span>&gt;:	mov    eax,DWORD PTR [rbp<span class="number">-0x8</span>]</span><br><span class="line">   <span class="number">0x0000000000401149</span> &lt;+<span class="number">67</span>&gt;:	add    edx,eax</span><br><span class="line">   <span class="number">0x000000000040114b</span> &lt;+<span class="number">69</span>&gt;:	mov    eax,DWORD PTR [rbp<span class="number">-0x4</span>]</span><br><span class="line">   <span class="number">0x000000000040114e</span> &lt;+<span class="number">72</span>&gt;:	add    eax,edx</span><br><span class="line">   <span class="number">0x0000000000401150</span> &lt;+<span class="number">74</span>&gt;:	pop    rbp</span><br><span class="line">   <span class="number">0x0000000000401151</span> &lt;+<span class="number">75</span>&gt;:	ret    </span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure>
+
+<p>进入 func 函数时，此时的寄存器值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">RAX  <span class="number">0x401152</span> (main) ◂— <span class="number">0xe5894855fa1e0ff3</span></span><br><span class="line">RBX  <span class="number">0x401190</span> (__libc_csu_init) ◂— <span class="number">0x8d4c5741fa1e0ff3</span></span><br><span class="line">RCX  <span class="number">0x4</span>  <span class="comment">// arg4</span></span><br><span class="line">RDX  <span class="number">0x3</span>  <span class="comment">// arg3</span></span><br><span class="line">RDI  <span class="number">0x1</span>  <span class="comment">// arg1</span></span><br><span class="line">RSI  <span class="number">0x2</span>  <span class="comment">// arg2</span></span><br><span class="line">R8   <span class="number">0x5</span>  <span class="comment">// ...</span></span><br><span class="line">R9   <span class="number">0x6</span></span><br><span class="line">R10  <span class="number">0x0</span></span><br><span class="line">R11  <span class="number">0x0</span></span><br></pre></td></tr></table></figure>
+
+<p>当执行到 <code>0x401150 &lt;func+74&gt;    pop    rbp</code> 时，此时的栈：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span>:<span class="number">0000</span>│ rbp rsp <span class="number">0x7fffffffe320</span> —▸ <span class="number">0x7fffffffe340</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">01</span>:<span class="number">0008</span>│         <span class="number">0x7fffffffe328</span> —▸ <span class="number">0x401183</span> (main+<span class="number">49</span>) ◂— <span class="number">0xb810c48348</span> # 返回地址</span><br><span class="line"><span class="number">02</span>:<span class="number">0010</span>│         <span class="number">0x7fffffffe330</span> ◂— <span class="number">0x7</span></span><br><span class="line"><span class="number">03</span>:<span class="number">0018</span>│         <span class="number">0x7fffffffe338</span> ◂— <span class="number">0x8</span></span><br><span class="line"><span class="number">04</span>:<span class="number">0020</span>│         <span class="number">0x7fffffffe340</span> ◂— <span class="number">0x0</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>64bit 环境下，前六个参数通过寄存器传递 (依次是 rdi, rsi, rdx, rcx, r8, r9)，其余的参数再通过栈传递</li>
+<li>函数返回值通过 rax 寄存器传递</li>
+</ul>
+<p>64位的常用寄存器：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20220118093536407.png" alt="image-20220118093536407" style="zoom:50%;" />
+
+<details class="note success"><summary><p>📌Q1: endbr64 指令干啥用的</p>
+</summary>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20211226130846802.png" alt="image-20211226130846802"></p>
+<ul>
+<li>来自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/clh14281055/article/details/117446588">csdn</a> 的回答<br><strong>Intel CET的作用及endbr64指令</strong>：<br>Intel CET提供了影子栈及间接跳转指令追踪功能，保护控制流完整性（wiki: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Control-flow_integrity">here</a>）。<br>Intel CET相关的指令如endbr64是后向（backward）兼容的。<br>在Intel CET中，间接跳转的处理逻辑中被插入一段过程：将CPU状态从<em>DLE</em>切换成<em>WAIT_FOR_ENDBRANCH</em>。<br>在间接跳转之后查看下一条指令是不是endbr64。如果指令是endbr64指令，那么该指令会将CPU状态从<em>WAIT_FOR_ENDBRANCH</em>恢复成<em>DLE</em>。另一方面，如果下一条指令不是endbr64，说明程序可能被控制流劫持了，CPU就报错（#CP）。<strong>因为按照正确的逻辑，间接跳转后应该需要有一条对应的endbr64指令来回应间接跳转，如果不是endbr64指令，那么程序控制流可能被劫持并前往其它地址（其它任意地址上是以非endbr64开始的汇编代码）</strong>（涉及编译器兼容CPU新特性）。</li>
+</ul>
+
+</details>
+
+<details class="note success"><summary><p>📌Q2: 为什么反编译的代码里面没有 <code>sub rsp, xxx</code></p>
+</summary>
+<ul>
+<li><p>来自 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28693863/why-is-there-no-sub-rsp-instruction-in-this-function-prologue-and-why-are-func/31450406#31450406">stackoverflow</a> 的回答<br>The System V ABI for x86-64 specifies a <code>red zone</code> of 128 bytes below <code>%rsp</code>. These 128 bytes belong to the function as long as it doesn’t call any other function (it is a <em>leaf function</em>).<br>Signal handlers (and functions called by a debugger) need to respect the red zone, since they are effectively involuntary function calls.<br>All of the local variables of your <code>test_function</code>, which is a leaf function, fit into the red zone, thus no adjustment of <code>%rsp</code> is needed. (Also, the function has no visible side-effects and would be optimized out on any reasonable optimization setting).<br>You can compile with <code>-mno-red-zone</code> to stop the compiler from using space below the stack pointer. Kernel code has to do this because hardware interrupts don’t implement a red-zone.</p>
+</li>
+<li><p>另一个回答：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13201644/why-does-the-x86-64-gcc-function-prologue-allocate-less-stack-than-the-local-var">https://stackoverflow.com/questions/13201644/why-does-the-x86-64-gcc-function-prologue-allocate-less-stack-than-the-local-var</a></p>
+</li>
+<li><p>《CTF权威指南PWN篇》第10章 P185 的解释<br>这是一项编译优化，rsp 以下 128 字节的区域被称为 red zone，是一块保留内存，不会被信号或中断所修改，函数可以在不调整栈指针的情况下用这块内存保存临时数据。</p>
+</li>
+</ul>
+
+</details>
+
+
+<details class="note info"><summary><p>📙扩展资料</p>
+</summary>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3755401.html">C 语言函数调用栈 (一)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3756668.html">C 语言函数调用栈 (二)</a></li>
+</ul>
+
+</details>
+
+<h2 id="栈溢出原理"><a href="#栈溢出原理" class="headerlink" title="栈溢出原理"></a>栈溢出原理</h2><p>转自 <a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/stackoverflow-basic/">ctf-wiki</a>: </p>
+<ul>
+<li>栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身所申请的字节数，因而导致与其相邻的栈中的变量的值被改变。这种问题是一种特定的缓冲区溢出漏洞，类似的还有堆溢出，bss 段溢出等溢出方式。栈溢出漏洞轻则可以使程序崩溃，重则可以使攻击者控制程序执行流程</li>
+<li>触发栈溢出的前提<ul>
+<li>程序须往栈上写数据</li>
+<li>写入的数据长度没有得到良好的控制</li>
+</ul>
+</li>
+</ul>
+<h3 id="可利用函数"><a href="#可利用函数" class="headerlink" title="可利用函数"></a>可利用函数</h3><p>想要写数据，就要先寻找能够读取用户输入的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// linux系统调用 - read</span></span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fildes, <span class="type">void</span> *buf, <span class="type">size_t</span> nbyte)</span>; <span class="comment">// example: read(0, buf, 0x10);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取一行数据 结束符: b&#x27;\n&#x27;</span></span><br><span class="line"><span class="type">char</span> * <span class="title function_">fgets</span><span class="params">(<span class="type">char</span> * <span class="keyword">restrict</span> str, <span class="type">int</span> size, FILE * <span class="keyword">restrict</span> stream)</span>;</span><br><span class="line"><span class="type">char</span> * <span class="title function_">gets</span><span class="params">(<span class="type">char</span> *str)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按照格式化字符串读数据, 常见的格式化字符串: %s</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">scanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> format, ...)</span>;  <span class="comment">// example: scanf(&quot;%s&quot;, buf);</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fscanf</span><span class="params">(FILE *<span class="keyword">restrict</span> stream, <span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> format, ...)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">sscanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> s, <span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> format, ...)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串复制，遇到&#x27;\x00&#x27;停止</span></span><br><span class="line"><span class="type">char</span> * <span class="title function_">strcpy</span><span class="params">(<span class="type">char</span> * dst, <span class="type">const</span> <span class="type">char</span> * src)</span>;</span><br><span class="line"><span class="type">char</span> * <span class="title function_">strncpy</span><span class="params">(<span class="type">char</span> * dst, <span class="type">const</span> <span class="type">char</span> * src, <span class="type">size_t</span> len)</span>;</span><br><span class="line"><span class="comment">// 字符串拼接，遇到&#x27;\x00&#x27;停止</span></span><br><span class="line"><span class="type">char</span> * <span class="title function_">strcat</span><span class="params">(<span class="type">char</span> *<span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> s2)</span>;</span><br><span class="line"><span class="type">char</span> * <span class="title function_">strncat</span><span class="params">(<span class="type">char</span> *<span class="keyword">restrict</span> s1, <span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> s2, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>接下来通过一个简单的例子来介绍栈溢出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// overflow.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">vuln</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">0x18</span>];</span><br><span class="line">    <span class="type">long</span> target = <span class="number">0xdeadbeef</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;You can say something:&quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, buf, <span class="number">0x20</span>);</span><br><span class="line">    <span class="keyword">if</span> (target == <span class="number">0x1234</span>) &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Bingo!&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Failed.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    vuln();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gcc overflow.c -fno-stack-protector -o overflow</span></span><br></pre></td></tr></table></figure>
+
+<details class="note success"><summary><p>📌gcc 编译参数里的 <code>-fno-stack-protector</code> 是用来干什么的？</p>
+</summary>
+<p>　　现在的GCC默认会启用栈保护机制，也就是<a href="Linux%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6.md#Stack%20Canaries">Stack Canaries</a>, <code>-fno-stack-protector</code> 是用来关闭此保护机制的</p>
+
+</details>
+
+
+<p>思路</p>
+<ol>
+<li>程序中有一个大小为 <code>0x18</code> 的buf，但是可以读取 <code>0x20</code> 个字节的数据，存在栈溢出漏洞，可以覆盖掉紧邻 <code>buf</code> 的 <code>target</code> 变量</li>
+<li>共输入 <code>0x20</code> 个字节的数据，前 <code>0x18</code> 个字节填充buf，后 <code>0x8</code> 个字节输入 <code>0x1234</code> 的字节流，覆盖掉 <code>target</code> 值即可成功进入 Bingo</li>
+</ol>
+<p>我们可以用 python 生成所需要输入的数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ python3 -c &quot;from struct import pack; print((b&#x27;A&#x27;*0x18 + pack(&#x27;&lt;Q&#x27;, 0x1234)).decode(), end=&#x27;&#x27;)&quot; | ./overflow</span><br><span class="line">You can say something:</span><br><span class="line">Bingo!</span><br></pre></td></tr></table></figure>
+
+<p>GDB调试看一下 read 后的栈是什么状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb ./overflow</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">b *vuln+60</span></span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">r &lt;&lt;&lt; $(python3 -c <span class="string">&quot;from struct import pack; print((b&#x27;A&#x27;*0x18 + pack(&#x27;&lt;Q&#x27;, 0x1234)).decode(), end=&#x27;&#x27;)&quot;</span>)</span></span><br></pre></td></tr></table></figure>
+
+<details class="note info"><summary><p>断点位置</p>
+</summary>
+<p>这里根据需要实际情况下断点，断点下在 <code>call read@plt</code> 之后，用来查看 read 之后的栈状态</p>
+<ul>
+<li>环境不同可能导致编译出来的程序不一致</li>
+<li>可以先 <code>disass vuln</code> 查看一下</li>
+</ul>
+
+</details>
+
+
+<p>python3-struct的使用:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/struct.html">struct — 将字节串解读为打包的二进制数据</a></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">───[ DISASM ]───</span><br><span class="line">   <span class="number">0x55555555518e</span> &lt;vuln+<span class="number">37</span>&gt;    mov    edx, <span class="number">0x20</span></span><br><span class="line">   <span class="number">0x555555555193</span> &lt;vuln+<span class="number">42</span>&gt;    mov    rsi, rax</span><br><span class="line">   <span class="number">0x555555555196</span> &lt;vuln+<span class="number">45</span>&gt;    mov    edi, <span class="number">0</span></span><br><span class="line">   <span class="number">0x55555555519b</span> &lt;vuln+<span class="number">50</span>&gt;    mov    eax, <span class="number">0</span></span><br><span class="line">   <span class="number">0x5555555551a0</span> &lt;vuln+<span class="number">55</span>&gt;    call   read@plt                &lt;read@plt&gt;</span><br><span class="line"></span><br><span class="line"> ► <span class="number">0x5555555551a5</span> &lt;vuln+<span class="number">60</span>&gt;    cmp    qword ptr [rbp - <span class="number">8</span>], <span class="number">0x1234</span></span><br><span class="line">   <span class="number">0x5555555551ad</span> &lt;vuln+<span class="number">68</span>&gt;    jne    vuln+<span class="number">84</span>                &lt;vuln+<span class="number">84</span>&gt;</span><br><span class="line"></span><br><span class="line">   <span class="number">0x5555555551af</span> &lt;vuln+<span class="number">70</span>&gt;    lea    rdi, [rip + <span class="number">0xe65</span>]</span><br><span class="line">   <span class="number">0x5555555551b6</span> &lt;vuln+<span class="number">77</span>&gt;    call   <span class="built_in">puts</span>@plt                &lt;<span class="built_in">puts</span>@plt&gt;</span><br><span class="line"></span><br><span class="line">   <span class="number">0x5555555551bb</span> &lt;vuln+<span class="number">82</span>&gt;    jmp    vuln+<span class="number">96</span>                &lt;vuln+<span class="number">96</span>&gt;</span><br><span class="line"></span><br><span class="line">   <span class="number">0x5555555551bd</span> &lt;vuln+<span class="number">84</span>&gt;    lea    rdi, [rip + <span class="number">0xe5e</span>]</span><br><span class="line">──[ SOURCE (CODE) ]───</span><br><span class="line">In file: /home/ubuntu/Datas/learn/<span class="number">01</span>_ROP/src/overflow.c</span><br><span class="line">    <span class="number">3</span> 	<span class="type">char</span> buf[<span class="number">0x18</span>];</span><br><span class="line">    <span class="number">4</span> 	<span class="type">long</span> target = <span class="number">0xdeadbeef</span>;</span><br><span class="line">    <span class="number">5</span></span><br><span class="line">    <span class="number">6</span> 	<span class="built_in">puts</span>(<span class="string">&quot;You can say something:&quot;</span>);</span><br><span class="line">    <span class="number">7</span> 	read(<span class="number">0</span>, buf, <span class="number">0x20</span>);</span><br><span class="line"> ►  <span class="number">8</span> 	<span class="keyword">if</span> (target == <span class="number">0x1234</span>) &#123;</span><br><span class="line">    <span class="number">9</span> 		<span class="built_in">puts</span>(<span class="string">&quot;Bingo!&quot;</span>);</span><br><span class="line">   <span class="number">10</span> 	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   <span class="number">11</span> 		<span class="built_in">puts</span>(<span class="string">&quot;Failed.&quot;</span>);</span><br><span class="line">   <span class="number">12</span> 	&#125;</span><br><span class="line">   <span class="number">13</span> &#125;</span><br><span class="line">──[ STACK ]───</span><br><span class="line"><span class="number">00</span>:<span class="number">0000</span>│ rsi rsp <span class="number">0x7fffffffe320</span> ◂— <span class="number">0x4141414141414141</span> (<span class="string">&#x27;AAAAAAAA&#x27;</span>)</span><br><span class="line">... ↓            <span class="number">2</span> skipped</span><br><span class="line"><span class="number">03</span>:<span class="number">0018</span>│         <span class="number">0x7fffffffe338</span> ◂— <span class="number">0x1234</span>   # 可以看到局部变量target已经被覆盖成了<span class="number">0x1234</span></span><br><span class="line"><span class="number">04</span>:<span class="number">0020</span>│ rbp     <span class="number">0x7fffffffe340</span> —▸ <span class="number">0x7fffffffe350</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">05</span>:<span class="number">0028</span>│         <span class="number">0x7fffffffe348</span> —▸ <span class="number">0x5555555551de</span> (main+<span class="number">18</span>) ◂— mov    eax, <span class="number">0</span></span><br><span class="line"><span class="number">06</span>:<span class="number">0030</span>│         <span class="number">0x7fffffffe350</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">07</span>:<span class="number">0038</span>│         <span class="number">0x7fffffffe358</span> —▸ <span class="number">0x7ffff7df0083</span> (__libc_start_main+<span class="number">243</span>) ◂— mov    edi, eax</span><br></pre></td></tr></table></figure>
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>栈溢出是一个特定的缓冲区溢出，通常情况下有这样的缓冲区溢出需求：</p>
+<ol>
+<li>栈溢出：覆盖特定的局部变量值(如上面的实例)</li>
+<li>栈溢出：覆盖返回地址(构造ROP等, 下一节内容)</li>
+<li>数据段溢出：覆盖特定的bss、data段的值</li>
+<li>堆溢出：覆盖堆中的malloc_chunk的特定值(堆利用章节内容)</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2022/08/13/stackoverflow/" title="Pwn 栈溢出">https://ex7l0it.github.io/2022/08/13/stackoverflow/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/07/ropemporium-wp-1/" rel="prev" title="ROP Emporium - Challenge1-3 Writeup">
+                  <i class="fa fa-angle-left"></i> ROP Emporium - Challenge1-3 Writeup
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/19/rop-basic/" rel="next" title="Pwn - 基本 ROP">
+                  Pwn - 基本 ROP <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

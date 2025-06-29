@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Blog</title>
+  <icon>https://ex7l0it.github.io/icon.png</icon>
+  
+  <link href="https://ex7l0it.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://ex7l0it.github.io/"/>
+  <updated>2025-05-28T09:53:08.000Z</updated>
+  <id>https://ex7l0it.github.io/</id>
+  
+  <author>
+    <name>Ex7l0it</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派4B 折腾记 - Openwrt</title>
+    <link href="https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/"/>
+    <id>https://ex7l0it.github.io/2023/11/04/raspberrypi-openwrt/</id>
+    <published>2023-11-04T06:31:08.000Z</published>
+    <updated>2025-05-28T09:53:08.000Z</updated>
+    
+    
+    <summary type="html">最近又稍微折腾了一下吃灰许久的树莓派。。</summary>
+    
+    
+    
+    <category term="折腾记" scheme="https://ex7l0it.github.io/categories/%E6%8A%98%E8%85%BE%E8%AE%B0/"/>
+    
+    
+    <category term="Raspberry" scheme="https://ex7l0it.github.io/tags/Raspberry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LLM 使用</title>
+    <link href="https://ex7l0it.github.io/2025/02/10/llm/"/>
+    <id>https://ex7l0it.github.io/2025/02/10/llm/</id>
+    <published>2025-02-10T05:00:18.000Z</published>
+    <updated>2025-02-10T05:00:18.000Z</updated>
+    
+    
+    <summary type="html">LLM 🤖 部署、微调相关内容</summary>
+    
+    
+    
+    
+    <category term="LLM" scheme="https://ex7l0it.github.io/tags/LLM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UDS 服务仿真实验</title>
+    <link href="https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/"/>
+    <id>https://ex7l0it.github.io/2024/07/12/uds-experiment-tutorial/</id>
+    <published>2024-07-12T07:35:24.000Z</published>
+    <updated>2024-07-23T03:23:24.000Z</updated>
+    
+    
+    <summary type="html">车联网安全 🚗 - UDS 服务 - 仿真实验</summary>
+    
+    
+    
+    <category term="IoV" scheme="https://ex7l0it.github.io/categories/IoV/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="IoV" scheme="https://ex7l0it.github.io/tags/IoV/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AFL++ QEMU mode (aarch64)</title>
+    <link href="https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/"/>
+    <id>https://ex7l0it.github.io/2024/06/18/AFLplusplus-QEMU-enchanced/</id>
+    <published>2024-06-18T03:56:00.000Z</published>
+    <updated>2024-06-18T03:56:00.000Z</updated>
+    
+    
+    <summary type="html">AFL++ QEMU mode （aarch64 架构）的高级应用</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Fuzzing" scheme="https://ex7l0it.github.io/tags/Fuzzing/"/>
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>带你玩 💻</title>
+    <link href="https://ex7l0it.github.io/2023/12/03/os-basic/"/>
+    <id>https://ex7l0it.github.io/2023/12/03/os-basic/</id>
+    <published>2023-12-03T08:15:54.000Z</published>
+    <updated>2023-12-04T09:07:05.000Z</updated>
+    
+    
+    <summary type="html">水一篇最最最最最最基础的东西</summary>
+    
+    
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="Linux" scheme="https://ex7l0it.github.io/tags/Linux/"/>
+    
+    <category term="Windows" scheme="https://ex7l0it.github.io/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pwn - 基本 ROP</title>
+    <link href="https://ex7l0it.github.io/2022/08/19/rop-basic/"/>
+    <id>https://ex7l0it.github.io/2022/08/19/rop-basic/</id>
+    <published>2022-08-19T07:51:00.000Z</published>
+    <updated>2023-11-22T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">栈溢出与ROP - 【01】基本 ROP</summary>
+    
+    
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="pwn" scheme="https://ex7l0it.github.io/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ROP Emporium - Challenge1-3 Writeup</title>
+    <link href="https://ex7l0it.github.io/2022/03/07/ropemporium-wp-1/"/>
+    <id>https://ex7l0it.github.io/2022/03/07/ropemporium-wp-1/</id>
+    <published>2022-03-07T07:51:00.000Z</published>
+    <updated>2023-11-19T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">ROP Emporium - ret2win, ret2syscall, ret2libc Writeup</summary>
+    
+    
+    
+    
+    <category term="pwn" scheme="https://ex7l0it.github.io/tags/pwn/"/>
+    
+    <category term="writeup" scheme="https://ex7l0it.github.io/tags/writeup/"/>
+    
+    <category term="rop" scheme="https://ex7l0it.github.io/tags/rop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ghidra 安装与使用指南</title>
+    <link href="https://ex7l0it.github.io/2022/10/05/Ghidra/"/>
+    <id>https://ex7l0it.github.io/2022/10/05/Ghidra/</id>
+    <published>2022-10-05T16:00:00.000Z</published>
+    <updated>2023-11-08T07:49:00.000Z</updated>
+    
+    
+    <summary type="html">Ghidra 安装与使用指南，面向零基础(大概可以🤔)；更新了一下过时的内容</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023 山东省大学生网络安全技能大赛 复盘</title>
+    <link href="https://ex7l0it.github.io/2023/10/23/23sdnisc/"/>
+    <id>https://ex7l0it.github.io/2023/10/23/23sdnisc/</id>
+    <published>2023-10-23T08:01:53.000Z</published>
+    <updated>2023-10-24T08:57:00.000Z</updated>
+    
+    
+    <summary type="html">👴🏻🚪又来打科来杯了，还是一如既往的菜</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://ex7l0it.github.io/categories/CTF/"/>
+    
+    
+    <category term="Writeup" scheme="https://ex7l0it.github.io/tags/Writeup/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pwn 栈溢出</title>
+    <link href="https://ex7l0it.github.io/2022/08/13/stackoverflow/"/>
+    <id>https://ex7l0it.github.io/2022/08/13/stackoverflow/</id>
+    <published>2022-08-13T11:00:00.000Z</published>
+    <updated>2023-10-20T02:35:00.000Z</updated>
+    
+    
+    <summary type="html">栈溢出与ROP - 【00】栈溢出</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://ex7l0it.github.io/categories/CTF/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="pwn" scheme="https://ex7l0it.github.io/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vSphere 安装 &amp; 配置</title>
+    <link href="https://ex7l0it.github.io/2023/10/13/vsphere/"/>
+    <id>https://ex7l0it.github.io/2023/10/13/vsphere/</id>
+    <published>2023-10-13T15:51:15.000Z</published>
+    <updated>2023-10-18T05:00:00.000Z</updated>
+    
+    
+    <summary type="html">记录 vSphere 安装与配置过程中的坑, 运维笔记内容 +1</summary>
+    
+    
+    
+    
+    <category term="Ops" scheme="https://ex7l0it.github.io/tags/Ops/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vSphere 折腾记 -- ESXi 系统升级+回滚</title>
+    <link href="https://ex7l0it.github.io/2023/10/13/esxi-upgrade/"/>
+    <id>https://ex7l0it.github.io/2023/10/13/esxi-upgrade/</id>
+    <published>2023-10-13T09:21:45.000Z</published>
+    <updated>2023-10-13T15:51:00.000Z</updated>
+    
+    
+    <summary type="html">本着有活必整的原则，👴又给自个挖了个大坑</summary>
+    
+    
+    
+    <category term="折腾记" scheme="https://ex7l0it.github.io/categories/%E6%8A%98%E8%85%BE%E8%AE%B0/"/>
+    
+    
+    <category term="Ops" scheme="https://ex7l0it.github.io/tags/Ops/"/>
+    
+    <category term="vsphere" scheme="https://ex7l0it.github.io/tags/vsphere/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vim 配置与使用</title>
+    <link href="https://ex7l0it.github.io/2023/07/16/vim/"/>
+    <id>https://ex7l0it.github.io/2023/07/16/vim/</id>
+    <published>2023-07-16T11:50:36.000Z</published>
+    <updated>2023-10-06T08:41:00.000Z</updated>
+    
+    
+    <summary type="html">vim 的基本使用 + 插件配置</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="助教课件" scheme="https://ex7l0it.github.io/tags/%E5%8A%A9%E6%95%99%E8%AF%BE%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基础知识 - shell 💻</title>
+    <link href="https://ex7l0it.github.io/2023/09/20/shell/"/>
+    <id>https://ex7l0it.github.io/2023/09/20/shell/</id>
+    <published>2023-09-20T08:28:51.000Z</published>
+    <updated>2023-10-06T08:21:40.000Z</updated>
+    
+    
+    <summary type="html">shell的基础知识 (2023秋季助教课件)</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="助教课件" scheme="https://ex7l0it.github.io/tags/%E5%8A%A9%E6%95%99%E8%AF%BE%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2023陇剑杯复盘</title>
+    <link href="https://ex7l0it.github.io/2023/09/16/ljb23/"/>
+    <id>https://ex7l0it.github.io/2023/09/16/ljb23/</id>
+    <published>2023-09-16T01:36:09.000Z</published>
+    <updated>2023-09-16T03:47:00.000Z</updated>
+    
+    
+    <summary type="html">2023年第二届陇剑杯线下半决赛部分题目 + 总决赛部分题目 Writeup</summary>
+    
+    
+    
+    
+    <category term="writeup" scheme="https://ex7l0it.github.io/tags/writeup/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Github Actions Workflows 使用</title>
+    <link href="https://ex7l0it.github.io/2023/09/07/GithubActions/"/>
+    <id>https://ex7l0it.github.io/2023/09/07/GithubActions/</id>
+    <published>2023-09-07T08:31:06.000Z</published>
+    <updated>2023-09-07T13:45:46.000Z</updated>
+    
+    
+    <summary type="html">Github Actions workflows 的基本使用</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="Github" scheme="https://ex7l0it.github.io/tags/Github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTFd + CTFd_Whale 部署</title>
+    <link href="https://ex7l0it.github.io/2023/08/18/ctfd/"/>
+    <id>https://ex7l0it.github.io/2023/08/18/ctfd/</id>
+    <published>2023-08-18T14:01:00.000Z</published>
+    <updated>2023-08-19T05:52:00.000Z</updated>
+    
+    
+    <summary type="html">CTFd + CTFd_Whale 部署指南（马马虎虎能用的版本的手动安装流程）</summary>
+    
+    
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker 的使用</title>
+    <link href="https://ex7l0it.github.io/2023/08/03/docker/"/>
+    <id>https://ex7l0it.github.io/2023/08/03/docker/</id>
+    <published>2023-08-03T04:30:00.000Z</published>
+    <updated>2023-08-03T04:30:00.000Z</updated>
+    
+    
+    <summary type="html">Docker 的常用命令，Dockerfile、docker-compose 的基本内容</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Ops" scheme="https://ex7l0it.github.io/tags/Ops/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo 博客自动化部署</title>
+    <link href="https://ex7l0it.github.io/2023/07/07/auto-hexo/"/>
+    <id>https://ex7l0it.github.io/2023/07/07/auto-hexo/</id>
+    <published>2023-07-07T04:43:55.000Z</published>
+    <updated>2023-07-28T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">使用 Github Actions 自动部署 Hexo 博客</summary>
+    
+    
+    
+    <category term="Blog" scheme="https://ex7l0it.github.io/categories/Blog/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="Github" scheme="https://ex7l0it.github.io/tags/Github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git 基础知识与使用</title>
+    <link href="https://ex7l0it.github.io/2022/09/20/Git/"/>
+    <id>https://ex7l0it.github.io/2022/09/20/Git/</id>
+    <published>2022-09-20T11:50:36.000Z</published>
+    <updated>2023-07-23T08:22:00.000Z</updated>
+    
+    
+    <summary type="html">git的入门教程(22年的助教课件)</summary>
+    
+    
+    
+    <category term="Tool" scheme="https://ex7l0it.github.io/categories/Tool/"/>
+    
+    
+    <category term="Tutorial" scheme="https://ex7l0it.github.io/tags/Tutorial/"/>
+    
+    <category term="助教课件" scheme="https://ex7l0it.github.io/tags/%E5%8A%A9%E6%95%99%E8%AF%BE%E4%BB%B6/"/>
+    
+  </entry>
+  
+</feed>

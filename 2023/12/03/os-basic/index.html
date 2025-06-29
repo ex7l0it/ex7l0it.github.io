@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="水一篇最最最最最最基础的东西">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带你玩 💻">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/12/03/os-basic/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="水一篇最最最最最最基础的东西">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204160609160.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204160653135.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204174851175.png">
+<meta property="article:published_time" content="2023-12-03T08:15:54.000Z">
+<meta property="article:modified_time" content="2023-12-04T09:07:05.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204160609160.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/12/03/os-basic/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/12/03/os-basic/","path":"2023/12/03/os-basic/","title":"带你玩 💻"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>带你玩 💻 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A6%E4%BD%A0%E7%8E%A9-%F0%9F%92%BB"><span class="nav-number">1.</span> <span class="nav-text">带你玩 💻</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="nav-number">1.2.</span> <span class="nav-text">搜索引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">Windows 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">常用软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.4.2.</span> <span class="nav-text">乱七八糟的内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">Linux 基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macOS-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.6.</span> <span class="nav-text">macOS 基本使用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/12/03/os-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="带你玩 💻 | Blog">
+      <meta itemprop="description" content="水一篇最最最最最最基础的东西">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          带你玩 💻<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/os-basic.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-03 16:15:54" itemprop="dateCreated datePublished" datetime="2023-12-03T16:15:54+08:00">2023-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-04 17:07:05" itemprop="dateModified" datetime="2023-12-04T17:07:05+08:00">2023-12-04</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">水一篇最最最最最最基础的东西</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="带你玩-💻"><a href="#带你玩-💻" class="headerlink" title="带你玩 💻"></a>带你玩 💻</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>在助教工作过程中，总是遇到一些意想不到的基础问题，归根到底还是一些非常基础的东西没有接触过，水一篇文章来唠唠这个情况</li>
+<li>就介绍一些比较基本的使用，作为计算机相关专业的学生，这些东西应该是每个人必备的能力</li>
+<li>下面的内容对于纯小白来说可能还是有不知道的名词，建议自行搜索了解，或者直接问 ChatGPT </li>
+<li>内容应该还是不全，有啥想到了再补充</li>
+</ul>
+<h2 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h2><ul>
+<li>别用百度了，用 <a target="_blank" rel="noopener" href="https://www.bing.com/">Bing</a> 吧<ul>
+<li>如果能用 Google 更好</li>
+<li>为啥呢？放俩图自己体会一下：<ul>
+<li><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204160609160.png" alt="用百度搜" style="zoom: 50%;" /></li>
+<li><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204160653135.png" alt="用必应搜" style="zoom: 50%;" /></li>
+</ul>
+</li>
+<li>不管你坚持用的啥搜索引擎，还是建议给浏览器装个广告过滤插件<ul>
+<li>比如 <code>uBlock Origin</code>, <code>Adblock Plus</code> 之类的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>关键词搜索<ul>
+<li>完整的句子适合去问 ChatGPT 而不是搜索引擎</li>
+<li>专业问题尽量使用英文关键字</li>
+</ul>
+</li>
+<li>稍微学一点搜索引擎的高级搜索语法<ul>
+<li><code>site:</code> 指定要搜索的网站</li>
+<li><code>filetype:</code> 指定要搜索的文件类型</li>
+<li><code>&quot;&quot;</code> 双引号: 完全匹配搜索</li>
+<li><code>-</code> 减号: 排除搜索</li>
+<li>…</li>
+</ul>
+</li>
+<li>要会区分官方网站、下载站、盗版站<ul>
+<li>别下个软件跳到某某软件管家或者某某下载站下载</li>
+<li>要想从官网下载的时候不要带 “下载” 关键字，试试直接搜索软件名</li>
+</ul>
+</li>
+<li>学一下怎么区分高质量回答&#x2F;博客<ul>
+<li>拥抱 <a target="_blank" rel="noopener" href="https://stackoverflow.com/">stackoverflow</a></li>
+<li>远离 CSDN、简书、知乎上仅仅几行代码、明显复制粘贴的内容</li>
+</ul>
+</li>
+</ul>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><ul>
+<li>遇到报错不要慌，先看看报错信息说的啥，看不懂就拿翻译工具翻译一下<ul>
+<li>定位相对关键的报错信息（例如某些情况下的最后一行有报错总结）拿去搜索</li>
+</ul>
+</li>
+<li>学着看官方文档</li>
+<li>如果是 Github 上开源的东西，试试从 Issues 里找解决方案</li>
+<li>不要只会照搬现成的解决方案中的代码，要结合实际环境<ul>
+<li>千万别看到一个解决方案的命令复制粘贴跑一下，不好使又再找一个再复制粘贴跑一下</li>
+<li>不然环境怎么炸的都不知道</li>
+</ul>
+</li>
+<li>关于问问题<ul>
+<li>了解一下 《提问的智慧》</li>
+<li>了解一下 《X-Y Problem》</li>
+</ul>
+</li>
+</ul>
+<h2 id="Windows-基本使用"><a href="#Windows-基本使用" class="headerlink" title="Windows 基本使用"></a>Windows 基本使用</h2><h3 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h3><p>(哪个用的惯用哪个)</p>
+<ul>
+<li><p>浏览器: <a target="_blank" rel="noopener" href="https://www.google.cn/chrome/">Chrome</a>, <a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/edge">Edge</a>, <a target="_blank" rel="noopener" href="https://www.mozilla.org/zh-CN/firefox/new/">Firefox</a> 等</p>
+<ul>
+<li>学会通过安装浏览器插件来优化浏览器使用体验<ul>
+<li>广告过滤</li>
+<li>翻译插件</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>文本编辑器: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code</a>, <a target="_blank" rel="noopener" href="https://www.sublimetext.com/">Sublime Text</a>, <a target="_blank" rel="noopener" href="https://gitee.com/cxasm/notepad--">ndd</a> 等</p>
+<ul>
+<li>顺带提一句，建议了解一下 Markdown</li>
+</ul>
+</li>
+<li><p>解压缩软件: <a target="_blank" rel="noopener" href="https://www.7-zip.org/">7-zip</a> 等</p>
+<ul>
+<li>别用 Windows 自带的解压缩（避免不必要的问题）</li>
+</ul>
+</li>
+<li><p>虚拟机: <a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-pro.html">VMware Workstation Pro</a>, <a target="_blank" rel="noopener" href="https://www.virtualbox.org/">VirtualBox</a>, WSL2, Multipass 等</p>
+<ul>
+<li>VMware 激活码网上一搜一大把</li>
+</ul>
+</li>
+<li><p>SSH 客户端: <a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm</a>, <a target="_blank" rel="noopener" href="https://github.com/kingToolbox/WindTerm">WindTerm</a>, <a target="_blank" rel="noopener" href="https://www.hostbuf.com/">FinalShell</a> 等</p>
+<ul>
+<li>可能有人不知道什么是 SSH，可以先去搜一搜了解一下</li>
+</ul>
+</li>
+<li><p>码代码: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code</a></p>
+</li>
+<li><p>磁盘占用情况分析: <a target="_blank" rel="noopener" href="https://www.diskanalyzer.com/">WizTree</a></p>
+<ul>
+<li>哎我C盘怎么红了？ 👉 拿这个工具去扫扫</li>
+</ul>
+</li>
+<li><p>软件卸载工具: <a target="_blank" rel="noopener" href="https://geekuninstaller.com/">geek</a></p>
+</li>
+<li><p>下载&#x2F;更新软件不要依赖某某软件管家，学会从官网下载</p>
+</li>
+</ul>
+<details class="note warning"><summary><p>软件安装时注意:</p>
+</summary>
+<ul>
+<li>⚠️ 注意所有软件的安装路径尽可能不要存在中文字符（为了避免某些软件出现稀奇古怪的问题）<ul>
+<li>多提一句，当前用户的目录名也不要存在中文字符<ul>
+<li>去 <code>C:\Users</code> 确认用户名是啥</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>⚠️ 不要把软件全部装在同一个目录下<ul>
+<li>比如说在安装过程中不管什么软件都指定了 <code>D:\software</code> 作为安装路径 (这里没有带子目录)</li>
+<li>否则卸载某一个软件的时候小心全给你扬了，或者出现其他稀奇古怪问题</li>
+</ul>
+</li>
+</ul>
+
+</details>
+
+<h3 id="乱七八糟的内容"><a href="#乱七八糟的内容" class="headerlink" title="乱七八糟的内容"></a>乱七八糟的内容</h3><ul>
+<li><p>建议开启显示已知文件后缀名</p>
+<ul>
+<li><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231204174851175.png" alt="image-20231204174851175"></li>
+<li>不要再出现说找不着文件的情况了 😅</li>
+</ul>
+</li>
+<li><p>怎么看电脑 IP 地址（IPv4）？</p>
+<ul>
+<li>打开 <code>powershell</code>，输入 <code>ipconfig</code>，找到你的网卡对应的 IPv4 地址<ul>
+<li>一般情况下是 <code>以太网适配器 以太网</code> 或者 <code>无线局域网适配器 WLAN</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>怎么启动 powershell？</p>
+<ul>
+<li>按下 <code>Win + R</code>，输入 <code>powershell</code>，回车</li>
+</ul>
+</li>
+<li><p>不要无脑关掉系统防火墙、UAC 以及 Windows Defender</p>
+<ul>
+<li>如果你不使用破解软件，那无需安装任何第三方杀毒软件</li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux-基本使用"><a href="#Linux-基本使用" class="headerlink" title="Linux 基本使用"></a>Linux 基本使用</h2><ul>
+<li>以 Ubuntu 为例，安装就不说了</li>
+<li>如果你使用的是带桌面环境的 Desktop 版本(是虚拟机且用的是VMware)，记着装 <code>open-vm-tools</code> 和 <code>open-vm-tools-desktop</code>: <code>sudo apt install open-vm-tools open-vm-tools-desktop -y</code><ul>
+<li>这样你就可以在虚拟机和宿主机之间拖拽文件了</li>
+</ul>
+</li>
+<li>如果你使用的是 Server 版本，或者你的使用场景不需要图形化界面（比如说你只需要打开终端执行命令就能完成你的工作），那建议走 ssh 连接的方式<ul>
+<li>安装 ssh: 终端下执行 <code>sudo apt install ssh -y</code></li>
+<li>查看本机 IP 地址: <code>ip addr</code> 或者 <code>ifconfig</code><ul>
+<li>没有 <code>ifconfig</code> 命令的话，执行 <code>sudo apt install net-tools -y</code> 安装</li>
+</ul>
+</li>
+<li>在客户端使用 ssh 连接<ul>
+<li>关于 SSH，建议再去了解一下免密登录</li>
+</ul>
+</li>
+<li>如果你想连接目标主机码代码，那建议使用 VSCode 的 Remote SSH 插件</li>
+</ul>
+</li>
+<li>虚拟机的话了解一下共享文件夹的使用<ul>
+<li>虚拟机内部会在 <code>/mnt/hgfs/</code> 挂载跟宿主机共享的文件夹</li>
+</ul>
+</li>
+</ul>
+<h2 id="macOS-基本使用"><a href="#macOS-基本使用" class="headerlink" title="macOS 基本使用"></a>macOS 基本使用</h2><ul>
+<li>首先，不建议做系统安全的在初学阶段选择购买 M 系列的 macbook，不然会因为架构问题很多东西干不了</li>
+<li>Windows、Linux 都会用的话，macOS 也没啥好说的</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/12/03/os-basic/" title="带你玩 💻">https://ex7l0it.github.io/2023/12/03/os-basic/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/04/raspberrypi-openwrt/" rel="prev" title="树莓派4B 折腾记 - Openwrt">
+                  <i class="fa fa-angle-left"></i> 树莓派4B 折腾记 - Openwrt
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/06/18/AFLplusplus-QEMU-enchanced/" rel="next" title="AFL++ QEMU mode (aarch64)">
+                  AFL++ QEMU mode (aarch64) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

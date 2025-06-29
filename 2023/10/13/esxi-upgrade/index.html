@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本着有活必整的原则，👴又给自个挖了个大坑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vSphere 折腾记 -- ESXi 系统升级+回滚">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/10/13/esxi-upgrade/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="本着有活必整的原则，👴又给自个挖了个大坑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231013212336890.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231013214752978.png">
+<meta property="article:published_time" content="2023-10-13T09:21:45.000Z">
+<meta property="article:modified_time" content="2023-10-13T15:51:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Ops">
+<meta property="article:tag" content="vsphere">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231013212336890.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/10/13/esxi-upgrade/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/10/13/esxi-upgrade/","path":"2023/10/13/esxi-upgrade/","title":"vSphere 折腾记 -- ESXi 系统升级+回滚"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vSphere 折腾记 -- ESXi 系统升级+回滚 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ESXi-%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7-%E2%80%93-%E5%9B%A0-RAID-%E6%B6%88%E5%A4%B1%E5%8F%88%E5%9B%9E%E6%BB%9A"><span class="nav-number">1.</span> <span class="nav-text">ESXi 系统升级 – 因 RAID 消失又回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7%E4%B9%8B%E6%97%85"><span class="nav-number">1.1.</span> <span class="nav-text">系统升级之旅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%9B%9E%E6%BB%9A%E4%B9%8B%E6%97%85"><span class="nav-number">1.2.</span> <span class="nav-text">系统回滚之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%9D%E8%AF%95%E5%AF%BB%E6%89%BE%E6%96%B0%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">尝试寻找新驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%8D%E7%BA%A7%E5%AE%89%E8%A3%85-6-x-%E7%89%88%E6%9C%AC%E5%9B%9E%E6%BB%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">降级安装: 6.x 版本回滚</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F"><span class="nav-number">1.3.</span> <span class="nav-text">结束</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/10/13/esxi-upgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vSphere 折腾记 -- ESXi 系统升级+回滚 | Blog">
+      <meta itemprop="description" content="本着有活必整的原则，👴又给自个挖了个大坑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vSphere 折腾记 -- ESXi 系统升级+回滚<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/esxi-upgrade.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-10-13 17:21:45 / 修改时间：23:51:00" itemprop="dateCreated datePublished" datetime="2023-10-13T17:21:45+08:00">2023-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%98%E8%85%BE%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">折腾记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本着有活必整的原则，👴又给自个挖了个大坑</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ESXi-系统升级-–-因-RAID-消失又回滚"><a href="#ESXi-系统升级-–-因-RAID-消失又回滚" class="headerlink" title="ESXi 系统升级 – 因 RAID 消失又回滚"></a>ESXi 系统升级 – 因 RAID 消失又回滚</h1><h2 id="系统升级之旅"><a href="#系统升级之旅" class="headerlink" title="系统升级之旅"></a>系统升级之旅</h2><p>2023.10.12 晚闲来无事，日常维护打补丁。但还是有一台 ESXi 主机是 6.5 版本，其他都是 7.0 版本，高版本没法迁移虚拟机到低版本上，就想给他升个级统一一下 （👴应该先考虑就这一台机器不升级一定是有原因的）</p>
+<p>那么就开始动手，经过一番网上冲浪，找到<a target="_blank" rel="noopener" href="https://my.vmware.com/zh/group/vmware/patch#search">下载资源</a>，登录、选择 7.0，下载，上传一气呵成</p>
+<blockquote>
+<p>下载: VMware-ESXi-7.0b-16324942-depot.zip<br>上传: web 管理页直接上传升级包到存储设备上, 记住上传到的数据存储名称</p>
+</blockquote>
+<p>开启 SSH，登录 ESXi 主机，执行升级命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先列出升级的模块:</span></span><br><span class="line">[root@esxi-t4:~] esxcli software sources profile list -d /vmfs/volumes/datastore3/VMware-ESXi-7.0b-16324942-depot.zip</span><br><span class="line">Name                          Vendor        Acceptance Level</span><br><span class="line">----------------------------  ------------  ----------------</span><br><span class="line">ESXi-7.0bs-16321839-no-tools  VMware, Inc.  PartnerSupported</span><br><span class="line">ESXi-7.0b-16324942-no-tools   VMware, Inc.  PartnerSupported</span><br><span class="line">ESXi-7.0bs-16321839-standard  VMware, Inc.  PartnerSupported</span><br><span class="line">ESXi-7.0b-16324942-standard   VMware, Inc.  PartnerSupported</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来要升级的模块是: ESXi-7.0b-16324942-standard, 先添加 --dry-run 参数试运行一下（安装或更新过程的试运行不会进行任何更改，但会打印出在不带--dry-run选项的情况下运行命令时将执行操作）</span></span><br><span class="line">[root@esxi-t4:~] esxcli software profile update -p ESXi-7.0b-16324942-standard -d -d /vmfs/volumes/datastore3/VMware-ESXi-7.0b-16324942-depot.zip --dry-run</span><br><span class="line">Update Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted <span class="keyword">for</span> the changes to be effective.</span><br><span class="line">   Reboot Required: <span class="literal">true</span></span><br><span class="line">   VIBs Installed: VMW_bootbank_bnxtnet_216.0.50.0-4vmw.700.1.0.15843807, VMW_bootbank_bnxtroce_216.0.58.0-1vmw.700.1.0.15843807, VMW_bootbank_brcmfcoe_12.0.1500.0-1vmw.700.1.0.15843807, VMW_bootbank_brcmnvmefc_12.4.293.2-3vmw.700.1.0.15843807, VMW_bootbank_elxiscsi_12.0.1200.0-1vmw.700.1.0.15843807, VMW_bootbank_elxnet_12.0.1250.0-5vmw.700.1.0.15843807, VMW_bootbank_i40en_1.8.1.16-1vmw.700.1.0.15843807, VMW_bootbank_i40iwn_1.1.2.5-1vmw.700.1.0.15843807, VMW_bootbank_iavmd_2.0.0.1055-3vmw.700.1.0.15843807, VMW_bootbank_igbn_0.1.1.0-6vmw.700.1.0.15843807, VMW_bootbank_iser_1.1.0.0-1vmw.700.1.0.15843807, VMW_bootbank_ixgben_1.7.1.26-1vmw.700.1.0.15843807, VMW_bootbank_lpfc_12.4.293.3-5vmw.700.1.0.15843807, VMW_bootbank_lpnic_11.4.62.0-1vmw.700.1.0.15843807, VMW_bootbank_lsi-mr3_7.712.50.00-1vmw.700.1.0.15843807, VMW_bootbank_lsi-msgpt2_20.00.06.00-2vmw.700.1.0.15843807, VMW_bootbank_lsi-msgpt35_13.00.12.00-1vmw.700.1.0.15843807, VMW_bootbank_lsi-msgpt3_17.00.10.00-1vmw.700.1.0.15843807, VMW_bootbank_mtip32xx-native_3.9.8-1vmw.700.1.0.15843807, VMW_bootbank_ne1000_0.8.4-10vmw.700.1.0.15843807, VMW_bootbank_nenic_1.0.29.0-1vmw.700.1.0.15843807, VMW_bootbank_nfnic_4.0.0.44-1vmw.700.1.0.15843807, VMW_bootbank_nhpsa_2.0.50-1vmw.700.1.0.15843807, VMW_bootbank_nmlx4-core_3.19.16.7-1vmw.700.1.0.15843807, VMW_bootbank_nmlx4-en_3.19.16.7-1vmw.700.1.0.15843807, VMW_bootbank_nmlx4-rdma_3.19.16.7-1vmw.700.1.0.15843807, VMW_bootbank_nmlx5-core_4.19.16.7-1vmw.700.1.0.15843807, VMW_bootbank_nmlx5-rdma_4.19.16.7-1vmw.700.1.0.15843807, VMW_bootbank_ntg3_4.1.4.1-1vmw.700.1.0.15843807, VMW_bootbank_nvme-pcie_1.2.2.14-1vmw.700.1.25.16324942, VMW_bootbank_nvmerdma_1.0.0.0-1vmw.700.1.0.15843807, VMW_bootbank_nvmxnet3-ens_2.0.0.22-1vmw.700.1.0.15843807, VMW_bootbank_nvmxnet3_2.0.0.30-1vmw.700.1.0.15843807, VMW_bootbank_pvscsi_0.1-2vmw.700.1.0.15843807, VMW_bootbank_qcnic_1.0.15.0-8vmw.700.1.0.15843807, VMW_bootbank_qedentv_3.12.1.0-23vmw.700.1.0.15843807, VMW_bootbank_qedrntv_3.12.1.2-12vmw.700.1.0.15843807, VMW_bootbank_qfle3_1.0.66.0-5vmw.700.1.0.15843807, VMW_bootbank_qfle3f_1.0.51.0-12vmw.700.1.0.15843807, VMW_bootbank_qfle3i_1.0.15.0-6vmw.700.1.0.15843807, VMW_bootbank_qflge_1.1.0.11-1vmw.700.1.0.15843807, VMW_bootbank_rste_2.0.2.0088-7vmw.700.1.0.15843807, VMW_bootbank_sfvmk_2.0.0.1004-3vmw.700.1.0.15843807, VMW_bootbank_smartpqi_1.0.4.3011-1vmw.700.1.0.15843807, VMW_bootbank_vmkata_0.1-1vmw.700.1.0.15843807, VMW_bootbank_vmkfcoe_1.0.0.2-1vmw.700.1.0.15843807, VMW_bootbank_vmkusb_0.1-1vmw.700.1.25.16324942, VMW_bootbank_vmw-ahci_1.3.9-1vmw.700.1.0.15843807, VMware_bootbank_cpu-microcode_7.0.0-1.25.16324942, VMware_bootbank_crx_7.0.0-1.25.16324942, VMware_bootbank_elx-esx-libelxima.so_12.0.1200.0-2vmw.700.1.0.15843807, VMware_bootbank_esx-base_7.0.0-1.25.16324942, VMware_bootbank_esx-dvfilter-generic-fastpath_7.0.0-1.25.16324942, VMware_bootbank_esx-update_7.0.0-1.25.16324942, VMware_bootbank_esx-xserver_7.0.0-1.25.16324942, VMware_bootbank_loadesx_7.0.0-1.25.16324942, VMware_bootbank_lsuv2-hpv2-hpsa-plugin_1.0.0-2vmw.700.1.0.15843807, VMware_bootbank_lsuv2-intelv2-nvme-vmd-plugin_1.0.0-2vmw.700.1.0.15843807, VMware_bootbank_lsuv2-lsiv2-drivers-plugin_1.0.0-2vmw.700.1.0.15843807, VMware_bootbank_lsuv2-nvme-pcie-plugin_1.0.0-1vmw.700.1.0.15843807, VMware_bootbank_lsuv2-oem-dell-plugin_1.0.0-1vmw.700.1.0.15843807, VMware_bootbank_lsuv2-oem-hp-plugin_1.0.0-1vmw.700.1.0.15843807, VMware_bootbank_lsuv2-oem-lenovo-plugin_1.0.0-1vmw.700.1.0.15843807, VMware_bootbank_lsuv2-smartpqiv2-plugin_1.0.0-3vmw.700.1.0.15843807, VMware_bootbank_native-misc-drivers_7.0.0-1.25.16324942, VMware_bootbank_qlnativefc_4.0.1.0-3vmw.700.1.0.15843807, VMware_bootbank_vdfs_7.0.0-1.25.16324942, VMware_bootbank_vmware-esx-esxcli-nvme-plugin_1.2.0.37-1vmw.700.1.0.15843807, VMware_bootbank_vsan_7.0.0-1.25.16324942, VMware_bootbank_vsanhealth_7.0.0-1.25.16324942, VMware_locker_tools-light_11.1.0.16036546-16321839</span><br><span class="line">   VIBs Removed: Adaptec_Inc_bootbank_scsi-aacraid_6.0.6.2.1.58012-1OEM.600.0.0.2494585, VMW_bootbank_ata-libata-92_3.00.9.2-16vmw.650.0.0.4564106, VMW_bootbank_ata-pata-amd_0.3.10-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-atiixp_0.4.6-4vmw.650.0.0.4564106, VMW_bootbank_ata-pata-cmd64x_0.2.5-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-hpt3x2n_0.3.4-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-pdc2027x_1.0-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-serverworks_0.4.3-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-sil680_0.4.8-3vmw.650.0.0.4564106, VMW_bootbank_ata-pata-via_0.3.3-2vmw.650.0.0.4564106, VMW_bootbank_block-cciss_3.6.14-10vmw.650.0.0.4564106, VMW_bootbank_bnxtnet_20.6.101.7-23vmw.650.3.96.13932383, VMW_bootbank_brcmfcoe_11.4.1078.26-14vmw.650.3.170.18678235, VMW_bootbank_char-random_1.0-3vmw.650.0.0.4564106, VMW_bootbank_ehci-ehci-hcd_1.0-4vmw.650.0.14.5146846, VMW_bootbank_elxnet_11.1.91.0-1vmw.650.0.0.4564106, VMW_bootbank_hid-hid_1.0-3vmw.650.0.0.4564106, VMW_bootbank_i40en_1.8.1.9-2vmw.650.3.96.13932383, VMW_bootbank_igbn_0.1.1.0-4vmw.650.3.96.13932383, VMW_bootbank_ima-qla4xxx_2.02.18-1vmw.650.0.0.4564106, VMW_bootbank_ipmi-ipmi-devintf_39.1-5vmw.650.2.50.8294253, VMW_bootbank_ipmi-ipmi-msghandler_39.1-5vmw.650.2.50.8294253, VMW_bootbank_ipmi-ipmi-si-drv_39.1-4vmw.650.0.0.4564106, VMW_bootbank_ixgben_1.7.1.15-1vmw.650.3.96.13932383, VMW_bootbank_lpfc_11.4.33.26-14vmw.650.3.138.16576891, VMW_bootbank_lsi-mr3_7.708.07.00-3vmw.650.3.96.13932383, VMW_bootbank_lsi-msgpt2_20.00.06.00-2vmw.650.3.96.13932383, VMW_bootbank_lsi-msgpt35_09.00.00.00-5vmw.650.3.96.13932383, VMW_bootbank_lsi-msgpt3_17.00.02.00-1vmw.650.3.96.13932383, VMW_bootbank_misc-cnic-register_1.78.75.v60.7-1vmw.650.0.0.4564106, VMW_bootbank_misc-drivers_6.5.0-3.96.13932383, VMW_bootbank_mtip32xx-native_3.9.5-1vmw.650.0.0.4564106, VMW_bootbank_ne1000_0.8.3-8vmw.650.2.75.10884925, VMW_bootbank_nenic_1.0.29.0-1vmw.650.3.96.13932383, VMW_bootbank_net-bnx2_2.2.4f.v60.10-2vmw.650.0.0.4564106, VMW_bootbank_net-bnx2x_1.78.80.v60.12-1vmw.650.0.0.4564106, VMW_bootbank_net-cdc-ether_1.0-3vmw.650.0.0.4564106, VMW_bootbank_net-cnic_1.78.76.v60.13-2vmw.650.0.0.4564106, VMW_bootbank_net-e1000_8.0.3.1-5vmw.650.3.153.17459147, VMW_bootbank_net-e1000e_3.2.2.1-2vmw.650.0.0.4564106, VMW_bootbank_net-enic_2.1.2.38-2vmw.650.0.0.4564106, VMW_bootbank_net-fcoe_1.0.29.9.3-7vmw.650.0.0.4564106, VMW_bootbank_net-forcedeth_0.61-2vmw.650.0.0.4564106, VMW_bootbank_net-igb_5.0.5.1.1-5vmw.650.0.0.4564106, VMW_bootbank_net-ixgbe_3.7.13.7.14iov-20vmw.650.0.0.4564106, VMW_bootbank_net-libfcoe-92_1.0.24.9.4-8vmw.650.0.0.4564106, VMW_bootbank_net-mlx4-core_1.9.7.0-1vmw.650.0.0.4564106, VMW_bootbank_net-mlx4-en_1.9.7.0-1vmw.650.0.0.4564106, VMW_bootbank_net-nx-nic_5.0.621-5vmw.650.0.0.4564106, VMW_bootbank_net-tg3_3.131d.v60.4-2vmw.650.0.0.4564106, VMW_bootbank_net-usbnet_1.0-3vmw.650.0.0.4564106, VMW_bootbank_net-vmxnet3_1.1.3.0-3vmw.650.3.138.16576891, VMW_bootbank_nhpsa_2.0.22-3vmw.650.2.50.8294253, VMW_bootbank_nmlx4-core_3.16.0.0-1vmw.650.0.0.4564106, VMW_bootbank_nmlx4-en_3.16.0.0-1vmw.650.0.0.4564106, VMW_bootbank_nmlx4-rdma_3.16.0.0-1vmw.650.0.0.4564106, VMW_bootbank_nmlx5-core_4.16.0.0-1vmw.650.0.0.4564106, VMW_bootbank_ntg3_4.1.3.2-1vmw.650.2.75.10884925, VMW_bootbank_nvme_1.2.2.28-5vmw.650.3.170.18678235, VMW_bootbank_nvmxnet3_2.0.0.23-1vmw.650.1.36.7388607, VMW_bootbank_ohci-usb-ohci_1.0-3vmw.650.0.0.4564106, VMW_bootbank_pvscsi_0.1-1vmw.650.1.26.5969303, VMW_bootbank_qedentv_2.0.6.4-8vmw.650.2.50.8294253, VMW_bootbank_qfle3_1.0.2.7-1vmw.650.0.0.4564106, VMW_bootbank_qflge_1.1.0.3-1vmw.650.0.0.4564106, VMW_bootbank_qlnativefc_2.1.73.0-5vmw.650.3.96.13932383, VMW_bootbank_sata-ahci_3.0-26vmw.650.1.26.5969303, VMW_bootbank_sata-ata-piix_2.12-10vmw.650.0.0.4564106, VMW_bootbank_sata-sata-nv_3.5-4vmw.650.0.0.4564106, VMW_bootbank_sata-sata-promise_2.12-3vmw.650.0.0.4564106, VMW_bootbank_sata-sata-sil24_1.1-1vmw.650.0.0.4564106, VMW_bootbank_sata-sata-sil_2.3-4vmw.650.0.0.4564106, VMW_bootbank_sata-sata-svw_2.3-3vmw.650.0.0.4564106, VMW_bootbank_scsi-adp94xx_1.0.8.12-6vmw.650.0.0.4564106, VMW_bootbank_scsi-aic79xx_3.1-5vmw.650.0.0.4564106, VMW_bootbank_scsi-bnx2fc_1.78.78.v60.8-1vmw.650.0.0.4564106, VMW_bootbank_scsi-bnx2i_2.78.76.v60.8-1vmw.650.0.0.4564106, VMW_bootbank_scsi-fnic_1.5.0.45-3vmw.650.0.0.4564106, VMW_bootbank_scsi-hpsa_6.0.0.84-1vmw.650.0.0.4564106, VMW_bootbank_scsi-ips_7.12.05-4vmw.650.0.0.4564106, VMW_bootbank_scsi-iscsi-linux-92_1.0.0.2-3vmw.650.0.0.4564106, VMW_bootbank_scsi-libfc-92_1.0.40.9.3-5vmw.650.0.0.4564106, VMW_bootbank_scsi-megaraid-mbox_2.20.5.1-6vmw.650.0.0.4564106, VMW_bootbank_scsi-megaraid-sas_6.603.55.00-2vmw.650.0.0.4564106, VMW_bootbank_scsi-megaraid2_2.00.4-9vmw.650.0.0.4564106, VMW_bootbank_scsi-mpt2sas_19.00.00.00-1vmw.650.0.0.4564106, VMW_bootbank_scsi-mptsas_4.23.01.00-10vmw.650.0.0.4564106, VMW_bootbank_scsi-mptspi_4.23.01.00-10vmw.650.0.0.4564106, VMW_bootbank_scsi-qla4xxx_5.01.03.2-7vmw.650.0.0.4564106, VMW_bootbank_shim-iscsi-linux-9-2-1-0_6.5.0-0.0.4564106, VMW_bootbank_shim-iscsi-linux-9-2-2-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libata-9-2-1-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libata-9-2-2-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libfc-9-2-1-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libfc-9-2-2-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libfcoe-9-2-1-0_6.5.0-0.0.4564106, VMW_bootbank_shim-libfcoe-9-2-2-0_6.5.0-0.0.4564106, VMW_bootbank_shim-vmklinux-9-2-1-0_6.5.0-0.0.4564106, VMW_bootbank_shim-vmklinux-9-2-2-0_6.5.0-0.0.4564106, VMW_bootbank_shim-vmklinux-9-2-3-0_6.5.0-0.0.4564106, VMW_bootbank_smartpqi_1.0.1.553-28vmw.650.3.96.13932383, VMW_bootbank_uhci-usb-uhci_1.0-3vmw.650.0.0.4564106, VMW_bootbank_usb-storage-usb-storage_1.0-3vmw.650.0.0.4564106, VMW_bootbank_usbcore-usb_1.0-3vmw.650.2.50.8294253, VMW_bootbank_vmkata_0.1-1vmw.650.1.36.7388607, VMW_bootbank_vmkplexer-vmkplexer_6.5.0-0.0.4564106, VMW_bootbank_vmkusb_0.1-1vmw.650.3.170.18678235, VMW_bootbank_vmw-ahci_1.1.6-1vmw.650.3.96.13932383, VMW_bootbank_xhci-xhci_1.0-3vmw.650.0.0.4564106, VMware_bootbank_cpu-microcode_6.5.0-3.134.16576879, VMware_bootbank_emulex-esx-elxnetcli_11.1.28.0-0.0.4564106, VMware_bootbank_esx-base_6.5.0-3.191.20448942, VMware_bootbank_esx-dvfilter-generic-fastpath_6.5.0-1.36.7388607, VMware_bootbank_esx-tboot_6.5.0-3.191.20448942, VMware_bootbank_esx-xserver_6.5.0-3.184.19588618, VMware_bootbank_lsu-hp-hpsa-plugin_2.0.0-16vmw.650.3.96.13932383, VMware_bootbank_lsu-lsi-drivers-plugin_1.0.0-1vmw.650.2.79.11925212, VMware_bootbank_lsu-lsi-lsi-mr3-plugin_1.0.0-11vmw.650.2.75.10884925, VMware_bootbank_lsu-lsi-lsi-msgpt3-plugin_1.0.0-8vmw.650.2.79.11925212, VMware_bootbank_lsu-lsi-megaraid-sas-plugin_1.0.0-8vmw.650.1.26.5969303, VMware_bootbank_lsu-lsi-mpt2sas-plugin_2.0.0-6vmw.650.1.26.5969303, VMware_bootbank_native-misc-drivers_6.5.0-3.120.15256549, VMware_bootbank_rste_2.0.2.0088-4vmw.650.0.0.4564106, VMware_bootbank_vmware-esx-esxcli-nvme-plugin_1.2.0.36-3.96.13932383, VMware_bootbank_vsan_6.5.0-3.191.20076035, VMware_bootbank_vsanhealth_6.5.0-3.191.20076036, VMware_locker_tools-light_6.5.0-3.191.20448942</span><br><span class="line">   VIBs Skipped: VMware_bootbank_esx-ui_1.34.0-15603211</span><br><span class="line"><span class="comment"># 正常打印出这样的内容就可以去掉 --dry-run 正式执行更新了</span></span><br><span class="line">[root@esxi-t4:~] esxcli software profile update -p ESXi-7.0b-16324942-standard -d -d /vmfs/volumes/datastore3/VMware-ESXi-7.0b-16324942-depot.zip</span><br><span class="line"><span class="comment"># 重启后生效</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考内容： <a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_54210259/article/details/126525982">在线升级版本：ESXI6.5升级7.0</a></p>
+</blockquote>
+<p>重启完成后成功升级到 7.0 版本 ESXi，当然，也不出意外的出了意外 👉 我虚拟机呢？咋无法访问了？，，，哎不对硬盘呢？😅</p>
+<ul>
+<li>然后发现不在 RAID 上的虚拟机正常，在的全是红叹号（忘了截个图记录一下壮观的场面了）</li>
+<li>再回去看看这打印的日志输出，开头一个 <code>VIBs Removed: Adaptec_Inc_bootbank_scsi-aacraid_6.0.6.2.1.58012-1OEM.600.0.0.2494585,</code> 😅 驱动被扬了</li>
+</ul>
+<h2 id="系统回滚之旅"><a href="#系统回滚之旅" class="headerlink" title="系统回滚之旅"></a>系统回滚之旅</h2><h3 id="尝试寻找新驱动"><a href="#尝试寻找新驱动" class="headerlink" title="尝试寻找新驱动"></a>尝试寻找新驱动</h3><ul>
+<li>👴大意了，忘了这台机器上有 RAID 卡（PM8060），看到会移除旧驱动也没考虑到新版本需不需要重装驱动的问题</li>
+<li>那既然旧驱动没了，找找新驱动吧<ul>
+<li>然后，果然，没有支持 7.x 的驱动😅</li>
+<li>在服务器上倒是找到了 6.x 下能用的驱动</li>
+<li>在浪潮产品支持页也能找到该 RAID 卡的驱动，也最高只有 6.x: <a target="_blank" rel="noopener" href="https://www.inspur.com/eportal/ui?struts.portlet.action=/portlet/download-front!toView.action&pageId=2367231&product_id=4193&index=0&part_id=#driver">驱动下载</a></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231013212336890.png" alt="image-20231013212336890"></p>
+<ul>
+<li>那没辙了，回滚吧</li>
+</ul>
+<h3 id="降级安装-6-x-版本回滚"><a href="#降级安装-6-x-版本回滚" class="headerlink" title="降级安装: 6.x 版本回滚"></a>降级安装: 6.x 版本回滚</h3><ul>
+<li><p>Bing 一搜能看到可以在开机加载时 <code>Shift+r</code> 能从 6.7 回滚到 6.5，👴 一激动去试了三遍都不行，结果发现 7.0 下行不通了: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/1033604?lang=zh_CN">恢复为早期版本的 ESXi (1033604)</a>: <ul>
+<li><blockquote>
+<p>由于引导设备的分区有所更改，因此在升级到 ESXi 7.0 的情况下，将无法恢复到早期版本。注意：要在升级到 7.0 版之后使用 ESXi 的早期版本，必须在升级之前创建引导设备的备份，或者重新安装所需的版本。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>得，重装⑧</p>
+</li>
+<li><p>下载 ESXi 资源 👉 <a target="_blank" rel="noopener" href="https://mirror.mahanserver.net/VMware/ESXI/6.5.0/">6.5 版本</a></p>
+<ul>
+<li>之前那个官网上的<a target="_blank" rel="noopener" href="https://my.vmware.com/zh/group/vmware/patch#search">下载链接</a>应该也是可以的（不过这次重装用的不是官网的</li>
+<li>还是求稳妥吧，毕竟之前系统版本是 6.5，还是回滚回 6.5 好了</li>
+</ul>
+</li>
+<li><p>驱动下载 👉 上面的<a target="_blank" rel="noopener" href="https://www.inspur.com/eportal/ui?struts.portlet.action=/portlet/download-front!toView.action&pageId=2367231&product_id=4193&index=0&part_id=#driver">下载链接</a></p>
+<ul>
+<li>下载后解压 <code>DRV-ESX65-ADAP</code>，把里面的 <code>aacraid-esxi6.0-certification-package-1.2.1.58012.tar</code> 也解压了</li>
+<li><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231013214752978.png" alt="image-20231013214752978"></li>
+</ul>
+</li>
+<li><p>封装驱动需要用到 <a target="_blank" rel="noopener" href="https://github.com/VFrontDe-Org/ESXi-Customizer-PS">ESXi-Customizer-PS.ps1</a></p>
+<ul>
+<li>依赖安装: <a target="_blank" rel="noopener" href="https://developer.vmware.com/powercli/installation-guide">PowerCLI</a>, 安装参考这个连接即可</li>
+<li>这里直接使用 powershell Bypass 绕过脚本限制，不过这样需要先修改一下原来的脚本，直接指定输出目录（通过 powershell 调用的时候这个 Path 是 null）：<ul>
+<li>第 26 行中 <code>[string]$outDir = $(Split-Path $MyInvocation.MyCommand.Path),</code> 修改为 <code>[string]$outDir = &quot;D:\&quot;,</code> 即指定保存到 D 盘根路径</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>执行封装命令:</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\ex7\Desktop&gt; powershell.exe <span class="literal">-ExecutionPolicy</span> Bypass <span class="operator">-File</span> .\ESXi<span class="literal">-Customizer-PS</span>.ps1 <span class="literal">-izip</span> .\VMware<span class="literal">-ESXi-6</span>.<span class="number">5.0</span><span class="literal">-Update3-13932383-HPE-preGen9-650</span>.U3.<span class="number">9.6</span>.<span class="number">8.8</span><span class="literal">-Jun2019-depot</span>.zip .\DRV<span class="literal">-ESX65-ADAP</span>\ <span class="literal">-nsc</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Running with PowerShell version <span class="number">5.1</span> and VMware PowerCLI version <span class="number">12.2</span>.<span class="number">0</span> build <span class="number">17538434</span></span><br><span class="line"></span><br><span class="line">Adding base Offline bundle .\VMware<span class="literal">-ESXi-6</span>.<span class="number">5.0</span><span class="literal">-Update3-13932383-HPE-preGen9-650</span>.U3.<span class="number">9.6</span>.<span class="number">8.8</span><span class="literal">-Jun2019-depot</span>.zip ... [<span class="type">OK</span>]</span><br><span class="line"></span><br><span class="line">Getting Imageprofiles, please wait ... [<span class="type">OK</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">Using</span> Imageprofile HPE-ESXi-6.5.0-Update3-preGen9-650.U3.9.6.8.8 ...</span><br><span class="line">(Dated <span class="number">06</span>/<span class="number">13</span>/<span class="number">2019</span> <span class="number">09</span>:<span class="number">29</span>:<span class="number">33</span>, AcceptanceLevel: PartnerSupported,</span><br><span class="line">HPE Custom Image Profile <span class="keyword">for</span> ESXi <span class="number">6.5</span>.<span class="number">0</span> Depot)</span><br><span class="line"></span><br><span class="line">Loading Offline bundles and VIB files from .\DRV<span class="literal">-ESX65-ADAP</span>\ ...</span><br><span class="line">   Loading C:\Users\ex7\Desktop\DRV<span class="literal">-ESX65-ADAP</span>\aacraid<span class="literal">-esxi6</span>.<span class="number">0</span><span class="literal">-1</span>.<span class="number">2.1</span>.<span class="number">58012</span>.zip ... [<span class="type">OK</span>]</span><br><span class="line">      Add VIB scsi<span class="literal">-aacraid</span> <span class="number">6.0</span>.<span class="number">6.2</span>.<span class="number">1.58012</span><span class="literal">-1OEM</span>.<span class="number">600.0</span>.<span class="number">0.2494585</span> [<span class="type">OK</span>, <span class="type">replaced</span> <span class="number">1.1</span><span class="type">.5.1</span>-<span class="number">9</span><span class="type">vmw.650.0.0.4564106</span>]</span><br><span class="line">   Loading C:\Users\ex7\Desktop\DRV<span class="literal">-ESX65-ADAP</span>\vmware<span class="literal">-esxi-drivers-scsi-aacraid-600</span>.<span class="number">6.2</span>.<span class="number">1.58012</span>.<span class="literal">-1</span>.<span class="number">0.6</span>.<span class="number">2494585</span>.x86_64.vib ... [<span class="type">OK</span>]</span><br><span class="line">      Add VIB scsi<span class="literal">-aacraid</span> <span class="number">6.0</span>.<span class="number">6.2</span>.<span class="number">1.58012</span><span class="literal">-1OEM</span>.<span class="number">600.0</span>.<span class="number">0.2494585</span> [<span class="type">IGNORED</span>, <span class="type">already</span> <span class="type">added</span>]</span><br><span class="line"></span><br><span class="line">Exporting the Imageprofile to <span class="string">&#x27;D:\\HPE-ESXi-6.5.0-Update3-preGen9-650.U3.9.6.8.8-customized.iso&#x27;</span>. Please be patient ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">All done.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>后续安装的时候注意选择第二个 <code>Install ESXi, preserve VMFS datastore</code><ul>
+<li>因为是降级安装，所以没法选择 Upgrade，然后选择保留数据</li>
+</ul>
+</li>
+<li>重装完成后进行虚拟机重新注册即可</li>
+</ul>
+<blockquote>
+<p>参考内容: <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39122545/article/details/118730434">浪潮服务器安装ESXI6.7 无raid驱动解决方案</a></p>
+</blockquote>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><ul>
+<li>一切又回到了原来的样子😅</li>
+<li>教训++:<ul>
+<li>驱动</li>
+<li>备份</li>
+<li>稳定</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/10/13/esxi-upgrade/" title="vSphere 折腾记 -- ESXi 系统升级+回滚">https://ex7l0it.github.io/2023/10/13/esxi-upgrade/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Ops/" rel="tag"><i class="fa fa-tag"></i> Ops</a>
+              <a href="/tags/vsphere/" rel="tag"><i class="fa fa-tag"></i> vsphere</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/20/shell/" rel="prev" title="基础知识 - shell 💻">
+                  <i class="fa fa-angle-left"></i> 基础知识 - shell 💻
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/13/vsphere/" rel="next" title="vSphere 安装 & 配置">
+                  vSphere 安装 & 配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

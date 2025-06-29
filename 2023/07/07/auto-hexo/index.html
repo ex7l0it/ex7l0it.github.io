@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="使用 Github Actions 自动部署 Hexo 博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客自动化部署">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/07/07/auto-hexo/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="使用 Github Actions 自动部署 Hexo 博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-07T04:43:55.000Z">
+<meta property="article:modified_time" content="2023-07-28T16:00:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="Github">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/07/07/auto-hexo/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/07/07/auto-hexo/","path":"2023/07/07/auto-hexo/","title":"Hexo 博客自动化部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo 博客自动化部署 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Github-Actions-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2-Hexo-%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.</span> <span class="nav-text">使用 Github Actions 自动化部署 Hexo 博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Github-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. Github 创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA-Github-Token"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 创建 Github Token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%BA-Private-%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA-secrets"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 为 Private 仓库创建 secrets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%9B%E5%BB%BA-Github-Actions-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 创建 Github Actions 配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%AE%8C%E6%88%90"><span class="nav-number">1.1.5.</span> <span class="nav-text">5. 完成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%85%B6%E4%BB%96%E7%9A%84%E5%A5%BD%E4%B8%9C%E8%A5%BF"><span class="nav-number">1.1.6.</span> <span class="nav-text">6. 其他的好东西</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/07/07/auto-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo 博客自动化部署 | Blog">
+      <meta itemprop="description" content="使用 Github Actions 自动部署 Hexo 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo 博客自动化部署<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/auto-hexo.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-07 12:43:55" itemprop="dateCreated datePublished" datetime="2023-07-07T12:43:55+08:00">2023-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-07-29 00:00:00" itemprop="dateModified" datetime="2023-07-29T00:00:00+08:00">2023-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>896</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">使用 Github Actions 自动部署 Hexo 博客</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="使用-Github-Actions-自动化部署-Hexo-博客"><a href="#使用-Github-Actions-自动化部署-Hexo-博客" class="headerlink" title="使用 Github Actions 自动化部署 Hexo 博客"></a>使用 Github Actions 自动化部署 Hexo 博客</h1><blockquote>
+<p>2023.07.29 更新: 不使用原来的 <code>Personal access tokens (classic)</code>，改用新版的 <code>Fine-grained personal access tokens</code></p>
+</blockquote>
+<p>环境信息:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo: 6.3.0</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 22.5.0 13.4.1</span><br><span class="line">node: 20.3.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>首先最基本的：</p>
+<ol>
+<li>会用 Git 以及 Github (废话)</li>
+<li>会用 Hexo 搭建博客 🤔<ul>
+<li>头一次用 Hexo 也问题不大，<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">官方文档</a>写的很详细，照着操作就会了</li>
+<li>重点关注如何修改配置文件<ul>
+<li><code>_config.yml</code> (hexo 配置文件: 看<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">官方文档</a>)</li>
+<li><code>_config.xxxx.yml</code> (xxxx主题的配置文件: 看对应主题的文档, 例如正在用的 <a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/theme-settings/">NexT</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-Github-创建仓库"><a href="#1-Github-创建仓库" class="headerlink" title="1. Github 创建仓库"></a>1. Github 创建仓库</h3><p>Github 创建两个仓库：</p>
+<ul>
+<li>一个 Public 仓库<ul>
+<li>用于存放build后的博客静态网页</li>
+<li>名称随意<ul>
+<li>注意如果使用 <code>用户名.github.io</code> 为仓库名可以无需加仓库名路径访问</li>
+<li>如果仓库名为 <code>blog</code>, 则需要通过 <code>用户名.github.io/blog</code> 访问</li>
+<li>这里以 <code>ex7l0it.github.io</code> 为例</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一个 Private 仓库<ul>
+<li>用来存放文章源码</li>
+<li>名称随意，以 <code>blog-source</code> 为例</li>
+</ul>
+</li>
+</ul>
+<p>实现目标是更新 Private 仓库数据时会使用 Github Actions 自动 build 博客内容并部署到指定的 Public 仓库中</p>
+<h3 id="2-创建-Github-Token"><a href="#2-创建-Github-Token" class="headerlink" title="2. 创建 Github Token"></a>2. 创建 Github Token</h3><ul>
+<li>如何创建? <ul>
+<li>答: 看<a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token">官方文档</a></li>
+<li>创建一个 Token, 用新的细粒度的 <code>Fine-grained personal access tokens</code></li>
+<li><code>Token name</code> 内容随意, 自己知道用于自动化部署博客即可</li>
+<li><del>Select scopes 部分选择 <code>repo</code> 和 <code>workflow</code> 权限</del></li>
+<li>Repository access 选中 <code>Only select repositories</code>，选择公开仓库 <code>ex7l0it.github.io</code><ul>
+<li>仓库权限中给 <code>Actions</code>、<code>Contents</code>、<code>Pages</code> 分配 <code>Read and write</code> 权限就够</li>
+<li>无需账号权限</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注意 <ul>
+<li>Token 创建完成后只显示一次, 及时复制</li>
+<li>Token 有过期时间, 过期之后记得再次更新(当然这是后话)</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-为-Private-仓库创建-secrets"><a href="#3-为-Private-仓库创建-secrets" class="headerlink" title="3. 为 Private 仓库创建 secrets"></a>3. 为 Private 仓库创建 secrets</h3><ul>
+<li>如何创建?<ul>
+<li>答: 还是看<a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository">官方文档</a></li>
+<li>Name 还是随意, 这里以 <code>DEPLOY_TOKEN</code> 为例</li>
+<li>Secret 内容填写上一步生成的 Token</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-创建-Github-Actions-配置文件"><a href="#4-创建-Github-Actions-配置文件" class="headerlink" title="4. 创建 Github Actions 配置文件"></a>4. 创建 Github Actions 配置文件</h3><ol>
+<li>在 hexo 项目根目录的 <code>.github</code> 文件夹下创建一个名为 <code>workflows</code> 的文件夹</li>
+<li>在刚刚创建的 <code>workflows</code> 文件夹下创建一个 <code>.yml</code> 类型文件，名称随意，这里以 <code>deploy.yml</code> 为例</li>
+<li><code>deploy.yml</code> 内容大致如下:</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Hexo</span> <span class="string">Deploy</span> <span class="string">GitHub</span> <span class="string">Pages</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="comment"># 只有当 master 分支进行 push 的时候执行下面的操作 (也就是当前Private仓库的分支)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span> </span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    </span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@master</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">theme-keep/hexo-deploy-github-pages-action@master</span></span><br><span class="line">      <span class="attr">env:</span></span><br><span class="line">        <span class="comment"># 这里注意 DEPLOY_TOKEN 是上一步设置的 secrets 名称</span></span><br><span class="line">        <span class="attr">PERSONAL_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DEPLOY_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># The repository the action should deploy to.</span></span><br><span class="line">        <span class="comment"># 这里是部署的目标仓库, 格式是Github用户名/一开始创建的 public 仓库名</span></span><br><span class="line">        <span class="attr">PUBLISH_REPOSITORY:</span> <span class="string">ex7l0it/ex7l0it.github.io</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># The branch the action should deploy to.</span></span><br><span class="line">        <span class="comment"># 要部署到的 public 仓库的分支名</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>这里使用的是 <code>theme-keep</code> 团队创建的 <a target="_blank" rel="noopener" href="https://github.com/theme-keep/hexo-deploy-github-pages-action">https://github.com/theme-keep/hexo-deploy-github-pages-action</a> 仓库中的内容，Hexo博客通用, 不局限主题 👍🏻👍🏻👍🏻</p>
+<blockquote>
+<p>杂七杂八的话</p>
+<ul>
+<li>现在 Github 默认分支改成了main, 本人还是习惯用 master(可以在Github设置中更改默认分支名称)</li>
+<li>如果需要将本地的 main 分支改名为 master 分支, 执行 <code>git branch -m main master</code> 即可</li>
+</ul>
+</blockquote>
+<h3 id="5-完成"><a href="#5-完成" class="headerlink" title="5. 完成"></a>5. 完成</h3><ul>
+<li>将 hexo 项目 push 到 Private 仓库即可触发自动化部署，可以在仓库的 Actions 页面看到 Workflows 的工作状态</li>
+<li>Public 仓库中通过 Github Pages 访问即可</li>
+</ul>
+<h3 id="6-其他的好东西"><a href="#6-其他的好东西" class="headerlink" title="6. 其他的好东西"></a>6. 其他的好东西</h3><ul>
+<li>扒拉半天才找到的能用的 <a target="_blank" rel="noopener" href="https://u.sb/css-cdn/">前端 CDNJS 库及 Google Fonts、Ajax 和 Gravatar 国内加速服务</a>，可以用来修改主题默认字体</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/07/07/auto-hexo/" title="Hexo 博客自动化部署">https://ex7l0it.github.io/2023/07/07/auto-hexo/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"><i class="fa fa-tag"></i> Tutorial</a>
+              <a href="/tags/Github/" rel="tag"><i class="fa fa-tag"></i> Github</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/05/hello-world-again/" rel="prev" title="又双又叕重启更新Blog">
+                  <i class="fa fa-angle-left"></i> 又双又叕重启更新Blog
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/16/vim/" rel="next" title="vim 配置与使用">
+                  vim 配置与使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

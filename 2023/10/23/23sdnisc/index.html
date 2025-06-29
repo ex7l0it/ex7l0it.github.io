@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="👴🏻🚪又来打科来杯了，还是一如既往的菜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023 山东省大学生网络安全技能大赛 复盘">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/10/23/23sdnisc/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="👴🏻🚪又来打科来杯了，还是一如既往的菜">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221659202.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221716239.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221757948.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023222109483.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231024160930613.png">
+<meta property="article:published_time" content="2023-10-23T08:01:53.000Z">
+<meta property="article:modified_time" content="2023-10-24T08:57:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Writeup">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221659202.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/10/23/23sdnisc/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/10/23/23sdnisc/","path":"2023/10/23/23sdnisc/","title":"2023 山东省大学生网络安全技能大赛 复盘"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2023 山东省大学生网络安全技能大赛 复盘 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2023-%E7%BD%91%E5%AE%89%E7%9C%81%E8%B5%9B%E5%A4%8D%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">2023 网安省赛复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc-%E7%AD%BE%E5%88%B0"><span class="nav-number">1.2.</span> <span class="nav-text">Misc - 签到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc-%E5%95%8A%E5%90%A7%E5%95%8A%E5%90%A7%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="nav-number">1.3.</span> <span class="nav-text">Misc - 啊吧啊吧的数据包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc-%E6%88%91%E5%BA%94%E8%AF%A5%E5%8E%BB%E7%88%B1%E4%BD%A0"><span class="nav-number">1.4.</span> <span class="nav-text">Misc - 我应该去爱你</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc-%E7%AE%80%E5%8D%95%E7%BC%96%E7%A0%81-%E8%A1%A5"><span class="nav-number">1.5.</span> <span class="nav-text">Misc - 简单编码(补)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc-%E7%A5%9E%E7%A7%98%E7%9A%84-base-%E8%A1%A5"><span class="nav-number">1.6.</span> <span class="nav-text">Misc - 神秘的 base(补)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Crypto-%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80"><span class="nav-number">1.7.</span> <span class="nav-text">Crypto - 小试牛刀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse-%E4%BA%BA%E7%94%9F%E6%A8%A1%E6%8B%9F-%E8%A1%A5"><span class="nav-number">1.8.</span> <span class="nav-text">Reverse - 人生模拟(补)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/10/23/23sdnisc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2023 山东省大学生网络安全技能大赛 复盘 | Blog">
+      <meta itemprop="description" content="👴🏻🚪又来打科来杯了，还是一如既往的菜">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023 山东省大学生网络安全技能大赛 复盘<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/23sdnisc.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-23 16:01:53" itemprop="dateCreated datePublished" datetime="2023-10-23T16:01:53+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-24 16:57:00" itemprop="dateModified" datetime="2023-10-24T16:57:00+08:00">2023-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">👴🏻🚪又来打科来杯了，还是一如既往的菜</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="2023-网安省赛复盘"><a href="#2023-网安省赛复盘" class="headerlink" title="2023 网安省赛复盘"></a>2023 网安省赛复盘</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>AiDai👴🏻🐂🍺</li>
+</ul>
+<h2 id="Misc-签到"><a href="#Misc-签到" class="headerlink" title="Misc - 签到"></a>Misc - 签到</h2><p>下载附件得到游戏地址，随便玩了三四关发现一共 17 关，👴🏻懒的打了，网页源码中发现注释的 <code>index.js</code>，搜 flag 有个 flag 函数，里头就有 flag：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221659202.png" alt="image-20231023221659202"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> r = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+=&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> cars = [<span class="number">25</span>, <span class="number">38</span>, <span class="number">49</span>, <span class="number">33</span>, <span class="number">25</span>, <span class="number">55</span>, <span class="number">45</span>, <span class="number">37</span>, <span class="number">12</span>, <span class="number">22</span>, <span class="number">24</span>, <span class="number">50</span>, <span class="number">12</span>, <span class="number">51</span>, <span class="number">24</span>, <span class="number">51</span>, <span class="number">13</span>, <span class="number">3</span>, <span class="number">16</span>, <span class="number">52</span>, <span class="number">13</span>, <span class="number">38</span>, <span class="number">25</span>, <span class="number">38</span>, <span class="number">13</span>, <span class="number">54</span>, <span class="number">4</span>, <span class="number">52</span>, <span class="number">13</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">55</span>, <span class="number">12</span>, <span class="number">38</span>, <span class="number">8</span>, <span class="number">51</span>, <span class="number">12</span>, <span class="number">38</span>, <span class="number">16</span>, <span class="number">49</span>, <span class="number">14</span>, <span class="number">22</span>, <span class="number">8</span>, <span class="number">54</span>, <span class="number">13</span>, <span class="number">35</span>, <span class="number">37</span>, <span class="number">33</span>, <span class="number">12</span>, <span class="number">55</span>, <span class="number">52</span>, <span class="number">63</span>];</span><br><span class="line"><span class="keyword">let</span> ff = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> iii = <span class="number">0</span>; iii &lt; cars.<span class="property">length</span>; iii++) &#123;</span><br><span class="line">    ff = ff + r[cars[iii]];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*this is flag*/</span></span><br></pre></td></tr></table></figure>
+
+<p>扔到控制台里头🏃🏻‍♀️：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221716239.png" alt="image-20231023221716239"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZmxhZ3tlMWYyMzYzNDQ0NmZmN2E0NTU3MmIzMmQxOWI2NjlhM30=</span><br></pre></td></tr></table></figure>
+
+<p>base64 解码得 flag</p>
+<h2 id="Misc-啊吧啊吧的数据包"><a href="#Misc-啊吧啊吧的数据包" class="headerlink" title="Misc - 啊吧啊吧的数据包"></a>Misc - 啊吧啊吧的数据包</h2><p>通过筛选 POST 请求发现有 shell 交互：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023221757948.png" alt="image-20231023221757948"></p>
+<p>解码 base64 发现这是一个查看 flag 的操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo Y2F0IGZsYWdfMTI2NDQzMTI= | base64 -d   </span><br><span class="line">cat flag_12644312</span><br></pre></td></tr></table></figure>
+
+<p>再结合后面的命令，这个 shell 在逐个字符爆破 flag，采用时间盲注，那么筛选这一段的 http 流数据（30147 - 35661），导出为 csv 便于 python 处理，删掉多余的列之后，保留 value 和时间, 写脚本处理即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;data_out.csv&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line">    now_num = <span class="number">1</span></span><br><span class="line">    now_index = <span class="string">&quot;cut -c&#123;:d&#125;&quot;</span></span><br><span class="line">    old_line = <span class="string">&quot;&quot;</span></span><br><span class="line">    attack_time = <span class="number">0</span></span><br><span class="line">    response_time = <span class="number">0</span></span><br><span class="line">    pattern = <span class="string">&quot;cut -c\d+\) = \&#x27;(.)\&#x27;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            t, payload = line.strip().split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">            <span class="keyword">if</span> payload == <span class="string">&quot;&quot;</span>:</span><br><span class="line">                response_time = <span class="built_in">float</span>(t)</span><br><span class="line">                <span class="comment"># print(attack_time, response_time)</span></span><br><span class="line">                <span class="keyword">if</span> response_time - attack_time &gt;= <span class="number">3</span>:</span><br><span class="line">                    xxx = re.findall(pattern=pattern, string=old_line)</span><br><span class="line">                    <span class="built_in">print</span>(xxx[<span class="number">0</span>], end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                attack_time = <span class="built_in">float</span>(t)</span><br><span class="line">                old_line = line.strip()</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Misc-我应该去爱你"><a href="#Misc-我应该去爱你" class="headerlink" title="Misc - 我应该去爱你"></a>Misc - 我应该去爱你</h2><p>扔到 Audacity 里看频谱，这玩意考眼神：</p>
+<p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231023222109483.png" alt="image-20231023222109483"></p>
+<p>猜了好几遍才猜对，眼神不行了😅</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;dfcba866efb361d89b7240c49653a782&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Misc-简单编码-补"><a href="#Misc-简单编码-补" class="headerlink" title="Misc - 简单编码(补)"></a>Misc - 简单编码(补)</h2><ul>
+<li>比赛日下午脑子一团浆糊，最后十几分钟才意识到这玩意是不是 二进制和八进制</li>
+<li>然后写脚本，寄在这个根据长度判断是二进制还是八进制（但凡判断条件里头加上个 <code>=</code> 就出 flag 了）<ul>
+<li>出来的字符串先 base64 解码，然后 base32 解码，最后 hex2str</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./e949a66de57a5411f5e9935442787a5b.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.read().split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    flag = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(i) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(i) &lt;= <span class="number">4</span>:</span><br><span class="line">            flag += <span class="built_in">chr</span>(<span class="built_in">int</span>(i, <span class="number">8</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            flag += <span class="built_in">chr</span>(<span class="built_in">int</span>(i, <span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    flag = base64.b64decode(flag)</span><br><span class="line">    flag = base64.b32decode(flag)</span><br><span class="line">    flag = binascii.a2b_hex(flag)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Misc-神秘的-base-补"><a href="#Misc-神秘的-base-补" class="headerlink" title="Misc - 神秘的 base(补)"></a>Misc - 神秘的 base(补)</h2><ul>
+<li>👴🏻之前没用过 base 换表，不晓得怎么改，找 b64decode 源码改了一通也不行<ul>
+<li>原来只需要 translate 就行😅</li>
+</ul>
+</li>
+<li>后续补的脚本：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">DecodeB64</span>(<span class="params">text</span>):</span><br><span class="line">    old_table = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span></span><br><span class="line">    l = <span class="string">&quot;OYiv05&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">all</span> = itertools.permutations(l, <span class="number">6</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> <span class="built_in">all</span>:</span><br><span class="line">        item = <span class="string">&quot;&quot;</span>.join(item)</span><br><span class="line">        table = <span class="string">&quot;xbQTZqjN8ERuwlzVfUIrPkeHd&#123;&#125;LK697o2pSsGD+ncgm3CBh/Xy1MF4JAWta&quot;</span>.<span class="built_in">format</span>(item)</span><br><span class="line">        decoded = base64.b64decode(text.translate(text.maketrans(old_table, table)))</span><br><span class="line">        <span class="keyword">if</span> decoded.endswith(<span class="string">b&quot;&#125;&quot;</span>) <span class="keyword">and</span> decoded.isascii():</span><br><span class="line">            <span class="built_in">print</span>(decoded)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    encoded_flag = <span class="string">&quot;EvAzEwo6E9RO4qSAHq42E9KvEv5zHDt34GtdHGJaHD7NHG42bwd=&quot;</span></span><br><span class="line">    DecodeB64(encoded_flag)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h2 id="Crypto-小试牛刀"><a href="#Crypto-小试牛刀" class="headerlink" title="Crypto - 小试牛刀"></a>Crypto - 小试牛刀</h2><p>给的密文：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfm\x82Kj]p~l?\x82ogw\x85mt[K\x8br\x97</span><br></pre></td></tr></table></figure>
+
+<p>猜测是根据 flag{} 进行变换的</p>
+<p>那么找规律发现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">11</span>]: <span class="built_in">ord</span>(<span class="string">&#x27;f&#x27;</span>) - <span class="built_in">ord</span>(<span class="string">&#x27;i&#x27;</span>)</span><br><span class="line">Out[<span class="number">11</span>]: -<span class="number">3</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">12</span>]: <span class="built_in">ord</span>(<span class="string">&#x27;l&#x27;</span>) - <span class="built_in">ord</span>(<span class="string">&#x27;p&#x27;</span>)</span><br><span class="line">Out[<span class="number">12</span>]: -<span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>写解题脚本得到 flag：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = <span class="string">b&quot;ipfm\x82Kj]p~l?\x82ogw\x85mt[K\x8br\x97&quot;</span></span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(d):</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">chr</span>(v-i-<span class="number">3</span>), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># flag&#123;CaSer_1s_VerY_E4sY&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reverse-人生模拟-补"><a href="#Reverse-人生模拟-补" class="headerlink" title="Reverse - 人生模拟(补)"></a>Reverse - 人生模拟(补)</h2><ul>
+<li>👴🏻好久不用 Ghidra 的 patch，给忘了导出要选 ELF（👴🏻选的Binary，👴🏻脑子瓦特了），就说怎么 patch 的程序直接执行不了</li>
+</ul>
+<p>简单看了看程序逻辑，猜测 flag 会在 FUN_0040350f 函数中打印出来，想要执行到这里必须要活到 60 岁，在主函数中的 while 循环里的 FUN_00403914 函数应该是获取当前的年龄：</p>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231024160930613.png" alt="image-20231024160930613" style="zoom:50%;" />
+
+<p>这个函数长这样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00403914</span> <span class="number">55</span>              PUSH       RBP</span><br><span class="line"><span class="number">00403915</span> <span class="number">48</span> <span class="number">89</span> e5        MOV        RBP,RSP</span><br><span class="line"><span class="number">00403918</span> <span class="number">48</span> <span class="number">89</span> <span class="number">7</span>d f8     MOV        qword ptr [RBP + local_10],RDI</span><br><span class="line"><span class="number">0040391</span>c <span class="number">48</span> <span class="number">8b</span> <span class="number">45</span> f8     MOV        RAX,qword ptr [RBP + local_10]</span><br><span class="line"><span class="number">00403920</span> <span class="number">8b</span> <span class="number">40</span> <span class="number">04</span>        MOV        EAX,dword ptr [RAX + <span class="number">0x4</span>]</span><br><span class="line"><span class="number">00403923</span> <span class="number">5</span>d              POP        RBP</span><br><span class="line"><span class="number">00403924</span> c3              RET</span><br><span class="line"><span class="number">00403925</span> <span class="number">90</span>              ??         <span class="number">90</span>h</span><br><span class="line"></span><br><span class="line">undefined4 <span class="title function_">FUN_00403914</span><span class="params">(<span class="type">long</span> param_1)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> *(param_1 + <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那直接 patch, 直接返回 60:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00403914</span> <span class="number">55</span>              PUSH       RBP</span><br><span class="line"><span class="number">00403915</span> <span class="number">48</span> <span class="number">89</span> e5        MOV        RBP,RSP</span><br><span class="line"><span class="number">00403918</span> <span class="number">48</span> <span class="number">89</span> <span class="number">7</span>d f8     MOV        qword ptr [RBP + local_10],RDI</span><br><span class="line"><span class="number">0040391</span>c <span class="number">48</span> c7 c0        MOV        RAX,<span class="number">0x3c</span></span><br><span class="line">            <span class="number">3</span>c <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="number">00403923</span> <span class="number">5</span>d              POP        RBP</span><br><span class="line"><span class="number">00403924</span> c3              RET</span><br><span class="line"><span class="number">00403925</span> <span class="number">90</span>              ??         <span class="number">90</span>h</span><br><span class="line"></span><br><span class="line">undefined8 <span class="title function_">get_age</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0x3c</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后 <code>FUN_0040350f</code> 函数里有这样的条件判断：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((((<span class="number">0</span> &lt; param_2) &amp;&amp; (<span class="number">0</span> &lt; param_3)) &amp;&amp; (<span class="number">0</span> &lt; param_4)) &amp;&amp;</span><br><span class="line">   (((<span class="number">0</span> &lt; param_5 &amp;&amp; (param_1 == <span class="number">0x3c</span>)) &amp;&amp; (local_f0 == <span class="number">0x11120c94</span>))))</span><br></pre></td></tr></table></figure>
+
+<p>直接把对应条件判断指令反过来写, 改完:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((((<span class="literal">true</span>) &amp;&amp; (<span class="literal">true</span>)) &amp;&amp; (<span class="literal">true</span>)) &amp;&amp; (((<span class="literal">true</span> &amp;&amp; (param_1 == <span class="number">60</span>)) &amp;&amp; (local_f0 != <span class="number">0x11120c94</span>))))</span><br></pre></td></tr></table></figure>
+
+<p>Patch 完直接导出 ELF 文件, 运行之后崩溃在了 <code>0x4035de</code> 处（<code>idiv   rcx</code>, 此时 rcx 是 0），直接 nop 掉，重新导出运行就能拿到flag：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> ./simulation2</span><br><span class="line">==============================================================================</span><br><span class="line">||                                                                          ||</span><br><span class="line">||               It&#x27;s another year of Shandong competition.                 ||</span><br><span class="line">||                    Welcome to the life simulator                         ||</span><br><span class="line">||                                                                          ||</span><br><span class="line">||                           author: Mr_hello                               ||</span><br><span class="line">||                                                                          ||</span><br><span class="line">||                                                                          ||</span><br><span class="line">==============================================================================</span><br><span class="line">你出生了,你是一名男孩</span><br><span class="line">flag&#123;76bce138e9f529db4d684e1d5e7875e4&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/10/23/23sdnisc/" title="2023 山东省大学生网络安全技能大赛 复盘">https://ex7l0it.github.io/2023/10/23/23sdnisc/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Writeup/" rel="tag"><i class="fa fa-tag"></i> Writeup</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/13/vsphere/" rel="prev" title="vSphere 安装 & 配置">
+                  <i class="fa fa-angle-left"></i> vSphere 安装 & 配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/04/raspberrypi-openwrt/" rel="next" title="树莓派4B 折腾记 - Openwrt">
+                  树莓派4B 折腾记 - Openwrt <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>

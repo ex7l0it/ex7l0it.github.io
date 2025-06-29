@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="bpww6NIyKNfozn7d3FvMSzrDS7_YpfeHmQhlR76xs0E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ex7l0it.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录 vSphere 安装与配置过程中的坑, 运维笔记内容 +1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vSphere 安装 &amp; 配置">
+<meta property="og:url" content="https://ex7l0it.github.io/2023/10/13/vsphere/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="记录 vSphere 安装与配置过程中的坑, 运维笔记内容 +1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020230629172145.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231015160001086.png">
+<meta property="article:published_time" content="2023-10-13T15:51:15.000Z">
+<meta property="article:modified_time" content="2023-10-18T05:00:00.000Z">
+<meta property="article:author" content="Ex7l0it">
+<meta property="article:tag" content="Ops">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020230629172145.png">
+
+
+<link rel="canonical" href="https://ex7l0it.github.io/2023/10/13/vsphere/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://ex7l0it.github.io/2023/10/13/vsphere/","path":"2023/10/13/vsphere/","title":"vSphere 安装 & 配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vSphere 安装 & 配置 | Blog</title>
+  
+
+
+
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;796a8510575f44a696b7122ec8152063&quot;}'></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vSphere"><span class="nav-number">1.</span> <span class="nav-text">vSphere</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vCenter-Server-%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">vCenter Server 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%99%90%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">用户权限限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%86%85%E5%AE%B9%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">镜像内容库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NFS-%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">NFS 共享存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">内容库配置</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ex7l0it"
+      src="https://avatars.githubusercontent.com/u/49543413">
+  <p class="site-author-name" itemprop="name">Ex7l0it</p>
+  <div class="site-description" itemprop="description">佛系更新</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ex7l0it" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ex7l0it" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ex7l0it.github.io/2023/10/13/vsphere/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49543413">
+      <meta itemprop="name" content="Ex7l0it">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="佛系更新">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vSphere 安装 & 配置 | Blog">
+      <meta itemprop="description" content="记录 vSphere 安装与配置过程中的坑, 运维笔记内容 +1">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vSphere 安装 & 配置<a href="https://github.com/ex7l0it/blog-source/tree/master/source/_posts/vsphere.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-13 23:51:15" itemprop="dateCreated datePublished" datetime="2023-10-13T23:51:15+08:00">2023-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 13:00:00" itemprop="dateModified" datetime="2023-10-18T13:00:00+08:00">2023-10-18</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">记录 vSphere 安装与配置过程中的坑, 运维笔记内容 +1</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="vSphere"><a href="#vSphere" class="headerlink" title="vSphere"></a>vSphere</h1><p>VMware vSphere 是 VMware 服务器虚拟化产品套件，包括有 VMware ESXi, VMware vCenter Server, VMware vSphere Client 等（除了这仨之外的👴没用过）</p>
+<ul>
+<li>本文只记录本人挖坑填坑过程中的些许经验，详细的内容请参考大佬🚪的博客&#x2F;文档</li>
+</ul>
+<blockquote>
+<p>写博客的时候发现有佬整理了运维知识库：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.chrisjing.com/017-Vmware%E4%BC%81%E4%B8%9A%E8%99%9A%E6%8B%9F%E5%8C%96/01-esxi%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2/">ESXi服务部署</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.chrisjing.com/017-Vmware%E4%BC%81%E4%B8%9A%E8%99%9A%E6%8B%9F%E5%8C%96/02-vcenter%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2/">vCenter 服务部署</a></li>
+</ul>
+</blockquote>
+<h2 id="vCenter-Server-安装"><a href="#vCenter-Server-安装" class="headerlink" title="vCenter Server 安装"></a>vCenter Server 安装</h2><ul>
+<li>实际需求：<ul>
+<li>内网下搭建 vCenter Server, 用于管理 ESXi 主机, 考虑仅对外开放 vSphere Client 的 Web 入口</li>
+<li>考虑权限问题：公用账号、个人账号、管理账号<ul>
+<li>非管理员只能操控权限内的虚拟机开关机、重启、挂载 ISO 镜像等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>坑点：<ul>
+<li>多台 ESXi 主机分布在不同的路由器子网下导致与 vCenter Server 通信是个问题</li>
+<li>处于一个混乱的网络拓扑：总之挺混乱</li>
+<li>vSphere Client 登录时需要去访问单点登录服务，这玩意没法用 IP + 端口转发，重定向直接寄</li>
+</ul>
+</li>
+<li>最后解决方案：<ul>
+<li>linux 虚拟机做路由转发 + 第三台路由器 👉 解决通信问题</li>
+<li>使用 FQDN + NAT端口转发 👉 解决单点登录</li>
+<li>可能还有更好的解决方案，👴能力有限，就先这么折腾了</li>
+</ul>
+</li>
+</ul>
+<p>安装包: <a target="_blank" rel="noopener" href="https://blog.whsir.com/post-5826.html">下载资源</a></p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><ol>
+<li>Windows 下挂载镜像后直接执行 <code>vcsa-ui-installer\win32\installer.exe</code> ，选择安装</li>
+<li>下一步，同意协议后填写部署目标的 ESXi 主机的相关信息(主机名、服务端口、用户名、密码)</li>
+<li>按照实际情况选择部署大小、存储位置</li>
+<li>进行网络配置：</li>
+</ol>
+<img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/Pasted%20image%2020230629172145.png" alt="Pasted image 20230629172145" style="zoom:50%;" />
+
+
+
+<p>根据实际情况选择网络，然后配置 IP 地址（建议静态分配，手动指定 IP 及 DNS 服务器等）</p>
+<p>FQDN 是可选项，如果需要通过域名访问 vCenter，则可以填写所要使用的域名，需要保证在指定的网络下能够解析该域名，且域名解析结果需要与 IPv4 配置的地址一致（否则第二阶段安装会卡在开始的0%）</p>
+<p>如果不需要域名访问，那么 FQDN 留空，指定 IP 地址，这个 IP 地址将是登录访问 vCenter 的唯一入口（无法通过搭建反向代理或端口转发间接访问）</p>
+<ol start="5">
+<li>等待第一阶段安装完成，进入第二阶段安装（第二阶段安装也可以通过 vCenter Server 虚拟机页面中显示的网页链接访问进行）</li>
+<li>配置 NTP 服务器，可以使用 <code>ntp.aliyun.com</code></li>
+<li>SSO 配置：创建新域，指定 Single Sign-On 域名时如果没啥特殊需求就保持为默认的 <code>vsphere.local</code><ul>
+<li>(不然在后面第二阶段安装时如果这里域名解析失败，会卡在 <code>22%(Starting VMware Security Token Service...)</code>) 👴搁这重装了不知道几遍</li>
+</ul>
+</li>
+<li>下一步等待第二阶段安装完成</li>
+<li>登录时账号是 <code>administrator@vsphere.local</code> (默认的标识源是 <code>localos</code>，所以这里需要显式标明上面的 SSO 域名 <code>vsphere.local</code>，后续可以在 SSO 配置中修改默认标识源)</li>
+<li>许可证：网上一堆</li>
+</ol>
+<blockquote>
+<p>一堆坑点：</p>
+<ul>
+<li>常见端口还是默认的 80 和 443 为好，改了会寄（反正👴弄不好）</li>
+<li>如果有域名，最好还是填写 FQDN（👴部署的时候填了这个）</li>
+<li>在第 7 步中，如果使用创建新的 SSO 域，不要去修改默认的 <code>vsphere.local</code>，不然会导致第二阶段安装卡在 <code>22%(Starting VMware Security Token Service...)</code></li>
+</ul>
+</blockquote>
+<h2 id="用户权限限制"><a href="#用户权限限制" class="headerlink" title="用户权限限制"></a>用户权限限制</h2><ul>
+<li>对于这个权限分配，👴瞎折腾一顿总结的教训：<ul>
+<li>权限配置需要创建一个角色，对角色分配特权<ul>
+<li>进入 <code>系统管理-访问控制-角色</code> 进行新建&#x2F;编辑</li>
+<li>这里根据实际情况分配</li>
+</ul>
+</li>
+<li>然后需要创建一个用户组，然后在权限配置中给这个用户组分配角色<ul>
+<li>从清单中选择需要指定的资源，在其中的权限页面进行添加&#x2F;编辑 </li>
+<li>或进入 <code>系统管理-访问控制-全局权限</code> 进行添加&#x2F;编辑</li>
+</ul>
+</li>
+<li>最后把用户加入到用户组，这个用户就有对应的权限了<ul>
+<li>进入 <code>Single Sign On - 用户和组 - 组</code> 进行添加</li>
+</ul>
+</li>
+<li>(需要保证用户在某一计算资源中有权限，不然直接没法登录)<ul>
+<li>不然会有这提示: <code>无法登录，因为您在连接到此客户端的所有 vCenter Server 系统上均没有权限。</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>更多内容参考官方文档:</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.vmware.com/cn/VMware-vSphere/7.0/com.vmware.vsphere.security.doc/GUID-4D0F8E63-2961-4B71-B365-BBFA24673FDB.html">常见任务的所需特权</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.vmware.com/cn/VMware-vSphere/7.0/com.vmware.vsphere.security.doc/GUID-5372F580-5C23-4E9C-8A4E-EF1B4DD9033E.html">vSphere 权限和用户管理任务</a></li>
+</ul>
+</blockquote>
+<h2 id="镜像内容库"><a href="#镜像内容库" class="headerlink" title="镜像内容库"></a>镜像内容库</h2><ul>
+<li>2023.10.18更：内容库是用来在不同的 vCenter Server 之间共享数据的，这创建的镜像内容库只能在存储所在的 ESXi 主机中发现，同 vCenter Server 下的其他 ESXi 主机发现不了😅… 还是得跟 NFS 结合</li>
+<li>TODO: 整理下面这一堆混乱的内容</li>
+</ul>
+<h3 id="NFS-共享存储"><a href="#NFS-共享存储" class="headerlink" title="NFS 共享存储"></a>NFS 共享存储</h3><ul>
+<li>搭建一个 NFS 服务器，给读写权限</li>
+<li>vSphere Client 中选择数据中心，添加数据存储时选择 NFS，填好 NFS 服务器信息，勾上所有主机添加即可</li>
+</ul>
+<h3 id="内容库配置"><a href="#内容库配置" class="headerlink" title="内容库配置"></a>内容库配置</h3><p><img src="https://raw.githubusercontent.com/ex7l0it/ImageHosting/master/Picture/image-20231015160001086.png" alt="image-20231015160001086"></p>
+<ul>
+<li>在搭建 vCenter Server 之前，各台 ESXi 主机都是各自主机上单独存储的系统镜像，混乱又不方便</li>
+<li>前段时间是考虑搭建了一个 nfs 服务器，把所有镜像挂载上去，然后各 ESXi 主机挂载 nfs 类型的数据存储<ul>
+<li>但是这个也坑的很：网络波动或者系统重启时 nfs 服务器启动晚于 ESXi 挂载，挂载失败导致错误，之后只能手动全部卸载存储再重新挂载</li>
+<li>等看看怎么解决这个问题，还是老老实实用着 NFS 吧😅</li>
+</ul>
+</li>
+<li>结合内容库<ul>
+<li>新建内容库的存储资源选择上面挂载的 NFS 存储</li>
+<li>需求是要把先前的普通用户再加上一个内容库管理的权限（能挂载 ISO 镜像、能上传镜像）</li>
+<li>👴直接参考自带的内容库管理员角色，把权限直接都加上了，但就是不好使（看不到内容库）</li>
+<li>最后还是再创建一个新用户组，给这个新用户组分配默认的 <code>内容库管理员(示例)</code> 角色，然后把普通用户加入到这个新用户组，才好使</li>
+<li>😅很烦的是这权限更改完成后得重新登录才生效</li>
+<li>配置完成后虚拟机编辑设置中的 <code>CD/DVD 驱动器</code> 选择 <code>内容库 ISO 文件</code>即可</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Ex7l0it
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://ex7l0it.github.io/2023/10/13/vsphere/" title="vSphere 安装 &amp; 配置">https://ex7l0it.github.io/2023/10/13/vsphere/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Ops/" rel="tag"><i class="fa fa-tag"></i> Ops</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/13/esxi-upgrade/" rel="prev" title="vSphere 折腾记 -- ESXi 系统升级+回滚">
+                  <i class="fa fa-angle-left"></i> vSphere 折腾记 -- ESXi 系统升级+回滚
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/23/23sdnisc/" rel="next" title="2023 山东省大学生网络安全技能大赛 复盘">
+                  2023 山东省大学生网络安全技能大赛 复盘 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ex7l0it</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"ex7l0it/ex7l0it.github.io","repo_id":"R_kgDOJOCRMg","category":"R_kgDOJOCRMg","category_id":"DIC_kwDOJOCRMs4CbF3g","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"preferred-color-scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+
+
+
+  
+  <script src="https://cdn.staticfile.org/jquery/3.7.0/jquery.min.js"></script>
+  
+  <script src="/js/outdate.js"></script>
+
+
+
+
+
+</body>
+</html>
